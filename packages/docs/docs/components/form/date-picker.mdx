@@ -1,0 +1,164 @@
+---
+title: Date Picker
+---
+
+### Basic Usage
+
+```jsx live
+function Demo() {
+  const [date, setDate] = useState(null)
+  const [formattedDate, setFormattedDate] = useState('')
+  return (
+    <>
+      <p>
+        <strong>Selected date:</strong>
+        {date && date.toString()}
+      </p>
+      <p>
+        <strong>Selected date after formatted: </strong>
+        {formattedDate}
+      </p>
+      <CDatePicker
+        value={date}
+        onChange={setDate}
+        formattedValue={formattedDate}
+        onFormattedValueChange={setFormattedDate}
+        placeholder="Select date"
+      />
+    </>
+  )
+}
+```
+
+### Disabled
+
+```jsx live
+function Demo() {
+  const [date, setDate] = useState(null)
+  return (
+    <SpaceItems>
+      <CDatePicker
+        value={date}
+        onChange={setDate}
+        placeholder="A disabled date picker"
+        disabled
+      />
+    </SpaceItems>
+  )
+}
+```
+
+### Sizes
+
+```jsx live
+function Demo() {
+  const [date, setDate] = useState(null)
+  const [formattedDate, setFormattedDate] = useState('')
+  const props = useMemo(
+    () => ({
+      value: date,
+      onChange: setDate,
+      formattedValue: formattedDate,
+      onFormattedValueChange: setFormattedDate,
+    }),
+    [date, setDate, formattedDate, setFormattedDate]
+  )
+  return (
+    <SpaceItems>
+      <CDatePicker size="xs" {...props} placeholder="xs" />
+      <CDatePicker size="sm" {...props} placeholder="sm" />
+      <CDatePicker {...props} placeholder="md (default)" />
+      <CDatePicker size="lg" {...props} placeholder="lg" />
+      <CDatePicker size="xl" {...props} placeholder="xl" />
+    </SpaceItems>
+  )
+}
+```
+
+### Date range
+
+```jsx live
+function Demo() {
+  const [range, setRange] = useState([null, null])
+  const [rangeFmt, setRangeFmt] = useState(['', ''])
+  const strDate = d => d && d.toString()
+  return (
+    <>
+      <p>
+        <strong>Selected date range:</strong>
+        {range.map(strDate).join(' - ')}
+      </p>
+      <p>
+        <strong>Selected date range after formatted:</strong>
+        {rangeFmt[0]} - {rangeFmt[1]}
+      </p>
+      <CDatePicker
+        range
+        placeholder="Select date range"
+        rangeValue={range}
+        onRangeChange={setRange}
+        formattedRangeValue={rangeFmt}
+        onFormattedRangeChange={setRangeFmt}
+      />
+    </>
+  )
+}
+```
+
+### Month & Year Select
+
+```jsx live
+function Demo() {
+  const [month, setMonth] = useState(null)
+  const [year, setYear] = useState(null)
+  const [formattedMonth, setFormattedMonth] = useState('')
+  const [formattedYear, setFormattedYear] = useState('')
+  return (
+    <div className="c-row c-gutter-md" style={{ width: '100%' }}>
+      <div className="c-col-6">
+        <p>
+          <strong>Selected month:</strong>
+          {month && month.toString()}
+        </p>
+        <p>
+          <strong>Selected month after formatted:</strong>
+          {formattedMonth}
+        </p>
+        <CDatePicker
+          unit="month"
+          value={month}
+          onChange={setMonth}
+          format="MMM, YYYY"
+          formattedValue={formattedMonth}
+          onFormattedValueChange={setFormattedMonth}
+          placeholder="Select month"
+        />
+      </div>
+      <div className="c-col-6">
+        <p>
+          <strong>Selected year:</strong>
+          {year && year.toString()}
+        </p>
+        <p>
+          <strong>Selected year after formatted:</strong>
+          {formattedYear}
+        </p>
+
+        <CDatePicker
+          unit="year"
+          value={year}
+          onChange={setYear}
+          format="YYYY"
+          formattedValue={formattedYear}
+          onFormattedValueChange={setFormattedYear}
+          placeholder="Select year"
+        />
+      </div>
+    </div>
+  )
+}
+```
+
+### Props
+
+<PropTable name="CDatePicker" typeWidth="280px" />

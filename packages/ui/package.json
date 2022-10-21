@@ -1,0 +1,55 @@
+{
+  "name": "@casual-ui/react",
+  "version": "0.0.1",
+  "description": "Casual UI React",
+  "main": "index.ts",
+  "author": {
+    "email": "1197160272@qq.com",
+    "name": "Dongsheng Zhao"
+  },
+  "scripts": {
+    "build": "vite build"
+  },
+  "repository": {
+    "url": "https://github.com/Blackman99/casual-ui.git",
+    "directory": "/packages/react/ui"
+  },
+  "keywords": [
+    "react17",
+    "react components",
+    "react17 components",
+    "ui components",
+    "react ui components",
+    "react17 ui components"
+  ],
+  "devDependencies": {
+    "@quasar/extras": "^1.13.4",
+    "@types/react-transition-group": "^4.4.4",
+    "@vitejs/plugin-react": "^1.2.0",
+    "clsx": "^1.1.1",
+    "dayjs": "^1.11.0",
+    "@casual-ui/styles": "latest",
+    "@casual-ui/types": "latest",
+    "@casual-ui/react": "workspace:*",
+    "@casual-ui/i18n": "latest",
+    "prettier": "^2.6.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-transition-group": "^4.4.2",
+    "sass": "^1.49.9",
+    "typescript": "^4.6.3",
+    "vite": "^2.8.6"
+  },
+  "license": "MIT",
+  "files": ["dist"],
+  "publishConfig": {
+    "main": "./dist/casual-ui-react.umd.js",
+    "module": "./dist/casual-ui-react.es.js",
+    "exports": {
+      ".": {
+        "import": "./dist/casual-ui-react.es.js",
+        "require": "./dist/casual-ui-react.umd.js"
+      }
+    }
+  }
+}

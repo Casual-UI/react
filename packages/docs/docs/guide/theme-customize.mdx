@@ -1,0 +1,189 @@
+---
+title: Theme Customization
+sidebar_position: 10
+---
+
+### Theme colors
+
+```jsx live
+function Demo() {
+  const colors = [
+    '--casual-primary',
+    '--casual-secondary',
+    '--casual-warning',
+    '--casual-negative',
+  ]
+
+  return (
+    <div className="c-row c-gutter-md c-items-center c-wrap">
+      {colors.map(colorName => (
+        <div className="c-col-3" key={colorName}>
+          <div
+            className="c-rounded-md color-card c-pa-md c-flex c-items-center c-justify-center"
+            style={{
+              backgroundColor: `var(${colorName})`,
+              height: '120px',
+              lineHeight: '120px',
+              color: '#fff',
+              textAlign: 'center',
+            }}
+          >
+            {colorName}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+:::tip TIP
+All of the colors used in Casual UI based on [CSS Variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties).
+
+You can override them in your custom css.
+
+:::
+
+
+### Variables Definition
+
+```scss title="packages/styles/variables.scss"
+@use "sass:color";
+
+// background
+$normal-bg: #dcdfe6;
+$light-bg: #f2f6fc;
+$pure-white: #fff;
+
+// primary
+$primary: #8952fd;
+$primary-lighter: color.adjust(#8952fd, $lightness: 2%, $alpha: -0.1);
+$primary-lighter2: color.adjust(#8952fd, $lightness: 5%);
+$primary-pale: lighten(#8952fd, 32%);
+$primary-pale-darker: color.adjust(#8952fd, $lightness: 5%, $alpha: -0.9);
+$primary-darker: color.adjust(#8952fd, $lightness: -5%, $alpha: 0.1);
+
+// secondary
+$secondary: #66bb6a;
+$secondary-pale: lighten($secondary, 40%);
+$secondary-lighter: color.adjust($secondary, $lightness: 3%, $alpha: -0.1);
+$secondary-lighter2: color.adjust($secondary, $lightness: 10%);
+$secondary-darker: color.adjust($secondary, $lightness: -3%, $alpha: 0.1);
+
+// negative
+$negative: #ff6472;
+$negative-pale: lighten(#ff6472, 29%);
+$negative-lighter: color.adjust(#ff6472, $lightness: 5%, $alpha: -0.1);
+$negative-darker: color.adjust(#ff6472, $lightness: -5%, $alpha: 0.1);
+
+// warning
+$warning: #ff9100;
+$warning-pale: lighten($warning, 48%);
+$warning-lighter: color.adjust(#ff9100, $lightness: 5%, $alpha: -0.1);
+$warning-darker: color.adjust(#ff9100, $lightness: -5%, $alpha: 0.1);
+
+// disabled
+$disabled: #9dacb6;
+
+// text
+$copywriting-normal: #303133;
+$copywriting-light: color.adjust(#303133, $lightness: 40%);
+
+// input
+$input-bg: #f8f8fb;
+$input-bg-lighter: lighten(#f8f8fb, 2%);
+$input-bg-darker: darken(#f8f8fb, 2%);
+$input-bg-darker2: darken(#f8f8fb, 5%);
+$input-placeholder: #c1cbd1;
+$input-prefix-suffix-divider: #eaeaea;
+$input-clear-icon-hover: #909399;
+
+// select
+$select-dropdown-z-index: 9;
+
+// table
+$table-striped-bg: color.adjust(#fff, $lightness: -3%);
+
+// popup
+$popup-bg: rgba(#000, 0.6);
+$popup-content-bg: #fff;
+
+// toggle
+$toggle-dot-bg: #fff;
+
+// tooltip
+$tooltip-bg: #090909;
+$tooltip-color: rgb(231 227 227);
+
+:root {
+  // background
+  --casual-normal-bg: #{$normal-bg};
+  --casual-light-bg: #{$light-bg};
+
+  // primary
+  --casual-primary: #{$primary};
+  --casual-primary-darker: #{$primary-darker};
+  --casual-primary-lighter: #{$primary-lighter};
+  --casual-primary-lighter2: #{$primary-lighter2};
+  --casual-primary-pale: #{$primary-pale};
+  --casual-primary-pale-darker: #{$primary-pale-darker};
+
+  // secondary
+  --casual-secondary: #{$secondary};
+  --casual-secondary-pale: #{$secondary-pale};
+  --casual-secondary-darker: #{$secondary-darker};
+  --casual-secondary-lighter: #{$secondary-lighter};
+  --casual-secondary-lighter2: #{$secondary-lighter2};
+
+  // text
+  --casual-copywriting-normal: #{$copywriting-normal};
+  --casual-copywriting-light: #{$copywriting-light};
+
+  // negative
+  --casual-negative: #{$negative};
+  --casual-negative-pale: #{$negative-pale};
+  --casual-negative-lighter: #{$negative-lighter};
+  --casual-negative-darker: #{$negative-darker};
+
+  // warning
+  --casual-warning: #{$warning};
+  --casual-warning-pale: #{$warning-pale};
+  --casual-warning-lighter: #{$warning-lighter};
+  --casual-warning-darker: #{$warning-darker};
+
+  // disabled
+  --casual-disabled: #{$disabled};
+
+  // input
+  --casual-input-bg: #{$input-bg};
+  --casual-input-bg-lighter: #{$input-bg-lighter};
+  --casual-input-bg-darker: #{$input-bg-darker};
+  --casual-input-bg-darker2: #{$input-bg-darker2};
+  --casual-input-placeholder: #{$input-placeholder};
+  --casual-input-prefix-suffix-divider: #{$input-prefix-suffix-divider};
+  --casual-input-clear-icon-hover: #{$input-clear-icon-hover};
+
+  // select
+  --casual-select-bg: #{$pure-white};
+  --casual-select-dropdown-z-index: #{$select-dropdown-z-index};
+
+  // radio
+  --casual-radio-unselect: #{$copywriting-light};
+
+  // toggle
+  --casual-toggle-dot-bg: #{$toggle-dot-bg};
+
+  // table
+  --casual-table-bg: #{$pure-white};
+  --casual-table-divider-color: #{$normal-bg};
+  --casual-table-striped-bg: #{$table-striped-bg};
+
+  // popup
+  --casual-popup-bg: #{$popup-bg};
+  --casual-popup-content-bg: #{$popup-content-bg};
+
+  // tooltip
+  --casual-tooltip-bg: #{$tooltip-bg};
+  --casual-tooltip-color: #{$tooltip-color};
+}
+
+```

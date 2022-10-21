@@ -1,0 +1,52 @@
+{
+  "name": "casual-ui-react-docs",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Casual UI React Docs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "docusaurus start --no-open",
+    "dev:zh": "docusaurus start --no-open --locale zh-CN",
+    "build": "docusaurus build"
+  },
+  "author": {
+    "email": "1197160272@qq.com",
+    "name": "Dongsheng Zhao"
+  },
+  "repository": {
+    "url": "https://github.com/Blackman99/casual-ui.git",
+    "directory": "/packages/react/docs"
+  },
+  "devDependencies": {
+    "@casual-ui/react": "latest",
+    "@casual-ui/styles": "latest",
+    "@docusaurus/core": "latest",
+    "@docusaurus/preset-classic": "latest",
+    "@docusaurus/remark-plugin-npm2yarn": "latest",
+    "@docusaurus/theme-common": "latest",
+    "@docusaurus/theme-live-codeblock": "latest",
+    "@docusaurus/types": "^2.1.0",
+    "@mdx-js/react": "^1.6.22",
+    "@quasar/extras": "^1.13.4",
+    "@tsconfig/docusaurus": "^1.0.5",
+    "@types/node": "^17.0.23",
+    "@types/react": "^17.0.43",
+    "@types/react-dom": "^18.0.6",
+    "@types/webpack-env": "^1.16.3",
+    "ansi-colors": "^4.1.1",
+    "cli-progress": "^3.10.0",
+    "clsx": "^1.1.1",
+    "docusaurus-plugin-module-alias": "^0.0.2",
+    "docusaurus-plugin-sass": "^0.2.2",
+    "fast-glob": "^3.2.11",
+    "prism-react-renderer": "^1.3.1",
+    "react": "^17.0.2",
+    "react-docgen-typescript": "^2.2.2",
+    "react-live": "^3.1.1",
+    "react-spring": "^9.5.2",
+    "sass": "^1.49.9",
+    "sass-loader": "^13.1.0",
+    "unist-util-visit": "^4.1.0"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,86 @@
+---
+title: Table
+---
+
+### Basic
+
+```jsx live
+<CTable
+  columns={[
+    { title: 'Name', field: 'name' },
+    { title: 'Gender', field: 'gender' },
+  ]}
+  data={[
+    { name: 'Jason', gender: 'male' },
+    { name: 'Lorry', gender: 'female' },
+  ]}
+  rowKey="name"
+/>
+```
+
+### Custom Header
+
+```jsx live
+function Demo() {
+  const columns = [
+    {
+      title: 'Name',
+      field: 'name',
+      customHeader: ({ title }) => (
+        <span style={{ color: 'purple', fontSize: '48px' }}>{title}</span>
+      ),
+    },
+    {
+      title: 'Gender',
+      field: 'gender',
+      customHeader: ({ title }) => (
+        <span style={{ color: 'cyan', fontSize: '48px' }}>{title}</span>
+      ),
+    },
+  ]
+
+  const data = [
+    { name: 'Jason', gender: 'male' },
+    { name: 'Lorry', gender: 'female' },
+  ]
+
+  return <CTable columns={columns} data={data} rowKey="name" />
+}
+```
+
+### Custom Column
+
+```jsx live
+function Demo() {
+  const columns = [
+    {
+      title: 'Name',
+      field: 'name',
+    },
+    {
+      title: 'Gender',
+      field: 'gender',
+    },
+    {
+      title: 'Actions',
+      customRender: ({ row }) => (
+        <>
+          <CButton label="Edit" size="sm" />
+          <CButton label="Delete" theme="negative" size="sm" />
+        </>
+      ),
+    },
+  ]
+
+  const data = [
+    { name: 'Jason', gender: 'male' },
+    { name: 'Lorry', gender: 'female' },
+  ]
+
+  return <CTable columns={columns} data={data} rowKey="name" />
+}
+```
+
+### Props
+
+<PropTable name="CTable" />

@@ -1,0 +1,35 @@
+---
+title: Tabs
+---
+
+### Basic Usage
+
+```jsx live
+function Demo() {
+  const items = [
+    {
+      name: 'Apple',
+      content: 'Apple is awesome',
+    },
+    {
+      name: 'Banana',
+      content: 'Banana is awesome',
+    },
+    {
+      name: 'Orange',
+      content: 'Orange is awesome',
+    },
+    {
+      name: 'Grapes',
+      content: 'Grapes are awesome',
+    },
+  ]
+
+  const [current, setCurrent] = useState('Apple')
+  return <CTabs items={items} activeTab={current} onTabChange={setCurrent} />
+}
+```
+
+### Props
+
+<PropTable name="CTabs" typeWidth="200px" />

@@ -1,0 +1,87 @@
+---
+title: Expansion
+---
+
+### Basic Usage
+
+```jsx live
+<CExpansion title="Click to open/fold">
+  <div className="c-pa-md">
+    <p>Hello, World</p>
+    <p>Hello, World</p>
+    <p>Hello, World</p>
+    <p>Hello, World</p>
+  </div>
+</CExpansion>
+```
+
+### Icon
+
+```jsx live
+<>
+  <CExpansion
+    title="Some Icon"
+    icon={<CIcon content={MdIcons.matPeople} />}
+  >
+    <div className="c-pa-lg">
+      <p>Some expandable content</p>
+    </div>
+  </CExpansion>
+  <CExpansion
+    title="Some Icon"
+    icon={<CIcon content={MdIcons.matNaturePeople} />}
+  >
+    <div className="c-pa-lg">
+      <p>Some expandable content</p>
+    </div>
+  </CExpansion>
+</>
+```
+
+### Customize Arrow
+
+```jsx live
+<>
+  <CExpansion
+    title="Customize Arrow"
+    arrow={() => <CIcon content={MdIcons.matArrowCircleDown} />}
+  >
+    <div className="c-pa-lg">
+      <p>Look! It's custom arrow</p>
+    </div>
+  </CExpansion>
+  <CExpansion
+    title="Customize Arrow"
+    arrow={open => (
+      <CIcon content={open ? MdIcons.matPeople : MdIcons.matNaturePeople} />
+    )}
+  >
+    <div className="c-pa-lg">
+      <p>Different icon when folded/opened</p>
+    </div>
+  </CExpansion>
+</>
+```
+
+### Expand From Top
+
+```jsx live
+<CExpansion
+  title="Click to open/fold"
+  reverse
+>
+  <div className="c-pa-md">
+    <p>Hello, World</p>
+    <p>Hello, World</p>
+    <p>Hello, World</p>
+    <p>Hello, World</p>
+  </div>
+</CExpansion>
+```
+
+### Props
+
+<PropTable
+  name="CExpansion"
+  typeWidth="260px"
+/>

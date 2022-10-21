@@ -1,0 +1,177 @@
+---
+title: Select
+sidebar_position: 2
+---
+
+### Basic
+
+```jsx live
+function Demo() {
+  const options = [
+    { label: '0 - 50', value: 0 },
+    { label: '50 - 100', value: 1 },
+    { label: '100 - 200', value: 2 },
+    { label: '200 - 500', value: 3 },
+    { label: '500 - 1000', value: 4 },
+  ]
+  const [selectedValue, setSelectedValue] = useState('')
+  return (
+    <CSelect
+      value={selectedValue}
+      onChange={setSelectedValue}
+      placeholder="Please select"
+      options={options}
+    />
+  )
+}
+```
+
+### 尺寸
+
+```jsx live
+function Demo() {
+  const options = [
+    { label: '0 - 50', value: 0 },
+    { label: '50 - 100', value: 1 },
+    { label: '100 - 200', value: 2 },
+    { label: '200 - 500', value: 3 },
+    { label: '500 - 1000', value: 4 },
+  ]
+  const [selectedValue, setSelectedValue] = useState('')
+  return (
+    <div className="c-row c-items-center c-gutter-md c-wrap">
+      <div>
+        <CSelect
+          value={selectedValue}
+          onChange={setSelectedValue}
+          placeholder="xs select"
+          size="xs"
+          options={options}
+        />
+      </div>
+      <div>
+        <CSelect
+          value={selectedValue}
+          onChange={setSelectedValue}
+          placeholder="sm select"
+          size="sm"
+          options={options}
+        />
+      </div>
+      <div>
+        <CSelect
+          value={selectedValue}
+          onChange={setSelectedValue}
+          placeholder="md select (default)"
+          options={options}
+        />
+      </div>
+      <div>
+        <CSelect
+          value={selectedValue}
+          onChange={setSelectedValue}
+          placeholder="lg select"
+          size="lg"
+          options={options}
+        />
+      </div>
+      <div>
+        <CSelect
+          value={selectedValue}
+          onChange={setSelectedValue}
+          placeholder="xl select"
+          size="xl"
+          options={options}
+        />
+      </div>
+    </div>
+  )
+}
+```
+
+### Disabled
+
+```jsx live
+function Demo() {
+  const options = [
+    { label: '0 - 50', value: 0 },
+    { label: '50 - 100', value: 1 },
+    { label: '100 - 200', value: 2 },
+    { label: '200 - 500', value: 3 },
+    { label: '500 - 1000', value: 4 },
+  ]
+  const [selectedValue, setSelectedValue] = useState('')
+  const [selectedValue2, setSelectedValue2] = useState(0)
+  return (
+    <SpaceItems>
+      <CSelect
+        value={selectedValue}
+        onChange={setSelectedValue}
+        placeholder="A disabled select"
+        options={options}
+        disabled
+      />
+      <CSelect
+        value={selectedValue2}
+        onChange={setSelectedValue2}
+        placeholder="A disabled select"
+        options={options}
+        disabled
+      />
+    </SpaceItems>
+  )
+}
+```
+
+### Clearable
+
+```jsx live
+function Demo() {
+  const options = [
+    { label: '0 - 50', value: 0 },
+    { label: '50 - 100', value: 1 },
+    { label: '100 - 200', value: 2 },
+    { label: '200 - 500', value: 3 },
+    { label: '500 - 1000', value: 4 },
+  ]
+  const [selectedValue, setSelectedValue] = useState('')
+  return (
+    <CSelect
+      value={selectedValue}
+      onChange={setSelectedValue}
+      placeholder="Select to see clear icon"
+      options={options}
+      clearable
+    />
+  )
+}
+```
+
+### Multiple
+
+```jsx live
+function Demo() {
+  const options = [
+    { label: '0 - 50', value: 0 },
+    { label: '50 - 100', value: 1 },
+    { label: '100 - 200', value: 2 },
+    { label: '200 - 500', value: 3 },
+    { label: '500 - 1000', value: 4 },
+  ]
+  const [selectedValue, setSelectedValue] = useState([])
+  return (
+    <CSelect
+      value={selectedValue}
+      onChange={setSelectedValue}
+      placeholder="Select multiple options"
+      multiple
+      options={options}
+      clearable
+    />
+  )
+}
+```
+
+### Props
+
+<PropTable name="CSelect" typeWidth="320px" />

@@ -1,0 +1,1399 @@
+---
+title: Form & Form Item
+---
+
+### Basic Usage
+
+```jsx live
+function Demo() {
+  const [formData, setFormData] = useState({
+    name: 'Micheal Jackson',
+    gender: 'male',
+    birthday: new Date('August 29, 1958'),
+    displayBirthday: 'August 29, 1958',
+    industry: 'Entertainment',
+  })
+
+  const setField = (k, v) =>
+    setFormData({
+      ...formData,
+      [k]: v,
+    })
+
+  const genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ]
+
+  const industryOptions = [
+    { label: 'IT', value: 'IT' },
+    { label: 'Medical', value: 'Medical' },
+    { label: 'Entertainment', value: 'Entertainment' },
+    { label: 'Transportation', value: 'Transportation' },
+  ]
+
+  return (
+    <CForm>
+      <CFormItem label="Name">
+        <CInput
+          value={formData.name}
+          onChange={v => setField('name', v)}
+        />
+      </CFormItem>
+      <CFormItem label="Gender">
+        <CRadioGroup
+          value={formData.gender}
+          options={genderOptions}
+          onChange={v => setField('gender', v)}
+        />
+      </CFormItem>
+      <CFormItem label="Birthday">
+        <CDatePicker
+          format="MMM DD, YYYY"
+          value={formData.birthday}
+          onChange={v => setField('birthday', v)}
+          formattedValue={formData.displayBirthday}
+          onFormattedValueChange={v => setField('displayBirthday', v)}
+        />
+      </CFormItem>
+      <CFormItem label="Industry">
+        <CSelect
+          value={formData.industry}
+          onChange={v => setField('industry', v)}
+          options={industryOptions}
+        />
+      </CFormItem>
+    </CForm>
+  )
+}
+```
+
+### Config Items
+
+```jsx live
+function Demo() {
+  const [formData, setFormData] = useState({
+    name: 'Micheal Jackson',
+    gender: 'male',
+    birthday: new Date('August 29, 1958'),
+    displayBirthday: 'August 29, 1958',
+    industry: 'Entertainment',
+  })
+
+  const setField = (k, v) =>
+    setFormData({
+      ...formData,
+      [k]: v,
+    })
+
+  const genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ]
+
+  const industryOptions = [
+    { label: 'IT', value: 'IT' },
+    { label: 'Medical', value: 'Medical' },
+    { label: 'Entertainment', value: 'Entertainment' },
+    { label: 'Transportation', value: 'Transportation' },
+  ]
+
+  const items = [
+    {
+      label: 'Name',
+      children: (
+        <CInput
+          value={formData.name}
+          onChange={v => setField('name', v)}
+        />
+      ),
+    },
+    {
+      label: 'Gender',
+      children: (
+        <CRadioGroup
+          value={formData.gender}
+          options={genderOptions}
+          onChange={v => setField('gender', v)}
+        />
+      ),
+    },
+    {
+      label: 'Birthday',
+      children: (
+        <CDatePicker
+          format="MMM DD, YYYY"
+          value={formData.birthday}
+          onChange={v => setField('birthday', v)}
+          formattedValue={formData.displayBirthday}
+          onFormattedValueChange={v => setField('displayBirthday', v)}
+        />
+      ),
+    },
+    {
+      label: 'Industry',
+      children: (
+        <CSelect
+          value={formData.industry}
+          onChange={v => setField('industry', v)}
+          options={industryOptions}
+        />
+      ),
+    },
+  ]
+
+  return <CForm items={items} />
+}
+```
+
+### Sizes
+
+```jsx live
+function Demo() {
+  const [formData, setFormData] = useState({
+    name: 'Micheal Jackson',
+    gender: 'male',
+    birthday: new Date('August 29, 1958'),
+    displayBirthday: 'August 29, 1958',
+    industry: 'Entertainment',
+  })
+
+  const setField = (k, v) =>
+    setFormData({
+      ...formData,
+      [k]: v,
+    })
+
+  const genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ]
+
+  const industryOptions = [
+    { label: 'IT', value: 'IT' },
+    { label: 'Medical', value: 'Medical' },
+    { label: 'Entertainment', value: 'Entertainment' },
+    { label: 'Transportation', value: 'Transportation' },
+  ]
+
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl']
+  const [size, setSize] = useState('md')
+  const items = [
+    {
+      label: 'Size',
+      col: 12,
+      children: (
+        <CRadioGroup
+          value={size}
+          onChange={setSize}
+          options={sizes.map(s => ({ label: s, value: s }))}
+        />
+      ),
+    },
+    {
+      label: 'Name',
+      children: (
+        <CInput
+          value={formData.name}
+          onChange={v => setField('name', v)}
+        />
+      ),
+    },
+    {
+      label: 'Gender',
+      children: (
+        <CRadioGroup
+          value={formData.gender}
+          options={genderOptions}
+          onChange={v => setField('gender', v)}
+        />
+      ),
+    },
+    {
+      label: 'Birthday',
+      children: (
+        <CDatePicker
+          format="MMM DD, YYYY"
+          value={formData.birthday}
+          onChange={v => setField('birthday', v)}
+          formattedValue={formData.displayBirthday}
+          onFormattedValueChange={v => setField('displayBirthday', v)}
+        />
+      ),
+    },
+    {
+      label: 'Industry',
+      children: (
+        <CSelect
+          value={formData.industry}
+          onChange={v => setField('industry', v)}
+          options={industryOptions}
+        />
+      ),
+    },
+  ]
+
+  return (
+    <CForm
+      items={items}
+      size={size}
+    />
+  )
+}
+```
+
+### Gutter Sizes
+
+```jsx live
+function Demo() {
+  const [formData, setFormData] = useState({
+    name: 'Micheal Jackson',
+    gender: 'male',
+    birthday: new Date('August 29, 1958'),
+    displayBirthday: 'August 29, 1958',
+    industry: 'Entertainment',
+  })
+
+  const setField = (k, v) =>
+    setFormData({
+      ...formData,
+      [k]: v,
+    })
+
+  const genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ]
+
+  const industryOptions = [
+    { label: 'IT', value: 'IT' },
+    { label: 'Medical', value: 'Medical' },
+    { label: 'Entertainment', value: 'Entertainment' },
+    { label: 'Transportation', value: 'Transportation' },
+  ]
+
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl']
+  const [gutterSize, setGutterSize] = useState('md')
+  const items = [
+    {
+      label: 'Gutter Size',
+      col: 12,
+      children: (
+        <CRadioGroup
+          value={gutterSize}
+          onChange={setGutterSize}
+          options={sizes.map(s => ({ label: s, value: s }))}
+        />
+      ),
+    },
+    {
+      label: 'Name',
+      children: (
+        <CInput
+          value={formData.name}
+          onChange={v => setField('name', v)}
+        />
+      ),
+    },
+    {
+      label: 'Gender',
+      children: (
+        <CRadioGroup
+          value={formData.gender}
+          options={genderOptions}
+          onChange={v => setField('gender', v)}
+        />
+      ),
+    },
+    {
+      label: 'Birthday',
+      children: (
+        <CDatePicker
+          format="MMM DD, YYYY"
+          value={formData.birthday}
+          onChange={v => setField('birthday', v)}
+          formattedValue={formData.displayBirthday}
+          onFormattedValueChange={v => setField('displayBirthday', v)}
+        />
+      ),
+    },
+    {
+      label: 'Industry',
+      children: (
+        <CSelect
+          value={formData.industry}
+          onChange={v => setField('industry', v)}
+          options={industryOptions}
+        />
+      ),
+    },
+  ]
+
+  return (
+    <CForm
+      items={items}
+      gutterSize={gutterSize}
+    />
+  )
+}
+```
+
+### Cols
+
+```jsx live
+function Demo() {
+  const [formData, setFormData] = useState({
+    name: 'Micheal Jackson',
+    gender: 'male',
+    birthday: new Date('August 29, 1958'),
+    displayBirthday: 'August 29, 1958',
+    industry: 'Entertainment',
+  })
+
+  const setField = (k, v) =>
+    setFormData({
+      ...formData,
+      [k]: v,
+    })
+
+  const genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ]
+
+  const industryOptions = [
+    { label: 'IT', value: 'IT' },
+    { label: 'Medical', value: 'Medical' },
+    { label: 'Entertainment', value: 'Entertainment' },
+    { label: 'Transportation', value: 'Transportation' },
+  ]
+
+  const [col, setCol] = useState(6)
+  const items = [
+    {
+      label: 'Item Col',
+      children: (
+        <CRadioGroup
+          value={col}
+          onChange={setCol}
+          options={[6, 12].map(s => ({ label: s, value: s }))}
+        />
+      ),
+    },
+    {
+      label: 'Name',
+      children: (
+        <CInput
+          value={formData.name}
+          onChange={v => setField('name', v)}
+        />
+      ),
+    },
+    {
+      label: 'Gender',
+      children: (
+        <CRadioGroup
+          value={formData.gender}
+          options={genderOptions}
+          onChange={v => setField('gender', v)}
+        />
+      ),
+    },
+    {
+      label: 'Birthday',
+      children: (
+        <CDatePicker
+          format="MMM DD, YYYY"
+          value={formData.birthday}
+          onChange={v => setField('birthday', v)}
+          formattedValue={formData.displayBirthday}
+          onFormattedValueChange={v => setField('displayBirthday', v)}
+        />
+      ),
+    },
+    {
+      label: 'Industry',
+      children: (
+        <CSelect
+          value={formData.industry}
+          onChange={v => setField('industry', v)}
+          options={industryOptions}
+        />
+      ),
+    },
+  ]
+
+  return (
+    <CForm
+      items={items}
+      col={col}
+    />
+  )
+}
+```
+
+### Label Width
+
+```jsx live
+function Demo() {
+  const [formData, setFormData] = useState({
+    name: 'Micheal Jackson',
+    gender: 'male',
+    birthday: new Date('August 29, 1958'),
+    displayBirthday: 'August 29, 1958',
+    industry: 'Entertainment',
+  })
+
+  const setField = (k, v) =>
+    setFormData({
+      ...formData,
+      [k]: v,
+    })
+
+  const genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ]
+
+  const industryOptions = [
+    { label: 'IT', value: 'IT' },
+    { label: 'Medical', value: 'Medical' },
+    { label: 'Entertainment', value: 'Entertainment' },
+    { label: 'Transportation', value: 'Transportation' },
+  ]
+
+  const [labelWidth, setLabelWidth] = useState('80px')
+  const items = [
+    {
+      label: 'Label Width',
+      col: 12,
+      children: (
+        <CRadioGroup
+          value={labelWidth}
+          onChange={setLabelWidth}
+          options={[
+            { label: '80px', value: '80px' },
+            { label: '100px', value: '100px' },
+            { label: '120px', value: '120px' },
+          ]}
+        />
+      ),
+    },
+    {
+      label: 'Name',
+      children: (
+        <CInput
+          value={formData.name}
+          onChange={v => setField('name', v)}
+        />
+      ),
+    },
+    {
+      label: 'Gender',
+      children: (
+        <CRadioGroup
+          value={formData.gender}
+          options={genderOptions}
+          onChange={v => setField('gender', v)}
+        />
+      ),
+    },
+    {
+      label: 'Birthday',
+      children: (
+        <CDatePicker
+          format="MMM DD, YYYY"
+          value={formData.birthday}
+          onChange={v => setField('birthday', v)}
+          formattedValue={formData.displayBirthday}
+          onFormattedValueChange={v => setField('displayBirthday', v)}
+        />
+      ),
+    },
+    {
+      label: 'Industry',
+      children: (
+        <CSelect
+          value={formData.industry}
+          onChange={v => setField('industry', v)}
+          options={industryOptions}
+        />
+      ),
+    },
+  ]
+
+  return (
+    <CForm
+      items={items}
+      labelWidth={labelWidth}
+    />
+  )
+}
+```
+
+### Label Direction
+
+```jsx live
+function Demo() {
+  const [formData, setFormData] = useState({
+    name: 'Micheal Jackson',
+    gender: 'male',
+    birthday: new Date('August 29, 1958'),
+    displayBirthday: 'August 29, 1958',
+    industry: 'Entertainment',
+  })
+
+  const setField = (k, v) =>
+    setFormData({
+      ...formData,
+      [k]: v,
+    })
+
+  const genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ]
+
+  const industryOptions = [
+    { label: 'IT', value: 'IT' },
+    { label: 'Medical', value: 'Medical' },
+    { label: 'Entertainment', value: 'Entertainment' },
+    { label: 'Transportation', value: 'Transportation' },
+  ]
+
+  const directions = ['row', 'row-reverse', 'column', 'column-reverse']
+  const [labelDirection, setLabelDirection] = useState('row')
+  const items = [
+    {
+      label: 'Label Direction',
+      col: 12,
+      children: (
+        <CRadioGroup
+          value={labelDirection}
+          onChange={setLabelDirection}
+          options={directions.map(d => ({
+            label: d,
+            value: d,
+          }))}
+        />
+      ),
+    },
+    {
+      label: 'Name',
+      children: (
+        <CInput
+          value={formData.name}
+          onChange={v => setField('name', v)}
+        />
+      ),
+    },
+    {
+      label: 'Gender',
+      children: (
+        <CRadioGroup
+          value={formData.gender}
+          options={genderOptions}
+          onChange={v => setField('gender', v)}
+        />
+      ),
+    },
+    {
+      label: 'Birthday',
+      children: (
+        <CDatePicker
+          format="MMM DD, YYYY"
+          value={formData.birthday}
+          onChange={v => setField('birthday', v)}
+          formattedValue={formData.displayBirthday}
+          onFormattedValueChange={v => setField('displayBirthday', v)}
+        />
+      ),
+    },
+    {
+      label: 'Industry',
+      children: (
+        <CSelect
+          value={formData.industry}
+          onChange={v => setField('industry', v)}
+          options={industryOptions}
+        />
+      ),
+    },
+  ]
+
+  return (
+    <CForm
+      items={items}
+      labelDirection={labelDirection}
+    />
+  )
+}
+```
+
+
+### Label Align
+
+```jsx live
+function Demo() {
+  const [formData, setFormData] = useState({
+    name: 'Micheal Jackson',
+    gender: 'male',
+    birthday: new Date('August 29, 1958'),
+    displayBirthday: 'August 29, 1958',
+    industry: 'Entertainment',
+  })
+
+  const setField = (k, v) =>
+    setFormData({
+      ...formData,
+      [k]: v,
+    })
+
+  const genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ]
+
+  const industryOptions = [
+    { label: 'IT', value: 'IT' },
+    { label: 'Medical', value: 'Medical' },
+    { label: 'Entertainment', value: 'Entertainment' },
+    { label: 'Transportation', value: 'Transportation' },
+  ]
+
+  const [labelAlign, setLabelAlign] = useState('left')
+  const items = [
+    {
+      label: 'Label Align',
+      children: (
+        <CRadioGroup
+          value={labelAlign}
+          onChange={setLabelAlign}
+          options={['left', 'center', 'right'].map(d => ({
+            label: d,
+            value: d,
+          }))}
+        />
+      ),
+    },
+    {
+      label: 'Name',
+      children: (
+        <CInput
+          value={formData.name}
+          onChange={v => setField('name', v)}
+        />
+      ),
+    },
+    {
+      label: 'Gender',
+      children: (
+        <CRadioGroup
+          value={formData.gender}
+          options={genderOptions}
+          onChange={v => setField('gender', v)}
+        />
+      ),
+    },
+    {
+      label: 'Birthday',
+      children: (
+        <CDatePicker
+          format="MMM DD, YYYY"
+          value={formData.birthday}
+          onChange={v => setField('birthday', v)}
+          formattedValue={formData.displayBirthday}
+          onFormattedValueChange={v => setField('displayBirthday', v)}
+        />
+      ),
+    },
+    {
+      label: 'Industry',
+      children: (
+        <CSelect
+          value={formData.industry}
+          onChange={v => setField('industry', v)}
+          options={industryOptions}
+        />
+      ),
+    },
+  ]
+
+  return (
+    <CForm
+      items={items}
+      labelAlign={labelAlign}
+    />
+  )
+}
+```
+
+### Form Validation
+
+The form validation of Casual UI，need to used with `field` `rules` of CFOrmItem.  
+`rules` is the validators. Each validator is a function that accept current value. And it need return `false | string | Promise<false | string>`.  
+The meaning of this return:
+
+- `false` means validation passed.
+- `string` means validation failed and it's the error message
+- `Promise` means a async validation and the result is the same with above
+
+For example. This is a validator for some field is required.
+
+```js
+const rule = v => (v ? false : 'This field is required')
+```
+
+It's async validator would be like this:
+
+```js
+const asyncRule = v =>
+  new Promise(resolve => {
+    setTimeout(() => {
+      resolve(v ? false : 'This field is required')
+    }, 1000)
+  })
+```
+
+### Normal Validation
+
+```jsx live
+function Demo() {
+  const [formData, setFormData] = useState({
+    name: '',
+    gender: '',
+    birthday: null,
+    displayBirthday: '',
+    industry: '',
+    hobbies: [],
+  })
+
+  const [validating, setValidating] = useState(false)
+
+  const setField = (k, v) =>
+    setFormData({
+      ...formData,
+      [k]: v,
+    })
+
+  const genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ]
+
+  const industryOptions = [
+    { label: 'IT', value: 'IT' },
+    { label: 'Medical', value: 'Medical' },
+    { label: 'Entertainment', value: 'Entertainment' },
+    { label: 'Transportation', value: 'Transportation' },
+  ]
+
+  const items = [
+    {
+      label: 'Name',
+      field: 'name',
+      rules: [v => (v ? false : 'Please enter Name')],
+      children: (
+        <CInput
+          value={formData.name}
+          onChange={v => setField('name', v)}
+          placeholder="Please enter Name"
+        />
+      ),
+    },
+    {
+      label: 'Gender',
+      field: 'gender',
+      rules: [
+        v => {
+          return v === 'male' ? false : 'Can only be Male!'
+        },
+      ],
+      children: (
+        <CRadioGroup
+          value={formData.gender}
+          options={genderOptions}
+          onChange={v => setField('gender', v)}
+        />
+      ),
+    },
+    {
+      label: 'Birthday',
+      field: 'birthday',
+      rules: [v => (!v ? ' Please select Birthday' : false)],
+      children: (
+        <CDatePicker
+          format="MMM DD, YYYY"
+          value={formData.birthday}
+          placeholder=" Please select Birthday"
+          onChange={v => setField('birthday', v)}
+          formattedValue={formData.displayBirthday}
+          onFormattedValueChange={v => setField('displayBirthday', v)}
+        />
+      ),
+    },
+    {
+      label: 'Industry',
+      field: 'industry',
+      rules: [
+        v =>
+          v !== 'IT' && v !== 'Entertainment'
+            ? 'Can only be IT or Entertainment!'
+            : false,
+      ],
+      children: (
+        <CSelect
+          value={formData.industry}
+          onChange={v => setField('industry', v)}
+          options={industryOptions}
+        />
+      ),
+    },
+    {
+      label: 'Hobbies',
+      field: 'hobbies',
+      rules: [v => (v && v.length < 2 ? 'At lease two hobbies' : false)],
+      children: (
+        <CCheckboxGroup
+          value={formData.hobbies}
+          onChange={v => setField('hobbies', v)}
+          options={['Reading', 'Writing', 'Singing', 'Dancing'].map(h => ({
+            label: h,
+            value: h,
+          }))}
+        />
+      ),
+    },
+  ]
+
+  const formRef = useRef(null)
+
+  return (
+    <div className="c-pa-md">
+      <CForm
+        ref={formRef}
+        value={formData}
+        items={items}
+        validating={validating}
+        onValidatingChange={setValidating}
+      />
+      <div className="c-mt-xl">
+        <SpaceItems>
+          <CButton
+            outlined
+            label="Reset"
+            onClick={() => formRef.current.clearAll()}
+          />
+          <CButton
+            label="Submit"
+            onClick={() => formRef.current.validateAll()}
+          />
+        </SpaceItems>
+      </div>
+    </div>
+  )
+}
+```
+
+### Async Validation
+
+```jsx live
+function Demo() {
+  const [formData, setFormData] = useState({
+    name: '',
+    gender: '',
+    birthday: null,
+    displayBirthday: '',
+    industry: '',
+    hobbies: [],
+  })
+
+  const [validating, setValidating] = useState(false)
+
+  const setField = (k, v) =>
+    setFormData({
+      ...formData,
+      [k]: v,
+    })
+
+  const genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ]
+
+  const industryOptions = [
+    { label: 'IT', value: 'IT' },
+    { label: 'Medical', value: 'Medical' },
+    { label: 'Entertainment', value: 'Entertainment' },
+    { label: 'Transportation', value: 'Transportation' },
+  ]
+
+  const items = [
+    {
+      label: 'Name',
+      field: 'name',
+      rules: [v => (v ? false : 'Please enter Name')],
+      children: (
+        <CInput
+          value={formData.name}
+          onChange={v => setField('name', v)}
+          placeholder="Please enter Name"
+        />
+      ),
+    },
+    {
+      label: 'Gender',
+      field: 'gender',
+      rules: [
+        v => {
+          return v === 'male' ? false : 'Can only be Male!'
+        },
+      ],
+      children: (
+        <CRadioGroup
+          value={formData.gender}
+          options={genderOptions}
+          onChange={v => setField('gender', v)}
+        />
+      ),
+    },
+    {
+      label: 'Birthday',
+      field: 'birthday',
+      rules: [v => (!v ? ' Please select Birthday' : false)],
+      children: (
+        <CDatePicker
+          format="MMM DD, YYYY"
+          value={formData.birthday}
+          placeholder=" Please select Birthday"
+          onChange={v => setField('birthday', v)}
+          formattedValue={formData.displayBirthday}
+          onFormattedValueChange={v => setField('displayBirthday', v)}
+        />
+      ),
+    },
+    {
+      label: 'Industry',
+      field: 'industry',
+      rules: [
+        v =>
+          v !== 'IT' && v !== 'Entertainment'
+            ? 'Can only be IT or Entertainment!'
+            : false,
+      ],
+      children: (
+        <CSelect
+          value={formData.industry}
+          onChange={v => setField('industry', v)}
+          options={industryOptions}
+        />
+      ),
+    },
+    {
+      label: 'Hobbies',
+      field: 'hobbies',
+      rules: [
+        v =>
+          new Promise(resolve => {
+            setTimeout(() => {
+              resolve(v.length >= 2 ? false : 'At least two hobbies')
+            }, 3000)
+          }),
+      ],
+      children: (
+        <CCheckboxGroup
+          value={formData.hobbies}
+          onChange={v => setField('hobbies', v)}
+          options={['Reading', 'Writing', 'Singing', 'Dancing'].map(h => ({
+            label: h,
+            value: h,
+          }))}
+        />
+      ),
+    },
+  ]
+
+  const formRef = useRef(null)
+
+  return (
+    <div className="c-pa-md">
+      <CForm
+        ref={formRef}
+        value={formData}
+        items={items}
+        validating={validating}
+        onValidatingChange={setValidating}
+      />
+      <div className="c-mt-xl">
+        <SpaceItems>
+          <CButton
+            outlined
+            label="Reset"
+            onClick={() => formRef.current.clearAll()}
+          />
+          <CButton
+            label="Submit"
+            onClick={() => formRef.current.validateAll()}
+          />
+        </SpaceItems>
+      </div>
+    </div>
+  )
+}
+```
+
+### Customize Form Component 
+
+Each form component can be a built-in component like `CInput`, `CRadioGroup`, `CCheckboxGroup`, `CSelect`, `CDatePicker`.  
+It can also be some component written by yourself.
+
+You can write a component with these props: `validateCurrent, clearCurrent, hasError`, which means:  
+
+- `validateCurrent`：Validate current field.
+- `clearCurrent`：Clear current field.
+- `hasError`：Determine whether the current field has error or not. It is a `string` or `false`. 
+
+For example. This is a custom input component
+
+```jsx
+const CustomInput = ({ validateCurrent, clearCurrent, hasError }) => (
+  <input
+    value={formData.name}
+    onFocus={clearCurrent}
+    onBlur={validateCurrent}
+    onChange={e => setField('name', e.target.value)}
+    style={{
+      borderColor: hasError ? 'red' : 'inherit',
+    }}
+  />
+)
+```
+
+```jsx live
+function Demo() {
+  const [formData, setFormData] = useState({
+    name: '',
+    gender: '',
+    birthday: null,
+    displayBirthday: '',
+    industry: '',
+    hobbies: [],
+  })
+
+  const setField = (k, v) =>
+    setFormData({
+      ...formData,
+      [k]: v,
+    })
+
+  const genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ]
+
+  const industryOptions = [
+    { label: 'IT', value: 'IT' },
+    { label: 'Medical', value: 'Medical' },
+    { label: 'Entertainment', value: 'Entertainment' },
+    { label: 'Transportation', value: 'Transportation' },
+  ]
+
+  const items = [
+    {
+      label: 'Name',
+      field: 'name',
+      rules: [v => (v ? false : 'Please enter Name')],
+      children: ({ validateCurrent, clearCurrent, hasError }) => (
+        <input
+          value={formData.name}
+          onFocus={clearCurrent}
+          onBlur={validateCurrent}
+          onChange={e => setField('name', e.target.value)}
+          style={{
+            borderColor: hasError ? 'red' : 'inherit',
+          }}
+        />
+      ),
+    },
+    {
+      label: 'Gender',
+      field: 'gender',
+      rules: [
+        v => {
+          return v === 'male' ? false : 'Can only be Male!'
+        },
+      ],
+      children: (
+        <CRadioGroup
+          value={formData.gender}
+          options={genderOptions}
+          onChange={v => setField('gender', v)}
+        />
+      ),
+    },
+    {
+      label: 'Birthday',
+      field: 'birthday',
+      rules: [v => (!v ? ' Please select Birthday' : false)],
+      children: (
+        <CDatePicker
+          format="MMM DD, YYYY"
+          value={formData.birthday}
+          placeholder=" Please select Birthday"
+          onChange={v => setField('birthday', v)}
+          formattedValue={formData.displayBirthday}
+          onFormattedValueChange={v => setField('displayBirthday', v)}
+        />
+      ),
+    },
+    {
+      label: 'Industry',
+      field: 'industry',
+      rules: [
+        v =>
+          v !== 'IT' && v !== 'Entertainment'
+            ? 'Can only be IT or Entertainment!'
+            : false,
+      ],
+      children: (
+        <CSelect
+          value={formData.industry}
+          onChange={v => setField('industry', v)}
+          options={industryOptions}
+        />
+      ),
+    },
+    {
+      label: 'Hobbies',
+      field: 'hobbies',
+      rules: [v => (v && v.length < 2 ? 'At least two hobbies' : false)],
+      children: (
+        <CCheckboxGroup
+          value={formData.hobbies}
+          onChange={v => setField('hobbies', v)}
+          options={['Reading', 'Writing', 'Singing', 'Dancing'].map(h => ({
+            label: h,
+            value: h,
+          }))}
+        />
+      ),
+    },
+  ]
+
+  const formRef = useRef(null)
+
+  return (
+    <div className="c-pa-md">
+      <CForm
+        ref={formRef}
+        value={formData}
+        items={items}
+      />
+      <div className="c-mt-xl">
+        <SpaceItems>
+          <CButton
+            outlined
+            label="Reset"
+            onClick={() => formRef.current.clearAll()}
+          />
+          <CButton
+            label="Submit"
+            onClick={() => formRef.current.validateAll()}
+          />
+        </SpaceItems>
+      </div>
+    </div>
+  )
+}
+```
+
+### Custom Component With Hooks
+
+You can also use hook function: `useFormItemContext` which will return `validateCurrent`、`clearCurrent`、`hasError`
+
+Use with this your custom component would be like this:
+
+```jsx
+const CustomInput = ({ value, onChange }) => {
+  const { clearCurrent, validateCurrent, hasError } = useFormItemContext()
+  return (
+    <input
+      value={value}
+      onFocus={clearCurrent}
+      onBlur={validateCurrent}
+      onChange={e => onChange(e.target.value)}
+      style={{
+        borderColor: hasError ? 'red' : 'inherit',
+      }}
+    />
+  )
+}
+```
+
+```jsx live
+function Demo() {
+  // This is a custom input component
+  const CustomInput = ({ value, onChange }) => {
+    const { clearCurrent, validateCurrent, hasError } = useFormItemContext()
+    return (
+      <input
+        value={value}
+        onFocus={clearCurrent}
+        onBlur={validateCurrent}
+        onChange={e => onChange(e.target.value)}
+        style={{
+          borderColor: hasError ? 'red' : 'inherit',
+        }}
+      />
+    )
+  }
+
+  const [formData, setFormData] = useState({
+    name: '',
+    gender: '',
+    birthday: null,
+    displayBirthday: '',
+    industry: '',
+    hobbies: [],
+  })
+
+  const setField = (k, v) =>
+    setFormData({
+      ...formData,
+      [k]: v,
+    })
+
+  const genderOptions = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+  ]
+
+  const industryOptions = [
+    { label: 'IT', value: 'IT' },
+    { label: 'Medical', value: 'Medical' },
+    { label: 'Entertainment', value: 'Entertainment' },
+    { label: 'Transportation', value: 'Transportation' },
+  ]
+
+  const items = [
+    {
+      label: 'Name',
+      field: 'name',
+      rules: [v => (v ? false : 'Please enter Name')],
+      children: (
+        <CustomInput
+          value={formData.name}
+          onChange={v => setField('name', v)}
+        />
+      ),
+    },
+    {
+      label: 'Gender',
+      field: 'gender',
+      rules: [
+        v => {
+          return v === 'male' ? false : 'Can only be Male!'
+        },
+      ],
+      children: (
+        <CRadioGroup
+          value={formData.gender}
+          options={genderOptions}
+          onChange={v => setField('gender', v)}
+        />
+      ),
+    },
+    {
+      label: 'Birthday',
+      field: 'birthday',
+      rules: [v => (!v ? ' Please select Birthday' : false)],
+      children: (
+        <CDatePicker
+          format="MMM DD, YYYY"
+          value={formData.birthday}
+          placeholder=" Please select Birthday"
+          onChange={v => setField('birthday', v)}
+          formattedValue={formData.displayBirthday}
+          onFormattedValueChange={v => setField('displayBirthday', v)}
+        />
+      ),
+    },
+    {
+      label: 'Industry',
+      field: 'industry',
+      rules: [
+        v =>
+          v !== 'IT' && v !== 'Entertainment'
+            ? 'Can only be IT or Entertainment!'
+            : false,
+      ],
+      children: (
+        <CSelect
+          value={formData.industry}
+          onChange={v => setField('industry', v)}
+          options={industryOptions}
+        />
+      ),
+    },
+    {
+      label: 'Hobbies',
+      field: 'hobbies',
+      rules: [v => (v && v.length < 2 ? 'At least two hobbies' : false)],
+      children: (
+        <CCheckboxGroup
+          value={formData.hobbies}
+          onChange={v => setField('hobbies', v)}
+          options={['Reading', 'Writing', 'Singing', 'Dancing'].map(h => ({
+            label: h,
+            value: h,
+          }))}
+        />
+      ),
+    },
+  ]
+
+  const formRef = useRef(null)
+
+  return (
+    <div className="c-pa-md">
+      <CForm
+        ref={formRef}
+        value={formData}
+        items={items}
+      />
+      <div className="c-mt-xl">
+        <SpaceItems>
+          <CButton
+            outlined
+            label="Reset"
+            onClick={() => formRef.current.clearAll()}
+          />
+          <CButton
+            label="Submit"
+            onClick={() => formRef.current.validateAll()}
+          />
+        </SpaceItems>
+      </div>
+    </div>
+  )
+}
+```
+
+:::warning Attention
+All the form item's props which has the same name with form will override the form's value.  
+It's useful when you want to a special item to have different styles.
+:::
+
+### CForm Props
+
+<PropTable
+  name="CForm"
+  typeWidth="240px"
+/>
+
+### CFormItem Props
+
+<PropTable
+  name="CFormItem"
+  typeWidth="200px"
+/>

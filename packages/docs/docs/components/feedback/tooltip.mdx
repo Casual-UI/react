@@ -1,0 +1,128 @@
+---
+title: Tooltip
+---
+
+### Basic Usage
+
+```jsx live
+<CTooltip content="Hello, world">
+  <CButton label="Hover Me" />
+</CTooltip>
+```
+
+### Positions
+
+```jsx live
+function Demo() {
+  const positions = [
+    'top-left',
+    'top',
+    'top-right',
+    'right-top',
+    'right',
+    'right-bottom',
+    'bottom-left',
+    'bottom',
+    'bottom-right',
+    'left-top',
+    'left',
+    'left-bottom',
+  ]
+  return (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: '24px',
+      }}
+    >
+      {positions.map(p => (
+        <CTooltip
+          key={p}
+          position={p}
+          content={`Message from position: ${p}`}
+        >
+          <div
+            style={{ color: '#fff', backgroundColor: 'var(--casual-primary)', lineHeight: '3em', textAlign: 'center' }}
+          >
+            {p}
+          </div>
+        </CTooltip>
+      ))}
+    </div>
+  )
+}
+```
+
+### Trigger Methods
+
+```jsx live
+function Demo() {
+  const [show, setShow] = useState(false)
+
+  return (
+    <div className="c-row c-gutter-x-md">
+      <div>
+        <CTooltip content="Hello, world">
+          <CButton
+            flat
+            rounded
+            label="Hover (default)"
+          />
+        </CTooltip>
+      </div>
+      <div>
+        <CTooltip
+          trigger="click"
+          content="Hello, world"
+        >
+          <CButton
+            rounded
+            label="Click"
+          />
+        </CTooltip>
+      </div>
+      <div>
+        <CButton
+          label="Manual"
+          onClick={() => setShow(!show)}
+        />
+        <CTooltip
+          trigger="manual"
+          content="Hello, world"
+          show={show}
+          toggleShow={setShow}
+        >
+          Click left button to show
+        </CTooltip>
+      </div>
+    </div>
+  )
+}
+```
+
+### Customize Content
+
+```jsx live
+<CTooltip
+  content={
+    <div>
+      Look! This is some custom content.
+      <CButton
+        label="Even with a button"
+        flat
+        round
+      />
+    </div>
+  }
+>
+  <CButton label="Hover Me" />
+</CTooltip>
+```
+
+### Props
+
+<PropTable
+  name="CTooltip"
+  typeWidth="280px"
+/>

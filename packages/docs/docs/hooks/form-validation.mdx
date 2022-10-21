@@ -1,0 +1,59 @@
+---
+title: Form Relative
+hooksAPI:
+  - components/form/useFormContext
+  - components/form/useFormItemContext
+---
+
+### `useFromContext`
+
+For each `CForm`. It has a `CFormContext` which can be fetched by `useFormContext`
+
+```ts
+const formContext: CFormContextProps = useFormContext()
+```
+
+```ts
+interface CFormContextProps {
+  col?: number
+  labelWidth?: string
+  labelDirection?: 'row' | 'row-reverse' | 'column' | 'column-reverse'
+  labelAlign?: 'left' | 'right' | 'center'
+  addValidator?: (field: string, newValidator: Validator[]) => void
+  validateAll?: () => Promise<void> | void
+  clearAll?: () => void
+  validateField?: (field: string, value: any) => void | Promise<void>
+  clearField?: (field: string) => void
+  errors?: Errors
+}
+
+interface Validators {
+  [key: string]: Validator[]
+}
+
+interface Errors {
+  [key: string]: string | false
+}
+
+type Validator = (value: any) => string | false | Promise<string | false>
+```
+
+For More see [CFormItem.tsx Source Code](https://github.com/Blackman99/casual-ui/blob/main/packages/react/ui/src/components/form/CFormItem.tsx)
+
+### `useFormItemContext`
+
+For each `CFormItem`. It has a `CFormItemContext` which can be fetched by `useFormItemContext`
+
+```ts
+const formItemContext: CFormItemContextProps = useFormItemContext()
+```
+
+```ts
+interface CFormItemContextProps {
+  clearCurrent?: () => void
+  validateCurrent?: (v: any) => void
+  hasError?: false | string
+}
+```
+
+For more usage see [CInput.tsx Source Code](https://github.com/Blackman99/casual-ui/blob/main/packages/react/ui/src/components/form/CInput.tsx)

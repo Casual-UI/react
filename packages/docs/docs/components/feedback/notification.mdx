@@ -1,0 +1,291 @@
+---
+title: Notification
+hooksAPI:
+  - components/popup/notification/useNotification
+---
+
+import { CNotification } from '@casual-ui/react'
+import BrowserOnly from '@docusaurus/BrowserOnly'
+
+<BrowserOnly>{() => <CNotification />}</BrowserOnly>
+
+### How To Use
+
+- Put `<CNotification />` in global layout
+
+```jsx
+import { CNotification } from '@casual-ui/react'
+function APP {
+
+  return (
+    <>
+      <CNotification />
+      // Other global layout components
+    </>
+  )
+}
+```
+
+- Then open notification by `useNotification` hook
+
+```jsx
+function Demo() {
+  const { open } = useNotification()
+
+  return (
+    <CButton
+      label="Open notification"
+      onClick={() => open({ title: 'Hi, there', message: 'Some notification content' })}
+    />
+  )
+}
+```
+
+:::warning Attention
+Please make sure `<CNotification />` only used once in the whole app
+:::
+
+### Basic Usage
+
+```jsx live
+function Demo() {
+  const { open } = useNotification()
+
+  return (
+    <CButton
+      label="Open Notification"
+      onClick={() =>
+        open({
+          title: 'Hi, there',
+          message: 'Hello, world',
+        })
+      }
+    />
+  )
+}
+```
+
+### Themes
+
+```jsx live
+function Demo() {
+  const { open } = useNotification()
+
+  const openWithTheme = theme => {
+    open({
+      title: `Theme: ${theme}`,
+      message: `This is a ${theme} notification`,
+      theme,
+    })
+  }
+
+  return (
+    <>
+      <CButton label="Primary" onClick={() => openWithTheme('primary')} />
+      <CButton
+        label="Secondary"
+        theme="secondary"
+        onClick={() => openWithTheme('secondary')}
+      />
+      <CButton
+        label="Warning"
+        theme="warning"
+        onClick={() => openWithTheme('warning')}
+      />
+      <CButton
+        label="Negative"
+        theme="negative"
+        onClick={() => openWithTheme('negative')}
+      />
+    </>
+  )
+}
+```
+
+### Positions
+
+```jsx live
+function Demo() {
+  const {
+    matArrowBack,
+    matArrowUpward,
+    matArrowForward,
+    matArrowDownward,
+    matFullscreenExit,
+  } = MdIcons
+
+  const { open } = useNotification()
+
+  const openWithPosition = (alignX, alignY) => {
+    open({
+      title: 'Hi, there',
+      message: 'Hello, world',
+      alignX,
+      alignY,
+    })
+  }
+
+  return (
+    <>
+      <div className="c-row c-gutter-sm">
+        <div>
+          <CButton icon onClick={() => openWithPosition('start', 'start')}>
+            <CIcon
+              content={matArrowUpward}
+              style={{ transform: 'rotate(-45deg)' }}
+            />
+          </CButton>
+        </div>
+        <div>
+          <CButton icon onClick={() => openWithPosition('center', 'start')}>
+            <CIcon content={matArrowUpward} />
+          </CButton>
+        </div>
+        <div>
+          <CButton icon onClick={() => openWithPosition('end', 'start')}>
+            <CIcon
+              content={matArrowUpward}
+              style={{ transform: 'rotate(45deg)' }}
+            />
+          </CButton>
+        </div>
+      </div>
+      <div className="c-row c-gutter-sm">
+        <div>
+          <CButton icon onClick={() => openWithPosition('start', 'center')}>
+            <CIcon content={matArrowBack} />
+          </CButton>
+        </div>
+        <div>
+          <CButton icon onClick={() => openWithPosition('center', 'center')}>
+            <CIcon content={matFullscreenExit} />
+          </CButton>
+        </div>
+        <div>
+          <CButton icon onClick={() => openWithPosition('end', 'center')}>
+            <CIcon content={matArrowForward} />
+          </CButton>
+        </div>
+      </div>
+      <div className="c-row c-gutter-sm">
+        <div>
+          <CButton icon onClick={() => openWithPosition('start', 'end')}>
+            <CIcon
+              content={matArrowBack}
+              style={{ transform: 'rotate(-45deg)' }}
+            />
+          </CButton>
+        </div>
+        <div>
+          <CButton icon onClick={() => openWithPosition('center', 'end')}>
+            <CIcon content={matArrowDownward} />
+          </CButton>
+        </div>
+        <div>
+          <CButton icon onClick={() => openWithPosition('end', 'end')}>
+            <CIcon
+              content={matArrowForward}
+              style={{ transform: 'rotate(45deg)' }}
+            />
+          </CButton>
+        </div>
+      </div>
+    </>
+  )
+}
+```
+
+### No Auto Close
+
+```jsx live
+function Demo() {
+  const { open } = useNotification()
+
+  return (
+    <CButton
+      label="Open Notification"
+      onClick={() =>
+        open({
+          title: 'Hi, there',
+          message: 'Hello, world',
+          timeout: 0,
+          alignX: 'end',
+          alignY: 'center',
+        })
+      }
+    />
+  )
+}
+```
+
+### No Close Icon & Manual Close
+
+```jsx live
+function Demo() {
+  const { open } = useNotification()
+
+  const [closeFunction, setCloseFunction] = useState(null)
+
+  const onClick = () => {
+    if (closeFunction) {
+      closeFunction()
+      setCloseFunction(null)
+      return
+    }
+    const { close } = open({
+      title: 'Hi, there',
+      message: 'This is a notification without close icon.',
+      timeout: 0,
+      closeIcon: false,
+    })
+    setCloseFunction(() => close)
+  }
+
+  return (
+    <CButton
+      label={closeFunction ? 'Close notification' : 'Open Notification'}
+      theme={closeFunction ? 'negative' : 'primary'}
+      onClick={onClick}
+    />
+  )
+}
+```
+
+### Dynamic Content
+
+```jsx live
+function Demo() {
+  const { open } = useNotification()
+
+  const openWithDynamicContent = () => {
+    const { changeContent } = open({
+      title: 'Hi, there',
+      message: 'Hello, world',
+      timeout: 7000,
+    })
+
+    setTimeout(() => {
+      changeContent({
+        title: 'Warning',
+        message: 'Content changed!',
+        theme: 'warning',
+      })
+      setTimeout(() => {
+        changeContent({
+          title: 'Error',
+          message: 'Content changed again!',
+          theme: 'negative',
+        })
+        setTimeout(() => {
+          changeContent({
+            title: 'Goodbye',
+            message: 'About to disappear',
+            theme: 'secondary',
+          })
+        }, 2000)
+      }, 2000)
+    }, 2000)
+  }
+  return <CButton label="Open Dynamic Notification" onClick={openWithDynamicContent} />
+}
+```

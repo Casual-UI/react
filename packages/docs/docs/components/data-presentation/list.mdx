@@ -1,0 +1,159 @@
+---
+title: List & ListItem
+---
+
+### Basic
+
+```jsx live
+function Demo() {
+  const items = [
+    { label: 'Apple' },
+    { label: 'Banana' },
+    { label: 'Orange' },
+    { label: 'Grapes' },
+  ]
+  return (
+    <CList
+      items={items}
+      itemKey="label"
+    />
+  )
+}
+```
+
+### Sizes
+
+```jsx live
+function Demo() {
+  const items = [
+    { label: 'Apple' },
+    { label: 'Banana' },
+    { label: 'Banana' },
+    { label: 'Grapes' },
+  ]
+
+  const [size, setSize] = useState('md')
+
+  const sizes = ['xs', 'sm', 'md', 'lg', 'xl']
+  return (
+    <>
+      <SpaceItems>
+        {sizes.map(s => (
+          <CRadio
+            key={s}
+            value={size}
+            onChange={setSize}
+            label={s}
+            selectedValue={s}
+          />
+        ))}
+      </SpaceItems>
+      <CList
+        size={size}
+        items={items}
+        itemKey="label"
+      />
+    </>
+  )
+}
+```
+
+### Divider
+
+```jsx live
+function Demo() {
+  const items = [
+    { label: 'Apple' },
+    { label: 'Banana' },
+    { label: 'Orange' },
+    { label: 'Grapes' },
+  ]
+  return (
+    <CList
+      items={items}
+      divider
+      itemKey="label"
+    />
+  )
+}
+```
+
+### Active & Clickable
+
+```jsx live
+function Demo() {
+  const items = [
+    { label: 'Apple' },
+    { label: 'Banana' },
+    { label: 'Orange' },
+    { label: 'Grapes' },
+  ]
+
+  const [activeFruit, setActiveFruit] = useState('Apple')
+
+  return (
+    <CList
+      items={items}
+      clickable
+      itemKey="label"
+      activeFn={item => item.label === activeFruit}
+      onItemClick={item => setActiveFruit(item.label)}
+    />
+  )
+}
+```
+
+### Custom Item
+
+```jsx live
+function Demo() {
+  const {
+    matCheck,
+    matSettingsPower,
+    matPersonAddAlt1,
+    matOfflineBolt,
+    matSettings,
+  } = MdIcons
+
+  const items = [
+    { title: 'Notification', subtitle: 'Some notifications description', icon: matOfflineBolt },
+    { title: 'Profile', subtitle: 'Some personal description', icon: matPersonAddAlt1 },
+    { title: 'Settings', subtitle: 'Some settings description', icon: matSettings },
+    { title: 'Exit', subtitle: 'Some exit description', icon: matSettingsPower },
+  ]
+
+  const [activeItem, setActiveItem] = useState('')
+  return (
+    <CList
+      items={items}
+      clickable
+      itemKey="title"
+      activeFn={item => item.title === activeItem}
+      onItemClick={item => setActiveItem(item.title)}
+      itemRender={({ key, item, onItemClick, active, clickable }) => (
+        <CInfoItem
+          key={key}
+          {...item}
+          align="center"
+          append={active && <CIcon content={matCheck} style={{
+            fontSize: '32px',
+            color: 'var(--casual-primary)'
+          }} />}
+        />
+      )}
+    />
+  )
+}
+```
+
+### CList Props
+
+<PropTable name="CList" />
+
+### CItem Props
+
+<PropTable name="CItem" />
+
+### CInfoItem Props
+
+<PropTable name="CInfoItem" typeWidth="280px" />

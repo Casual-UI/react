@@ -1,0 +1,70 @@
+---
+title: Dropdown
+---
+
+### Basic Usage
+
+```jsx live
+function Demo() {
+  const [show, setShow] = useState(false)
+
+  return (
+    <CDropdown
+      value={show}
+      onChange={setShow}
+      dropContent={<p>Some dropdown content</p>}
+    >
+      <CButton label="Click to show dropdown" />
+    </CDropdown>
+  )
+}
+```
+
+### Width Exceed Parent
+
+```jsx live
+function Demo() {
+  const [show, setShow] = useState(false)
+
+  return (
+    <CDropdown
+      value={show}
+      onChange={setShow}
+      widthWithinParent={false}
+      dropContent={
+        <p style={{ width: '400px' }}>Some long content. Some long content.</p>
+      }
+    >
+      <CButton label="Click to show dropdown" />
+    </CDropdown>
+  )
+}
+```
+
+### Manual Control
+
+```jsx live
+function Demo() {
+  const [show, setShow] = useState(false)
+
+  return (
+    <>
+      <CButton
+        label={`Click to ${show ? 'fold' : 'show'}`}
+        onClick={() => setShow(!show)}
+      />
+      <CDropdown
+        value={show}
+        manual
+        dropContent={<p>Some dropdown content</p>}
+      >
+        <h3>Click the left to control</h3>
+      </CDropdown>
+    </>
+  )
+}
+```
+
+### Props
+
+<PropTable name="CDropdown" />

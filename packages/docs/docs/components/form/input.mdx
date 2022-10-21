@@ -1,0 +1,146 @@
+---
+title: Input
+sidebar_position: 1
+---
+
+### Basic
+
+```jsx live
+function Demo() {
+  const [value, onChange] = useState('')
+  return (
+    <div className="c-row c-gutter-x-md">
+      <div>
+        <CInput {...{ value, onChange }} placeholder="Normal Input" />
+      </div>
+      <div>
+        <CInput
+          {...{ value, onChange }}
+          placeholder="Password Input"
+          type="password"
+        />
+      </div>
+      <div>
+        <CInput {...{ value, onChange }} placeholder="Rounded Input" rounded />
+      </div>
+      <div>
+        <CInput {...{ value, onChange }} placeholder="Disabled Input" disabled />
+      </div>
+    </div>
+  )
+}
+```
+
+### Clearable
+
+```jsx live
+function Demo() {
+  const [value, onChange] = useState('')
+  return (
+    <>
+      <CInput {...{ value, onChange }} clearable placeholder="Content Clearable" />
+    </>
+  )
+}
+```
+
+### Sizes
+
+```jsx live
+function Demo() {
+  const [value, onChange] = useState('')
+  return (
+    <div className="c-row c-gutter-x-md c-items-center c-wrap">
+      <div>
+        <CInput {...{ value, onChange }} size="xs" placeholder="xs" />
+      </div>
+      <div>
+        <CInput {...{ value, onChange }} size="sm" placeholder="sm" />
+      </div>
+      <div>
+        <CInput
+          {...{ value, onChange }}
+          size="md"
+          placeholder="md (default)"
+        />
+      </div>
+      <div>
+        <CInput {...{ value, onChange }} size="lg" placeholder="lg" />
+      </div>
+      <div>
+        <CInput {...{ value, onChange }} size="xl" placeholder="xl" />
+      </div>
+    </div>
+  )
+}
+```
+
+### Prefix & Suffix
+
+```jsx live
+function Demo() {
+  const [value, onChange] = useState('')
+  return (
+    <div className="c-row c-gutter-md c-wrap">
+      <div>
+        <CInput
+          {...{ value, onChange }}
+          placeholder="Prefix&Suffix"
+          prefix="+234"
+          suffix="@someone"
+        />
+      </div>
+      <div>
+        <CInput
+          {...{ value, onChange }}
+          rounded
+          placeholder="Prefix&Suffix Icons"
+          clearable
+          prefix={<CIcon content={MdIcons.matContactPhone} />}
+          suffix={<CIcon content={MdIcons.matDateRange} />}
+        />
+      </div>
+      <div>
+        <CInput
+          {...{ value, onChange }}
+          rounded
+          placeholder="No divider"
+          clearable
+          prefix={<CIcon content={MdIcons.matContactPhone} />}
+          suffix={<CIcon content={MdIcons.matDateRange} />}
+          withPrefixDivider={false}
+          withSuffixDivider={false}
+        />
+      </div>
+    </div>
+  )
+}
+```
+
+### Loading
+
+```jsx live
+function Demo() {
+  const [value, onChange] = useState('')
+  return (
+    <div className="c-row c-gutter-x-md">
+      <div>
+        <CInput {...{ value, onChange }} rounded placeholder="Loading" loading />
+      </div>
+      <div>
+        <CInput
+          {...{ value, onChange }}
+          rounded
+          loading
+          placeholder="Loading"
+          customLoading={<CLoadingBar color="purple" />}
+        />
+      </div>
+    </div>
+  )
+}
+```
+
+### Props
+
+<PropTable name="CInput" typeWidth="300px" />
