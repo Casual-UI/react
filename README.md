@@ -17,7 +17,11 @@ yarn add @casual-ui/react
 # via pnpm
 pnpm install @casual-ui/react
 ```
-- Usage in j(t)sx files
+- Import styles in your entry file
+```js
+import '@casual-ui/react/dist/style.css'
+```
+- Use in j(t)sx files
 ```jsx
 import { CButton } from '@casual-ui/react'
 

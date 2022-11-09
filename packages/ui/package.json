@@ -23,25 +23,28 @@
     "react17 ui components"
   ],
   "devDependencies": {
+    "@casual-ui/i18n": "latest",
+    "@casual-ui/react": "workspace:*",
+    "@casual-ui/styles": "latest",
+    "@casual-ui/types": "latest",
     "@quasar/extras": "^1.13.4",
     "@types/react-transition-group": "^4.4.4",
     "@vitejs/plugin-react": "^1.2.0",
     "clsx": "^1.1.1",
     "dayjs": "^1.11.0",
-    "@casual-ui/styles": "latest",
-    "@casual-ui/types": "latest",
-    "@casual-ui/react": "workspace:*",
-    "@casual-ui/i18n": "latest",
     "prettier": "^2.6.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-spring": "^9.5.2",
     "react-transition-group": "^4.4.2",
     "sass": "^1.49.9",
     "typescript": "^4.6.3",
     "vite": "^2.8.6"
   },
   "license": "MIT",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "main": "./dist/casual-ui-react.umd.js",
     "module": "./dist/casual-ui-react.es.js",
