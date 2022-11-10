@@ -1,4 +1,4 @@
-import { CSize } from '@casual-ui/types'
+import type { CSize } from '@casual-ui/types'
 import { useSize } from '@casual-ui/react'
 import clsx from 'clsx'
 import React from 'react'
@@ -53,7 +53,8 @@ const CToggle = ({
   const realSize = useSize(size)
 
   const onToggle = () => {
-    if (disabled) return
+    if (disabled)
+      return
     onChange?.(value === checkValue ? uncheckValue : checkValue)
   }
 
@@ -65,7 +66,7 @@ const CToggle = ({
         `c-h-${realSize}`,
         `c-font-${realSize}`,
         value === checkValue && 'c-toggle--checked',
-        disabled && 'c-toggle--disabled'
+        disabled && 'c-toggle--disabled',
       )}
       onClick={onToggle}
     >

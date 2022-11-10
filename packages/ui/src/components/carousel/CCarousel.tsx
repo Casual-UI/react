@@ -2,9 +2,9 @@ import {
   matNavigateBefore,
   matNavigateNext,
 } from '@quasar/extras/material-icons'
-import { CSlot, CTheme } from '@casual-ui/types'
+import type { CSlot, CTheme } from '@casual-ui/types'
 import clsx from 'clsx'
-import React, { useCallback, useMemo, useState, useEffect } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import CButton from '../basic/button/CButton'
 import CIcon from '../basic/icon/CIcon'
 import Fade from '../transition/Fade'
@@ -134,12 +134,12 @@ const CCarousel = ({
 
   const showPrevArrow = useMemo(
     () => showArrow && (infinity || activeIndex > 0),
-    [showArrow, infinity, activeIndex]
+    [showArrow, infinity, activeIndex],
   )
 
   const showNextArrow = useMemo(
     () => showArrow && (infinity || activeIndex < children.length - 1),
-    [showArrow, infinity, activeIndex]
+    [showArrow, infinity, activeIndex, children.length],
   )
 
   const [hovering, setHovering] = useState(false)
@@ -148,23 +148,21 @@ const CCarousel = ({
   const resumes: Function[] = []
 
   const onMouseEnter = () => {
-    if (arrowTiming === 'hover') {
+    if (arrowTiming === 'hover')
       setShowArrow(true)
-    }
+
     setHovering(true)
-    if (pauseOnHover) {
+    if (pauseOnHover)
       pauses.forEach(p => p())
-    }
   }
 
   const onMouseLeave = () => {
-    if (arrowTiming === 'hover') {
+    if (arrowTiming === 'hover')
       setShowArrow(false)
-    }
+
     setHovering(false)
-    if (pauseOnHover) {
+    if (pauseOnHover)
       resumes.forEach(r => r())
-    }
   }
 
   const toIndex = useCallback(
@@ -175,9 +173,9 @@ const CCarousel = ({
           onActiveIndexChange?.(idx)
           return
         }
-        if (infinity) {
+        if (infinity)
           onActiveIndexChange?.(children.length - 1)
-        }
+
         return
       }
       if (idx > activeIndex) {
@@ -186,23 +184,22 @@ const CCarousel = ({
           onActiveIndexChange?.(idx)
           return
         }
-        if (infinity) {
+        if (infinity)
           onActiveIndexChange?.(0)
-        }
       }
     },
-    [activeIndex, infinity]
+    [activeIndex, children.length, infinity, onActiveIndexChange],
   )
 
-  const toPrev = useCallback(() => toIndex(activeIndex - 1), [activeIndex])
+  const toPrev = useCallback(() => toIndex(activeIndex - 1), [activeIndex, toIndex])
 
-  const toNext = useCallback(() => toIndex(activeIndex + 1), [activeIndex])
+  const toNext = useCallback(() => toIndex(activeIndex + 1), [activeIndex, toIndex])
 
   const [transitioning, setTransitioning] = useState(false)
 
   const indicatorAnimationState = useMemo<'running' | 'paused'>(
     () => ((pauseOnHover && hovering) || transitioning ? 'paused' : 'running'),
-    [pauseOnHover, hovering, transitioning]
+    [pauseOnHover, hovering, transitioning],
   )
   return (
     <CarouselContext.Provider
@@ -226,7 +223,7 @@ const CCarousel = ({
             'c-carousel--indicators',
             'c-flex',
             `c-items-${indicatorsPositionVertical}`,
-            `c-justify-${indicatorsPositionHorizontal}`
+            `c-justify-${indicatorsPositionHorizontal}`,
           )}
         >
           <div
@@ -234,20 +231,18 @@ const CCarousel = ({
               'c-carousel--indicators-container',
               'c-gutter-xs',
               'c-flex',
-              `c-${indicatorsAlignDirection}`
+              `c-${indicatorsAlignDirection}`,
             )}
           >
-            {customIndicators
-              ? customIndicators
-              : children.map((_, i) => {
-                  const isActive = i === activeIndex
-                  return (
+            {customIndicators || children.map((_, i) => {
+              const isActive = i === activeIndex
+              return (
                     <div key={`indicators-${i}`}>
                       <div
                         className={clsx(
                           'c-carousel--indicator-item',
                           `c-carousel--indicator-item--${theme}`,
-                          isActive && 'c-carousel--indicator-item--active'
+                          isActive && 'c-carousel--indicator-item--active',
                         )}
                         onClick={() => toIndex(i)}
                       >
@@ -265,8 +260,8 @@ const CCarousel = ({
                         ></div>
                       </div>
                     </div>
-                  )
-                })}
+              )
+            })}
           </div>
         </div>
         <Fade show={showPrevArrow}>
@@ -274,9 +269,7 @@ const CCarousel = ({
             className="c-carousel--control c-carousel--control--prev"
             onClick={toPrev}
           >
-            {customArrowPrev ? (
-              customArrowPrev
-            ) : (
+            {customArrowPrev || (
               <CButton
                 flat
                 icon
@@ -292,9 +285,7 @@ const CCarousel = ({
             className="c-carousel--control c-carousel--control--next"
             onClick={toNext}
           >
-            {customArrowNext ? (
-              customArrowNext
-            ) : (
+            {customArrowNext || (
               <CButton
                 flat
                 icon
@@ -309,14 +300,15 @@ const CCarousel = ({
           {children.map((c, i) => (
             <TransitionWrapper
               key={i}
-              children={c}
               direction={direction}
               activeIndex={activeIndex}
               currentIndex={i}
               toNext={toNext}
               interval={interval}
               vertical={vertical}
-            />
+            >
+              {c}
+            </TransitionWrapper>
           ))}
         </div>
       </div>

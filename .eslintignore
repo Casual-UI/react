@@ -1,0 +1,3 @@
+/packages/docs/.docusaurus/**/*
+/packages/docs/build/**/*
+/packages/docs/static/**/*

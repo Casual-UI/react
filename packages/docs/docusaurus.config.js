@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 // @ts-check
 const lightCodeTheme = require('prism-react-renderer/themes/github')
 const darkCodeTheme = require('prism-react-renderer/themes/dracula')
@@ -35,13 +34,13 @@ const config = {
             'https://github.com/Blackman99/casual-ui/edit/main/packages/react/docs',
           remarkPlugins: [
             [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
-            () => async ast => {
+            () => async (ast) => {
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
+              // @ts-expect-error
               ast.children.unshift({
                 type: 'import',
                 value:
-                  "import { PropTable } from '@site/src/theme/components/PropTable.tsx'",
+                  'import { PropTable } from \'@site/src/theme/components/PropTable.tsx\'',
                 default: false,
               })
             },

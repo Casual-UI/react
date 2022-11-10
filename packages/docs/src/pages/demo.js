@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { CCarouselSlider, CCarousel } from '@casual-ui/react'
+import { CCarousel, CCarouselSlider } from '@casual-ui/react'
 
 export default function Demo() {
   const [activeIndex, setActiveIndex] = useState(0)

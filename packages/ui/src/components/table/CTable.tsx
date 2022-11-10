@@ -51,7 +51,7 @@ interface CTableColumn<T = any, S extends keyof T = any> {
 }
 interface CTableProps<
   T extends Record<string | number | symbol, any>,
-  S extends keyof T
+  S extends keyof T,
 > {
   /**
    * Determine whether the table is striped or not.
@@ -75,7 +75,7 @@ interface CTableProps<
   rowKey?: string
 }
 
-function CTable<T>({
+function CTable<T extends Record<string | number | symbol, any>>({
   striped = false,
   columns = [],
   data = [],
@@ -98,9 +98,9 @@ function CTable<T>({
               >
                 {customHeader
                   ? customHeader({
-                      field,
-                      title,
-                    })
+                    field,
+                    title,
+                  })
                   : title}
               </CTh>
             ))}
@@ -108,7 +108,6 @@ function CTable<T>({
         </thead>
         <tbody>
           {data.map((row, idx) => (
-            // @ts-ignore
             <CTr key={row[rowKey]}>
               {columns.map(({ field, customRender, width }) => (
                 <CTd
@@ -117,11 +116,11 @@ function CTable<T>({
                 >
                   {customRender
                     ? customRender({
-                        row,
-                        val: row[field],
-                        idx,
-                        field,
-                      })
+                      row,
+                      val: row[field],
+                      idx,
+                      field,
+                    })
                     : String(row[field])}
                 </CTd>
               ))}

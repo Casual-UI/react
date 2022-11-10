@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import { CTheme } from '@casual-ui/types'
+import type { CTheme } from '@casual-ui/types'
 import { matClose } from '@quasar/extras/material-icons'
 import CIcon from '../../basic/icon/CIcon'
 
@@ -26,7 +26,7 @@ const CNotificationItem = ({
     <div
       className={clsx(
         'c-notification--item-card',
-        `c-notification--item-theme-${theme}`
+        `c-notification--item-theme-${theme}`,
       )}
     >
       <div className="c-notification--header">
@@ -45,7 +45,7 @@ const CNotificationItem = ({
                   className={clsx(
                     'c-notification--countdown-bar-circle',
                     'c-with-close-count-down',
-                    'c-notification--countdown-bar-circle-with-initial-state'
+                    'c-notification--countdown-bar-circle-with-initial-state',
                   )}
                   style={{
                     animationDuration: `${timeout / 1000}s`,

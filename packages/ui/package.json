@@ -28,6 +28,7 @@
     "@casual-ui/styles": "latest",
     "@casual-ui/types": "latest",
     "@quasar/extras": "^1.13.4",
+    "@types/react-dom": "^18.0.6",
     "@types/react-transition-group": "^4.4.4",
     "@vitejs/plugin-react": "^1.2.0",
     "clsx": "^1.1.1",

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTransition, animated, config } from 'react-spring'
+import { animated, config, useTransition } from 'react-spring'
 
 interface FadeProps {
   show: boolean
@@ -32,6 +32,6 @@ export default ({ show, children }: FadeProps) => {
         >
           {children}
         </animated.div>
-      )
+      ),
   )
 }

@@ -1,4 +1,4 @@
-import { CSize, CSlot } from '@casual-ui/types'
+import type { CSize, CSlot } from '@casual-ui/types'
 import { CIcon, useSize } from '@casual-ui/react'
 import clsx from 'clsx'
 import React from 'react'
@@ -56,20 +56,22 @@ const CInfoItem = ({
     <div
       className={clsx(
         'c-info-item c-flex c-justify-between',
-        `c-items-${align}`
+        `c-items-${align}`,
       )}
     >
       <div className={clsx('c-flex c-flex-grow', `c-items-${iconAlign}`)}>
         {icon && (
           <div className={`c-mr-${contextSize}`}>
-            {typeof icon === 'string' ? (
+            {typeof icon === 'string'
+              ? (
               <CIcon
                 className="c-info-item--icon"
                 content={icon}
               />
-            ) : (
-              icon
-            )}
+                )
+              : (
+                  icon
+                )}
           </div>
         )}
         <div className="c-flex-grow">

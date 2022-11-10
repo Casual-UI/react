@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react'
 import clsx from 'clsx'
-import type { DateValue, Formatter } from './CDatePicker'
 import dayjs from 'dayjs'
 import useI18n from '../../../hooks/useI18n'
+import type { DateValue, Formatter } from './CDatePicker'
 
 interface CDatePanelProps {
   year?: number
@@ -26,7 +26,8 @@ const CDatePanel = ({
   formattedDateRange = ['', ''],
   format = 'YYYY-MM-DD',
   formatter = (d, f) => {
-    if (!d) return ''
+    if (!d)
+      return ''
     return dayjs(d).format(f)
   },
   range = false,
@@ -92,7 +93,7 @@ const CDatePanel = ({
 
     const items = [...leftPads, ...middle, ...rightPads]
     return {
-      items: items,
+      items,
       start: leftPads.length,
       end: leftPads.length + middle.length,
     }
@@ -108,18 +109,20 @@ const CDatePanel = ({
 
   const isDateInRange = (date: number) => {
     const [startDate, endDate] = formattedDateRange
-    if (!startDate) return false
-    if (!endDate && !hoveringDate) return false
+    if (!startDate)
+      return false
+    if (!endDate && !hoveringDate)
+      return false
     const d = getCurrentYearMonthDate()
     d.setDate(date)
     const hovering = innerFormatter(hoveringDate)
     const target = innerFormatter(d)
-    if (endDate) {
+    if (endDate)
       return target >= startDate && target <= endDate
-    }
+
     return (
-      (target >= startDate && target <= hovering) ||
-      (target >= hovering && target <= startDate)
+      (target >= startDate && target <= hovering)
+      || (target >= hovering && target <= startDate)
     )
   }
 
@@ -130,9 +133,9 @@ const CDatePanel = ({
     const [start, end] = formattedDateRange
     const hovering = innerFormatter(hoveringDate)
     const target = innerFormatter(d)
-    if (!end) {
+    if (!end)
       return hovering <= start ? target === hovering : target === start
-    }
+
     return start === target
   }
 
@@ -143,18 +146,18 @@ const CDatePanel = ({
     const [start, end] = formattedDateRange
     const hovering = innerFormatter(hoveringDate)
     const target = innerFormatter(d)
-    if (!end) {
+    if (!end)
       return hovering < start ? target === start : target === hovering
-    }
+
     return end === target
   }
 
   // 目标日期是否展示选中态样式
   const isSelected = (date: number) => {
     const checkTarget = new Date(year, month, date)
-    if (range) {
+    if (range)
       return dateRange.some(d => isSameDate(d, checkTarget))
-    }
+
     return isSameDate(value, checkTarget)
   }
 
@@ -165,7 +168,7 @@ const CDatePanel = ({
     return d.getDate()
   }
 
-  const { locale, messages } = useI18n()
+  const { messages } = useI18n()
 
   return (
     <div className="c-date-panel c-date-picker--panel">
@@ -185,9 +188,9 @@ const CDatePanel = ({
               'c-date-panel--date-item',
               isStart(date) && 'c-date-panel--date-item--is-start',
               isEnd(date) && 'c-date-panel--date-item--is-end',
-              isDateInRange(date) && 'c-date-panel--date-item--in-range'
+              isDateInRange(date) && 'c-date-panel--date-item--in-range',
             )}
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation()
               setDate(date)
             }}
@@ -197,8 +200,8 @@ const CDatePanel = ({
               className={clsx(
                 'c-date-panel--date-item--inner',
                 isSelected(date) && 'c-date-panel--date-item--inner-selected',
-                (i < dates.start || i >= dates.end) &&
-                  'c-date-panel--date-item--inner-not-current-month'
+                (i < dates.start || i >= dates.end)
+                  && 'c-date-panel--date-item--inner-not-current-month',
               )}
             >
               {getDisplayDateNum(date)}

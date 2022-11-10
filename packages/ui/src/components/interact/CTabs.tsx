@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
-import { CSize, CSlot } from '@casual-ui/types'
+import type { CSize, CSlot } from '@casual-ui/types'
 import { useSize } from '@casual-ui/react'
 
 type SlotWithNext = (setNextName: (nextName: string) => void) => JSX.Element
@@ -83,12 +83,14 @@ const CTabs = ({
 
   useEffect(() => {
     if (!customHeader) {
-      if (!header.current) return
+      if (!header.current)
+        return
 
       const activeItem = header.current.querySelector<HTMLDivElement>(
-        '.c-tabs--header-item-active'
+        '.c-tabs--header-item-active',
       )
-      if (!activeItem) return
+      if (!activeItem)
+        return
       setActiveBarLeft(`${activeItem.offsetLeft}px`)
       setActiveBarWidth(`${activeItem.offsetWidth}px`)
     }
@@ -98,25 +100,28 @@ const CTabs = ({
       // backwards
       setEnterClass('c-date-panel-reverse-enter-active')
       setLeaveClass(
-        `c-date-panel-reverse-leave-active c-date-panel-reverse-leave-initial c-pa-${realSize}`
+        `c-date-panel-reverse-leave-active c-date-panel-reverse-leave-initial c-pa-${realSize}`,
       )
-    } else {
+    }
+    else {
       // forwards
       setEnterClass('c-date-panel-enter-active')
       setLeaveClass(
-        `c-date-panel-leave-active c-date-panel-leave-initial c-pa-${realSize}`
+        `c-date-panel-leave-active c-date-panel-leave-initial c-pa-${realSize}`,
       )
     }
     setTimeout(() => {
       onTabChange?.(nextName)
     }, 300)
-  }, [nextName])
+  }, [activeTab, customHeader, items, nextName, onTabChange, realSize])
 
   return (
     <div className={clsx('c-tabs')}>
-      {customHeader ? (
-        customHeader(setNextName)
-      ) : (
+      {customHeader
+        ? (
+            customHeader(setNextName)
+          )
+        : (
         <div
           ref={header}
           className="c-tabs--header c-row c-items-center"
@@ -129,7 +134,7 @@ const CTabs = ({
                 `c-h-${realSize}`,
                 `c-font-${realSize}`,
                 `c-px-${realSize}`,
-                nextName === item.name && 'c-tabs--header-item-active'
+                nextName === item.name && 'c-tabs--header-item-active',
               )}
               onClick={() => setNextName(item.name)}
             >
@@ -144,7 +149,7 @@ const CTabs = ({
             }}
           ></div>
         </div>
-      )}
+          )}
       <div
         style={bodyStyle}
         className={clsx('c-tabs--body', panelPadding && `c-pa-${realSize}`)}
@@ -159,8 +164,8 @@ const CTabs = ({
                   activeTab === nextName
                     ? ''
                     : item.name === nextName
-                    ? enterClass
-                    : leaveClass
+                      ? enterClass
+                      : leaveClass,
                 )}
               >
                 {item.content
@@ -169,7 +174,7 @@ const CTabs = ({
                     : item.content
                   : item.name}
               </div>
-            )
+            ),
         )}
       </div>
     </div>

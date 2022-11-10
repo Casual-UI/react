@@ -1,5 +1,6 @@
 import clsx from 'clsx'
-import React, { CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
+import React from 'react'
 
 interface CIconProps {
   /**
@@ -29,9 +30,9 @@ const CIcon = ({ content, className, style, onClick }: CIconProps) => {
         dangerouslySetInnerHTML={{
           __html: def
             .split('&&')
-            .map(pathAttrs => {
+            .map((pathAttrs) => {
               const [d, style, transform] = pathAttrs.split('@@')
-              return `<path d="${d}" style="${style ? style : ''}" ${
+              return `<path d="${d}" style="${style || ''}" ${
                 transform ? `transform="${transform}"` : ''
               }></path>`
             })

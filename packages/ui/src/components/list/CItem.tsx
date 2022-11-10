@@ -1,4 +1,4 @@
-import { CSize, CSlot } from '@casual-ui/types'
+import type { CSize, CSlot } from '@casual-ui/types'
 import { useSize } from '@casual-ui/react'
 import clsx from 'clsx'
 import React from 'react'
@@ -53,14 +53,14 @@ const CItem = ({
         clickable && 'c-item--clickable',
         active && 'c-item--active',
         `c-font-${contextSize}`,
-        `c-pa-${contextSize}`
+        `c-pa-${contextSize}`,
       )}
-      onClick={e => {
+      onClick={(e) => {
         e.stopPropagation()
         onClick?.()
       }}
     >
-      {children ? children : label}
+      {children || label}
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { CSize } from '@casual-ui/types'
+import type { CSize } from '@casual-ui/types'
 import { useSize } from '@casual-ui/react'
 import clsx from 'clsx'
 import { useFormItemContext } from './CFormContext'
@@ -58,10 +58,11 @@ const CRadio = ({
         `c-radio--size-${size}`,
         value === selectedValue && 'c-radio--selected',
         disabled && 'c-radio--disabled',
-        hasError && 'c-radio--has-error'
+        hasError && 'c-radio--has-error',
       )}
       onClick={() => {
-        if (disabled) return
+        if (disabled)
+          return
         onChange?.(value === selectedValue ? '' : selectedValue)
       }}
     >

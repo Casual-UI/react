@@ -1,6 +1,6 @@
 import React from 'react'
-import { CSize, CSlot, CTheme } from '@casual-ui/types'
-import { useTheme, useSize } from '@casual-ui/react'
+import type { CSize, CSlot, CTheme } from '@casual-ui/types'
+import { useSize, useTheme } from '@casual-ui/react'
 import { matClose } from '@quasar/extras/material-icons'
 import clsx from 'clsx'
 import CIcon from '../icon/CIcon'
@@ -62,7 +62,7 @@ const CTag = ({
         `c-h-${realSize}`,
         `c-font-${realSize}`,
         `c-px-${realSize}`,
-        rounded && `c-rounded-${realSize}`
+        rounded && `c-rounded-${realSize}`,
       )}
     >
       <div className="c-tag--prefix">{prefix && prefix}</div>
@@ -70,7 +70,7 @@ const CTag = ({
       {closeable && (
         <div
           className={clsx('c-tag--close-icon', 'c-ml-sm')}
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation()
             onClose?.()
           }}

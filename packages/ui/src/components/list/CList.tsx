@@ -1,4 +1,4 @@
-import { CSize, CSlot } from '@casual-ui/types'
+import type { CSize, CSlot } from '@casual-ui/types'
 import { useSize } from '@casual-ui/react'
 import clsx from 'clsx'
 import React from 'react'
@@ -76,10 +76,8 @@ const CList = ({
   return (
     <CSizeContext.Provider value={contextSize}>
       <div className={clsx('c-list', divider && 'c-list--with-divider')}>
-        {items.length === 0 &&
-          (customNoData ? (
-            customNoData
-          ) : (
+        {items.length === 0
+          && (customNoData || (
             <div className={clsx('c-list--empty', `c-px-${contextSize}`)}>
               No Data
             </div>
@@ -92,8 +90,8 @@ const CList = ({
             active={activeFn(item)}
             onClick={() => onItemClick?.(item)}
           >
-            {itemRender &&
-              itemRender({
+            {itemRender
+              && itemRender({
                 item,
                 active: activeFn(item),
                 onItemClick,

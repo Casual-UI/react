@@ -1,6 +1,6 @@
-import CDialog from './CDialog'
 import React, { useMemo } from 'react'
-import { CPosition, CSlot } from '@casual-ui/types'
+import type { CPosition, CSlot } from '@casual-ui/types'
+import CDialog from './CDialog'
 
 type Position = 'left' | 'top' | 'right' | 'bottom'
 
@@ -94,7 +94,7 @@ const CDrawer = ({
 }: CDrawerProps) => {
   const isLeftOrRight = useMemo(
     () => position === 'left' || position === 'right',
-    [position]
+    [position],
   )
 
   return (

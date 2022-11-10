@@ -1,5 +1,4 @@
-/* eslint-disable react/display-name */
-import { CSlot } from '@casual-ui/types'
+import type { CSlot } from '@casual-ui/types'
 import clsx from 'clsx'
 import React from 'react'
 import { CSSTransition } from 'react-transition-group'
@@ -47,9 +46,8 @@ const CPopup = ({
   closeOnClickBackdrop = true,
 }: CPopupProps) => {
   const onBackdropClick = () => {
-    if (closeOnClickBackdrop) {
+    if (closeOnClickBackdrop)
       onChange?.(false)
-    }
   }
 
   return (
@@ -69,7 +67,7 @@ const CPopup = ({
         className={clsx(
           'c-popup--content-wrapper',
           `c-items-${horizontalAlign}`,
-          `c-justify-${verticalAlign}`
+          `c-justify-${verticalAlign}`,
         )}
       >
         <div className={clsx('c-popup--content')}>{children}</div>

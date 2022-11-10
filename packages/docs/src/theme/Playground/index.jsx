@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import { LiveEditor, LiveError, LivePreview, LiveProvider } from 'react-live'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import BrowserOnly from '@docusaurus/BrowserOnly'
 import { usePrismTheme } from '@docusaurus/theme-common'
-import styles from './styles.module.css'
 import useIsBrowser from '@docusaurus/useIsBrowser'
 import { CExpansion } from '@casual-ui/react'
 import { translate } from '@docusaurus/Translate'
 import ReactIcon from '../components/ReactIcon'
+import styles from './styles.module.css'
 
 function LivePreviewLoader() {
   // Is it worth improving/translating?
@@ -75,17 +75,19 @@ export default function Playground({ children, transformCode, ...props }) {
         theme={prismTheme}
         {...props}
       >
-        {playgroundPosition === 'top' ? (
+        {playgroundPosition === 'top'
+          ? (
           <>
             <ResultWithHeader />
             <ThemedLiveEditor />
           </>
-        ) : (
+            )
+          : (
           <>
             <ThemedLiveEditor />
             <ResultWithHeader />
           </>
-        )}
+            )}
       </LiveProvider>
     </div>
   )

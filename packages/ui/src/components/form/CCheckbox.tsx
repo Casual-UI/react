@@ -1,4 +1,4 @@
-import { CSize, CTheme } from '@casual-ui/types'
+import type { CSize, CTheme } from '@casual-ui/types'
 import { useSize, useTheme } from '@casual-ui/react'
 import clsx from 'clsx'
 import React from 'react'
@@ -53,7 +53,8 @@ const CCheckbox = ({
   disabled = false,
 }: CCheckboxProps) => {
   const toggleCheckStatus = () => {
-    if (disabled) return
+    if (disabled)
+      return
     onChange?.(value === checkedValue ? '' : checkedValue)
   }
 
@@ -71,7 +72,7 @@ const CCheckbox = ({
         `c-font-${realSize}`,
         checkedValue === value && 'c-checkbox--checked',
         disabled && 'c-checkbox--disabled',
-        hasError && 'c-checkbox--has-error'
+        hasError && 'c-checkbox--has-error',
       )}
       onClick={toggleCheckStatus}
     >

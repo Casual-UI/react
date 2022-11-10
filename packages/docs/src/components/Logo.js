@@ -1,9 +1,9 @@
 import React from 'react'
 import clsx from 'clsx'
-import homeStyle from './home.module.scss'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import useBaseUrl from '@docusaurus/useBaseUrl'
 import { translate } from '@docusaurus/Translate'
+import homeStyle from './home.module.scss'
 const Logo = () => {
   const { siteConfig } = useDocusaurusContext()
   const badges = [
@@ -129,6 +129,7 @@ const Logo = () => {
         {badges.map(badgeUrl => (
           <img
             key={badgeUrl}
+            // eslint-disable-next-line react-hooks/rules-of-hooks
             src={useBaseUrl(`/badges/${badgeUrl}.svg`)}
             alt=""
           />

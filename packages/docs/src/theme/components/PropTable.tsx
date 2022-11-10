@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { CTable } from '@casual-ui/react'
-import {
-  CustomRender,
+import type {
   CTableColumn,
-  // @ts-ignore
-} from '@site/ui/src/components/table/CTable'
-import { PropItem } from 'react-docgen-typescript'
+  CustomRender,
+} from '@site/../ui/src/components/table/CTable'
+import type { PropItem } from 'react-docgen-typescript'
 import { translate } from '@docusaurus/Translate'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 
@@ -19,13 +18,13 @@ const localeMap = {
 }
 
 export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
-  const typeRender: CustomRender = ({ val }) => {
+  const typeRender: CustomRender = ({ val }: any) => {
     return (
       <code>
         {new Map([
-          ['CTheme', `'primary' | 'secondary' | 'warning' | 'negative'`],
+          ['CTheme', '\'primary\' | \'secondary\' | \'warning\' | \'negative\''],
           ['CSlot', 'JSX.Element | string'],
-          ['CSize', `'sm' | 'md' | 'lg'`],
+          ['CSize', '\'sm\' | \'md\' | \'lg\''],
         ]).get(val.name) || val.name}
       </code>
     )
@@ -47,8 +46,8 @@ export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
         message: 'Description',
       }),
       field: 'description',
-      customRender: ({ val, row }) => {
-        const tagName = localeMap[i18n.currentLocale]
+      customRender: ({ val, row }: any) => {
+        const tagName = localeMap[i18n.currentLocale as 'zh-CN']
         return (
           <div
             dangerouslySetInnerHTML={{
@@ -56,10 +55,10 @@ export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
                 i18n.currentLocale === 'en'
                   ? val
                   : tagName
-                  ? row.tags[tagName]
                     ? row.tags[tagName]
-                    : `Please add @${tagName} to source code`
-                  : '',
+                      ? row.tags[tagName]
+                      : `Please add @${tagName} to source code`
+                    : '',
             }}
           ></div>
         )
@@ -80,16 +79,16 @@ export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
         message: 'Required',
       }),
       field: 'required',
-      customRender: ({ val }) =>
+      customRender: ({ val }: any) =>
         val
           ? translate({
-              id: 'propTable.required.yes',
-              message: 'Yes',
-            })
+            id: 'propTable.required.yes',
+            message: 'Yes',
+          })
           : translate({
-              id: 'propTable.required.no',
-              message: 'No',
-            }),
+            id: 'propTable.required.no',
+            message: 'No',
+          }),
       width: '100px',
     },
     {
@@ -99,18 +98,20 @@ export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
       }),
       field: 'defaultValue',
       width: '100px',
-      customRender: ({ val }) => {
-        return val === null ? (
-          '-'
-        ) : (
+      customRender: ({ val }: any) => {
+        return val === null
+          ? (
+              '-'
+            )
+          : (
           <code>
             {new Map<boolean | string, string>([
               [true, 'true'],
               [false, 'false'],
-              ['', "''"],
+              ['', '\'\''],
             ]).get(val.value) || val.value}
           </code>
-        )
+            )
       },
     },
   ]
@@ -121,11 +122,11 @@ export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
     if (name) {
       import(
         `@site/.docusaurus/casual-components-doc/default/${name}.json`
-      ).then(r => {
+      ).then((r) => {
         setData(Object.values(r.default[0].props))
       })
     }
-  }, [])
+  }, [name])
 
   return (
     <CTable<PropItem>

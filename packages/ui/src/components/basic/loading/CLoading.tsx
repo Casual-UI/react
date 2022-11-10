@@ -1,6 +1,5 @@
+import type { CSSProperties } from 'react'
 import React from 'react'
-import useLoadingSize from './useLoadingSize'
-import { CSSProperties } from 'react'
 
 interface CLoadingProps {
   /**

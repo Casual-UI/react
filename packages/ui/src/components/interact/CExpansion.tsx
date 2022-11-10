@@ -1,8 +1,8 @@
-import { CSlot } from '@casual-ui/types'
+import type { CSlot } from '@casual-ui/types'
 import { matKeyboardArrowDown } from '@quasar/extras/material-icons'
 import clsx from 'clsx'
+import type { CSSProperties } from 'react'
 import React, {
-  CSSProperties,
   useCallback,
   useEffect,
   useMemo,
@@ -62,7 +62,7 @@ const CExpansion = ({
 
   const realtimeBodyHeigh = useMemo(
     () => (innerOpen ? initialBodyHeight : 0),
-    [innerOpen, initialBodyHeight]
+    [innerOpen, initialBodyHeight],
   )
 
   const bodyDom = useRef<HTMLDivElement>(null)
@@ -70,7 +70,7 @@ const CExpansion = ({
   useEffect(() => {
     setInitialBodyHeight(`${bodyDom.current?.clientHeight}px`)
     setInnerOpen(open)
-  }, [])
+  }, [open])
 
   const onHeaderClick = useCallback(() => {
     setInnerOpen(!innerOpen)
@@ -102,7 +102,7 @@ const CExpansion = ({
         <div
           className={clsx(
             'c-expansion--arrow',
-            innerOpen && 'c-expansion--arrow-expanded'
+            innerOpen && 'c-expansion--arrow-expanded',
           )}
         >
           {arrow ? arrow(innerOpen) : <CIcon content={matKeyboardArrowDown} />}

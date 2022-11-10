@@ -1,4 +1,4 @@
-import { CSize, CSlot, CTheme } from '@casual-ui/types'
+import type { CSize, CSlot, CTheme } from '@casual-ui/types'
 import { CIcon, CLoading, useSize, useSizeThemeClass } from '@casual-ui/react'
 import { matHighlightOff } from '@quasar/extras/material-icons'
 import clsx from 'clsx'
@@ -143,7 +143,7 @@ const CInput = ({
 
   useEffect(() => {
     setFocused?.(innerFocused)
-  }, [innerFocused])
+  }, [innerFocused, setFocused])
 
   useEffect(() => {
     setInnerFocused(focused)
@@ -156,9 +156,9 @@ const CInput = ({
   }
 
   const onBlur = () => {
-    if (autoBlur) {
+    if (autoBlur)
       setInnerFocused(false)
-    }
+
     validateCurrent?.(value)
   }
 
@@ -173,7 +173,7 @@ const CInput = ({
     <div
       className={clsx(
         ...useSizeThemeClass({ size: contextSize, theme, prefix: 'c-input' }),
-        innerFocused && `c-input--focused`,
+        innerFocused && 'c-input--focused',
         rounded && `c-rounded-${contextSize}`,
         loading && 'c-input--loading',
         disabled && 'c-input--disabled',
@@ -181,7 +181,7 @@ const CInput = ({
         `c-px-${contextSize}`,
         `c-h-${contextSize}`,
         customColor && 'c-input--custom-color',
-        hasError && 'c-input--has-error'
+        hasError && 'c-input--has-error',
       )}
     >
       <div className={clsx('c-input--content-wrapper')}>
@@ -189,8 +189,8 @@ const CInput = ({
           <div
             className={clsx(
               'c-input--prefix',
-              prefix && `c-pr-sm c-input--prefix-with-content`,
-              withPrefixDivider && 'c-input--prefix-with-divider'
+              prefix && 'c-pr-sm c-input--prefix-with-content',
+              withPrefixDivider && 'c-input--prefix-with-divider',
             )}
           >
             <div>{prefix}</div>
@@ -204,7 +204,7 @@ const CInput = ({
             onChange={e => onChange?.(e.target.value)}
             onFocus={onFocus}
             onBlur={onBlur}
-            className={clsx(prefix && `c-pl-sm`, suffix && 'c-pr-sm')}
+            className={clsx(prefix && 'c-pl-sm', suffix && 'c-pr-sm')}
             type={type}
             readOnly={readonly}
           />
@@ -214,7 +214,7 @@ const CInput = ({
             className={clsx(
               'c-input--clear-icon',
               (loading || suffix) && 'c-mr-sm',
-              value && 'c-input--clear-icon-show'
+              value && 'c-input--clear-icon-show',
             )}
             onClick={onClearIconClick}
           >
@@ -225,11 +225,11 @@ const CInput = ({
           className={clsx(
             'c-input--suffix',
             withSuffixDivider && 'c-input--suffix-with-divider',
-            suffix && `c-pl-sm c-input--suffix-with-content`
+            suffix && 'c-pl-sm c-input--suffix-with-content',
           )}
         >
           <div className={clsx(loading && 'c-mr-sm')}>{suffix && suffix}</div>
-          {loading && (customLoading ? customLoading : <CLoading />)}
+          {loading && (customLoading || <CLoading />)}
         </div>
       </div>
     </div>

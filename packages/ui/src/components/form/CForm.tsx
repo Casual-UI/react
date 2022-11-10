@@ -1,17 +1,21 @@
-import React, { forwardRef, useState, useImperativeHandle, Ref } from 'react'
+import type { Ref } from 'react'
+import React, { forwardRef, useImperativeHandle, useState } from 'react'
 import clsx from 'clsx'
-import {
-  CFormContext,
+import type { CSize, CSlot } from '@casual-ui/types'
+import useSize, { CSizeContext } from '../../hooks/useSize'
+import useGutterSize, { CGutterSizeContext } from '../../hooks/useGutterSize'
+import CLoadingBars from '../basic/loading/CLoadingBars'
+import type {
+  Errors,
   Validator,
   Validators,
-  Errors,
+} from './CFormContext'
+import {
+  CFormContext,
   useFormContext,
 } from './CFormContext'
-import useSize, { CSizeContext } from '../../hooks/useSize'
-import { CSize, CSlot } from '@casual-ui/types'
-import useGutterSize, { CGutterSizeContext } from '../../hooks/useGutterSize'
-import CFormItem, { CFormItemProps } from './CFormItem'
-import CLoadingBars from '../basic/loading/CLoadingBars'
+import type { CFormItemProps } from './CFormItem'
+import CFormItem from './CFormItem'
 
 interface CFormProps {
   /**
@@ -87,7 +91,7 @@ const FormWithoutForward = (
   ref: Ref<{
     validateAll: () => void | Promise<void>
     clearAll: () => void
-  }>
+  }>,
 ) => {
   const validators: Validators = {}
 
@@ -173,7 +177,7 @@ const FormWithoutForward = (
               'c-row',
               'c-item-center',
               'c-wrap',
-              `c-gutter-${realGutterSize}`
+              `c-gutter-${realGutterSize}`,
             )}
           >
             {items.map((item, i) => (

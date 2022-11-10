@@ -1,14 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import clsx from 'clsx'
-import { CSize } from '@casual-ui/types'
+import type { CSize } from '@casual-ui/types'
 import dayjs from 'dayjs'
-import { useSize, CSizeContext, CTabs } from '@casual-ui/react'
+import { CSizeContext, CTabs, useSize } from '@casual-ui/react'
 import CDropdown from '../../interact/CDropdown'
 import CInput from '../CInput'
+import { useFormItemContext } from '../CFormContext'
 import CDatePanelHeader from './CDatePanelHeader'
 import CDateGridPanel from './CDateGridPanel'
 import CDatePanel from './CDatePanel'
-import { useFormItemContext } from '../CFormContext'
 
 type DateValue = Date | null
 type Formatter = (origin: DateValue, format: string) => string
@@ -116,9 +116,9 @@ const CDatePicker = ({
   format = 'YYYY-MM-DD',
   size,
   formatter = (v, f) => {
-    if (!v) {
+    if (!v)
       return ''
-    }
+
     return dayjs(v).format(f)
   },
   range = false,
@@ -129,33 +129,34 @@ const CDatePicker = ({
 }: CDatePickerProps) => {
   const now = new Date()
 
-  const innerFormatter = (d: DateValue) => formatter(d, format)
+  const innerFormatter = useCallback((d: DateValue) => formatter(d, format), [format, formatter])
 
   const { validateCurrent } = useFormItemContext()
 
   const [isFirst, setIsFirst] = useState(true)
 
   useEffect(() => {
-    if (!isFirst) {
+    if (!isFirst)
       validateCurrent?.(value)
-    }
+
     setIsFirst(false)
     if (!value) {
       onFormattedValueChange?.('')
       return
     }
     onFormattedValueChange?.(innerFormatter(value))
-  }, [value])
+  }, [innerFormatter, isFirst, onFormattedValueChange, validateCurrent, value])
 
   useEffect(() => {
     const [start, end] = rangeValue
     onFormattedRangeChange?.([innerFormatter(start), innerFormatter(end)])
-  }, [rangeValue])
+  }, [innerFormatter, onFormattedRangeChange, rangeValue])
 
   const displayValue = useMemo(() => {
     if (range) {
       const [start, end] = formattedRangeValue || ['', '']
-      if (!start && !end) return ''
+      if (!start && !end)
+        return ''
       return `${start} - ${end}`
     }
     return formattedValue || ''
@@ -174,17 +175,16 @@ const CDatePicker = ({
   }
 
   const onDateSet = () => {
-    if (hideOnSelect) {
+    if (hideOnSelect)
       openOrCloseDropDown(false)
-    }
   }
   const onMonthSet = (
     newMonth: number,
-    setNextName: (name: string) => void
+    setNextName: (name: string) => void,
   ) => {
     setMonth(newMonth)
     onChange?.(
-      new Date(value?.getFullYear() || year, newMonth, value?.getDate() || 1)
+      new Date(value?.getFullYear() || year, newMonth, value?.getDate() || 1),
     )
     if (unit === 'day') {
       setNextName('day')
@@ -196,7 +196,7 @@ const CDatePicker = ({
   const onYearSet = (newYear: number, setNextName: (name: string) => void) => {
     setYear(newYear)
     onChange?.(
-      new Date(newYear, value?.getMonth() || month, value?.getDate() || 1)
+      new Date(newYear, value?.getMonth() || month, value?.getDate() || 1),
     )
     if (unit === 'year') {
       onDateSet()
@@ -214,8 +214,8 @@ const CDatePicker = ({
     d.setFullYear(year)
     d.setMonth(monthNum)
     return (
-      d.getFullYear() === value?.getFullYear() &&
-      d.getMonth() === value?.getMonth()
+      d.getFullYear() === value?.getFullYear()
+      && d.getMonth() === value?.getMonth()
     )
   }
 
@@ -226,7 +226,7 @@ const CDatePicker = ({
           'c-date-picker',
           `c-date-picker--size-${contextSize}`,
           `c-font-${contextSize}`,
-          disabled && 'c-date-picker--disabled'
+          disabled && 'c-date-picker--disabled',
         )}
       >
         <CDropdown
@@ -250,7 +250,7 @@ const CDatePicker = ({
                 />
               )}
               activeTab={innerUnit}
-              onTabChange={tab => {
+              onTabChange={(tab) => {
                 setInnerUnit(tab as Unit)
               }}
               items={[
@@ -262,7 +262,7 @@ const CDatePicker = ({
                         items={Array(yearRange[1] - yearRange[0] + 1)
                           .fill(0)
                           .map((_, i) => i + yearRange[0])}
-                        displayFormatter={item => item + ''}
+                        displayFormatter={item => `${item}`}
                         isActive={isYearActive}
                         onItemClick={y => onYearSet(y, setNextName)}
                       />
@@ -296,7 +296,7 @@ const CDatePicker = ({
                           range,
                           year,
                           month,
-                          onChange: v => {
+                          onChange: (v) => {
                             onChange?.(v)
                             onDateSet()
                           },

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
-import { CSlot } from '@casual-ui/types'
+import type { CSlot } from '@casual-ui/types'
 import { useClickOutside } from '@casual-ui/react'
 interface CTooltipProps {
   /**
@@ -13,18 +13,18 @@ interface CTooltipProps {
    * @zh 弹出位置
    */
   position?:
-    | 'top'
-    | 'top-left'
-    | 'top-right'
-    | 'right'
-    | 'right-top'
-    | 'right-bottom'
-    | 'left-top'
-    | 'left'
-    | 'left-bottom'
-    | 'bottom-left'
-    | 'bottom-right'
-    | 'bottom'
+  | 'top'
+  | 'top-left'
+  | 'top-right'
+  | 'right'
+  | 'right-top'
+  | 'right-bottom'
+  | 'left-top'
+  | 'left'
+  | 'left-bottom'
+  | 'bottom-left'
+  | 'bottom-right'
+  | 'bottom'
   /**
    * The trigger method.
    * @zh 触发方式
@@ -58,32 +58,27 @@ const CTooltip = ({
   const [innerShow, setInnerShow] = useState(show)
 
   useEffect(() => {
-    if (trigger === 'manual') {
+    if (trigger === 'manual')
       toggleShow?.(innerShow)
-    }
-  }, [innerShow, trigger])
+  }, [innerShow, toggleShow, trigger])
 
   useEffect(() => {
-    if (trigger === 'manual') {
+    if (trigger === 'manual')
       setInnerShow(show)
-    }
   }, [show, trigger])
 
   const onMouseEnter = () => {
-    if (trigger === 'hover') {
+    if (trigger === 'hover')
       setInnerShow(true)
-    }
   }
   const onMouseLeave = () => {
-    if (trigger === 'hover') {
+    if (trigger === 'hover')
       setInnerShow(false)
-    }
   }
 
   const onClick = () => {
-    if (trigger === 'click') {
+    if (trigger === 'click')
       setInnerShow(!innerShow)
-    }
   }
 
   const tooltipDom = useRef<HTMLInputElement>(null)
@@ -91,9 +86,8 @@ const CTooltip = ({
   useClickOutside({
     domRef: tooltipDom,
     cbOutside: () => {
-      if (trigger === 'click') {
+      if (trigger === 'click')
         setInnerShow(false)
-      }
     },
   })
 
@@ -109,7 +103,7 @@ const CTooltip = ({
       <div
         className={clsx(
           'c-tooltip--popper-content-wrapper',
-          `c-tooltip--position-${position}`
+          `c-tooltip--position-${position}`,
         )}
         onClick={e => e.stopPropagation()}
       >

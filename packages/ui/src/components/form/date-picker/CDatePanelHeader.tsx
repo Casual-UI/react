@@ -2,13 +2,13 @@ import React, { useMemo } from 'react'
 import clsx from 'clsx'
 import {
   matKeyboardArrowLeft,
-  matKeyboardDoubleArrowLeft,
   matKeyboardArrowRight,
+  matKeyboardDoubleArrowLeft,
   matKeyboardDoubleArrowRight,
 } from '@quasar/extras/material-icons'
-import { CSize } from '@casual-ui/types'
+import type { CSize } from '@casual-ui/types'
+import { CIcon, useSize } from '@casual-ui/react'
 import type { Unit } from './CDatePicker'
-import { useSize, CIcon } from '@casual-ui/react'
 
 interface CDatePanelHeaderProps {
   year?: number
@@ -93,7 +93,8 @@ const CDatePanelHeader = ({
   const isMonth = useMemo(() => unit === 'month', [unit])
 
   const setUnit = (newUnit: Unit) => {
-    if (!unitSwitchable) return
+    if (!unitSwitchable)
+      return
     onUnitChange?.(newUnit)
   }
 
@@ -104,18 +105,20 @@ const CDatePanelHeader = ({
       className={clsx(
         'c-date-panel--header',
         `c-px-${realSize}`,
-        `c-pt-${realSize}`
+        `c-pt-${realSize}`,
       )}
     >
       <div className="c-flex c-items-center">
-        {isDay || isMonth ? (
+        {isDay || isMonth
+          ? (
           <CIcon content={matKeyboardDoubleArrowLeft} onClick={toPrevYear} />
-        ) : (
+            )
+          : (
           <CIcon
             content={matKeyboardDoubleArrowLeft}
             onClick={previousYearRange}
           />
-        )}
+            )}
         {isDay && (
           <CIcon content={matKeyboardArrowLeft} onClick={toPrevMonth} />
         )}
@@ -123,14 +126,14 @@ const CDatePanelHeader = ({
       <div
         className={clsx(
           'c-date-panel--year',
-          (isDay || isMonth) &&
-            unitSwitchable &&
-            'c-date-panel--year-switchable'
+          (isDay || isMonth)
+            && unitSwitchable
+            && 'c-date-panel--year-switchable',
         )}
       >
         {isDay && (
           <span
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation()
               setUnit('month')
             }}
@@ -139,31 +142,35 @@ const CDatePanelHeader = ({
           </span>
         )}
         &nbsp;
-        {isDay || isMonth ? (
+        {isDay || isMonth
+          ? (
           <span
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation()
               setUnit('year')
             }}
           >
             {year}
           </span>
-        ) : (
+            )
+          : (
           <span>{yearRange.join(' - ')}</span>
-        )}
+            )}
       </div>
       <div className="c-flex c-items-center">
         {isDay && (
           <CIcon content={matKeyboardArrowRight} onClick={toNextMonth} />
         )}
-        {isDay || isMonth ? (
+        {isDay || isMonth
+          ? (
           <CIcon content={matKeyboardDoubleArrowRight} onClick={toNextYear} />
-        ) : (
+            )
+          : (
           <CIcon
             content={matKeyboardDoubleArrowRight}
             onClick={nextYearRange}
           />
-        )}
+            )}
       </div>
     </div>
   )

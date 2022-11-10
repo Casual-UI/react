@@ -1,16 +1,16 @@
 import clsx from 'clsx'
+import type { Ref } from 'react'
 import React, {
   forwardRef,
   useEffect,
+  useImperativeHandle,
   useMemo,
   useState,
-  useImperativeHandle,
-  Ref,
 } from 'react'
-import { CRule, CSize, CLabelDirection, CSlot } from '@casual-ui/types'
-import { CFormItemContext, useFormContext } from './CFormContext'
+import type { CLabelDirection, CRule, CSize, CSlot } from '@casual-ui/types'
 import useSize, { CSizeContext } from '../../hooks/useSize'
 import useGutterSize, { CGutterSizeContext } from '../../hooks/useGutterSize'
+import { CFormItemContext, useFormContext } from './CFormContext'
 
 interface CFormItemProps {
   /**
@@ -48,12 +48,12 @@ interface CFormItemProps {
    * @zh 具体的表单组件
    */
   children?:
-    | JSX.Element
-    | ((context: {
-        validateCurrent: (value: any) => void
-        clearCurrent: () => void
-        hasError: false | string
-      }) => CSlot)
+  | JSX.Element
+  | ((context: {
+    validateCurrent: (value: any) => void
+    clearCurrent: () => void
+    hasError: false | string
+  }) => CSlot)
   /**
    * The validators.
    * @zh 验证规则
@@ -87,7 +87,7 @@ const CFormItemWithoutForwardRef = (
     clearCurrent: () => void
     validateCurrent: (value: any) => void | Promise<void>
     hasError: false | string
-  }>
+  }>,
 ) => {
   const formContextValue = useFormContext({
     labelAlign,
@@ -96,26 +96,25 @@ const CFormItemWithoutForwardRef = (
     col,
   })
 
-  if (field && rules) {
+  if (field && rules)
     formContextValue.addValidator?.(field, rules)
-  }
 
   const validateCurrent = (v: any) => {
-    if (field) {
+    if (field)
       formContextValue.validateField?.(field, v)
-    }
   }
 
   const hasError = useMemo(() => {
-    if (!formContextValue.errors) return false
-    if (!field) return false
+    if (!formContextValue.errors)
+      return false
+    if (!field)
+      return false
     return formContextValue.errors[field]
   }, [formContextValue.errors, field])
 
   const clearCurrent = () => {
-    if (field) {
+    if (field)
       formContextValue.clearField?.(field)
-    }
   }
 
   useImperativeHandle(ref, () => ({
@@ -163,10 +162,10 @@ const CFormItemWithoutForwardRef = (
               `c-col-${formContextValue.col}`,
               `c-${formContextValue.labelDirection}`,
               `c-col-${formContextValue.col}`,
-              formContextValue.labelDirection === 'column' ||
-                formContextValue.labelDirection === 'column-reverse'
+              formContextValue.labelDirection === 'column'
+                || formContextValue.labelDirection === 'column-reverse'
                 ? 'c-items-start'
-                : 'c-items-center'
+                : 'c-items-center',
             )}
           >
             <div
@@ -174,9 +173,9 @@ const CFormItemWithoutForwardRef = (
                 'c-form-item--label',
                 `c-font-${realSize}`,
                 `c-m${getLabelMarginPosition(
-                  formContextValue.labelDirection
+                  formContextValue.labelDirection,
                 )}-${realSize}`,
-                `c-text-${formContextValue.labelAlign}`
+                `c-text-${formContextValue.labelAlign}`,
               )}
               style={{
                 width: formContextValue.labelWidth,
@@ -193,7 +192,7 @@ const CFormItemWithoutForwardRef = (
                   'c-form-item--error-tip',
                   hasError
                     ? 'c-form-item--error-tip--show'
-                    : 'c-form-item--error-tip--hidden'
+                    : 'c-form-item--error-tip--hidden',
                 )}
               >
                 {innerErrorMessage}

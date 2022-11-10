@@ -1,8 +1,9 @@
-import { CSize } from '@casual-ui/types'
+import type { CSize } from '@casual-ui/types'
 import clsx from 'clsx'
-import React, { useMemo, useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import useGutterSize from '../../hooks/useGutterSize'
-import CCheckbox, { CCheckboxModel } from './CCheckbox'
+import type { CCheckboxModel } from './CCheckbox'
+import CCheckbox from './CCheckbox'
 import { useFormItemContext } from './CFormContext'
 
 interface CCheckboxGroupProps {
@@ -44,9 +45,9 @@ const CCheckboxGroup = ({
     () =>
       options.map(op => ({
         ...op,
-        checked: value.some(v => v === op.value),
+        checked: value.includes(op.value),
       })),
-    [options, value]
+    [options, value],
   )
 
   const onCheckStatusChange = (val: CCheckboxModel) => {
@@ -65,11 +66,11 @@ const CCheckboxGroup = ({
   const [isFirst, setIsFirst] = useState(true)
 
   useEffect(() => {
-    if (!isFirst) {
+    if (!isFirst)
       validateCurrent?.(value)
-    }
+
     setIsFirst(false)
-  }, [value])
+  }, [isFirst, validateCurrent, value])
 
   return (
     <div
@@ -78,7 +79,7 @@ const CCheckboxGroup = ({
         className,
         'c-row',
         'c-items-center',
-        `c-gutter-${realGutterSize}`
+        `c-gutter-${realGutterSize}`,
       )}
     >
       {optionsWithCheckStatus.map(op => (

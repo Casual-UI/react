@@ -1,13 +1,13 @@
-import { CSlot, PositionGroup } from '@casual-ui/types'
+import type { CSlot, PositionGroup } from '@casual-ui/types'
 import { matClose } from '@quasar/extras/material-icons'
 import clsx from 'clsx'
-import React, { CSSProperties, useEffect } from 'react'
+import type { CSSProperties } from 'react'
+import React, { useEffect, useMemo } from 'react'
+import { createPortal } from 'react-dom'
+import { CSSTransition } from 'react-transition-group'
 import CButton from '../basic/button/CButton'
 import CIcon from '../basic/icon/CIcon'
 import CPopup from './CPopup'
-import { createPortal } from 'react-dom'
-import { CSSTransition } from 'react-transition-group'
-import { useMemo } from 'react'
 
 interface CDialogProps {
   /**
@@ -162,24 +162,23 @@ const CDialog = ({
 }: CDialogProps) => {
   useEffect(() => {
     const listenKeyboard = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && value) {
+      if (e.key === 'Escape' && value)
         onChange?.(false)
-      }
     }
     window.addEventListener('keyup', listenKeyboard)
     return () => {
       window.removeEventListener('keyup', listenKeyboard)
     }
-  }, [value])
+  }, [onChange, value])
 
   const getContent = (
     customContent: CSlot | undefined,
-    defaultContent: CSlot
-  ) => (customContent ? customContent : defaultContent)
+    defaultContent: CSlot,
+  ) => (customContent || defaultContent)
 
   const roundedClass = useMemo(() => {
     const classMap = new Map<PositionGroup, string>([
-      ['start start', `c-rounded-br-md`],
+      ['start start', 'c-rounded-br-md'],
       ['start center', 'c-rounded-r-md'],
       ['start end', 'c-rounded-tr-md'],
       ['center start', 'c-rounded-b-md'],
@@ -214,7 +213,7 @@ const CDialog = ({
           className={clsx(
             'c-dialog',
             rounded && roundedClass,
-            customClass && customClass
+            customClass && customClass,
           )}
           style={{
             width,
@@ -232,17 +231,15 @@ const CDialog = ({
                   className="c-dialog--close-btn"
                   onClick={() => onChange?.(false)}
                 >
-                  {customCloseIcon
-                    ? customCloseIcon
-                    : closeIcon && <CIcon content={matClose} />}
+                  {(customCloseIcon || closeIcon) && <CIcon content={matClose} />}
                 </div>
-              </>
+              </>,
             )}
           </div>
           <div
             className={clsx(
               'c-dialog--content',
-              bodyPadding && 'c-px-md c-pb-md'
+              bodyPadding && 'c-px-md c-pb-md',
             )}
             style={{
               height: bodyHeight,
@@ -275,15 +272,15 @@ const CDialog = ({
                         />
                       )}
                     </div>
-                  </>
+                  </>,
                 )}
-              </div>
+              </div>,
             )}
           </div>
         </div>
       </CSSTransition>
     </CPopup>,
-    document.body
+    document.body,
   )
 }
 

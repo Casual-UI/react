@@ -1,5 +1,5 @@
-import { CSize } from '@casual-ui/types'
-import { useSize, CSizeContext, CIcon } from '@casual-ui/react'
+import type { CSize } from '@casual-ui/types'
+import { CIcon, CSizeContext, useSize } from '@casual-ui/react'
 import { matKeyboardArrowDown } from '@quasar/extras/material-icons'
 import clsx from 'clsx'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
@@ -14,7 +14,7 @@ import { useFormItemContext } from './CFormContext'
  */
 type CSelectModelValue = string | number | Array<string | number>
 
-type OOption = {
+interface OOption {
   label: string
   value: any
   [otherKey: string | number | symbol]: any
@@ -80,7 +80,8 @@ const CSelect = ({
   const [selectDomHeight, setSelectDomHeight] = useState(-1)
 
   const selectDomStyle = useMemo(() => {
-    if (selectDomHeight < 1) return {}
+    if (selectDomHeight < 1)
+      return {}
     return {
       height: `${selectDomHeight}px`,
     }
@@ -91,13 +92,15 @@ const CSelect = ({
   const [focused, setFocused] = useState(false)
 
   const realPlaceholder = useMemo(() => {
-    if (!multiple) return placeholder
+    if (!multiple)
+      return placeholder
     return (value as any[]).length > 0 ? '' : placeholder
-  }, [placeholder, value])
+  }, [multiple, placeholder, value])
 
   const selectedOptions = useMemo(() => {
-    if (!multiple) return []
-    return options.filter(op => (value as any[]).some(v => v === op.value))
+    if (!multiple)
+      return []
+    return options.filter(op => (value as any[]).includes(op.value))
   }, [multiple, value, options])
 
   useEffect(() => {
@@ -109,9 +112,9 @@ const CSelect = ({
   const [isFirst, setIsFirst] = useState(true)
 
   useEffect(() => {
-    if (!isFirst) {
+    if (!isFirst)
       validateCurrent?.(value)
-    }
+
     setIsFirst(false)
     if (multiple) {
       const newHeight = tagsDom.current?.clientHeight || -1
@@ -123,7 +126,7 @@ const CSelect = ({
       return
     }
     setInputValue(options.find(item => item.value === value)?.label || '')
-  }, [value])
+  }, [initialSelectDomHeight, isFirst, multiple, options, validateCurrent, value])
 
   const onItemClick = (item: OOption) => {
     if (multiple) {
@@ -144,24 +147,24 @@ const CSelect = ({
   }
 
   const onSelectClick = () => {
-    if (disabled) return
+    if (disabled)
+      return
 
-    if (multiple) {
+    if (multiple)
       setFocused(!focused)
-    }
   }
 
   const onArrowClick = () => {
-    if (disabled) return
-    if (!multiple) {
+    if (disabled)
+      return
+    if (!multiple)
       setFocused(!focused)
-    }
   }
 
   const isItemActive = (item: OOption) => {
-    if (multiple) {
-      return (value as any[]).some(v => v === item.value)
-    }
+    if (multiple)
+      return (value as any[]).includes(item.value)
+
     return item.value === value
   }
 
@@ -183,7 +186,7 @@ const CSelect = ({
           <div
             className={clsx(
               `c-py-${contextSize}`,
-              focused && 'c-select--options-show'
+              focused && 'c-select--options-show',
             )}
           >
             <CList
@@ -203,7 +206,7 @@ const CSelect = ({
             focused && 'c-select--focused',
             `c-font-${contextSize}`,
             disabled && 'c-select--disabled',
-            hasError && 'c-select--has-error'
+            hasError && 'c-select--has-error',
           )}
           style={selectDomStyle}
         >
@@ -211,17 +214,19 @@ const CSelect = ({
             className="c-select--input-wrapper"
             onClick={onSelectClick}
           >
-            {multiple ? (
+            {multiple
+              ? (
               <div
                 className={clsx(
                   'c-select--placeholder',
                   `c-h-${contextSize}`,
-                  `c-px-${contextSize}`
+                  `c-px-${contextSize}`,
                 )}
               >
                 {realPlaceholder}
               </div>
-            ) : (
+                )
+              : (
               <CInput
                 value={inputValue}
                 onChange={v => setInputValue(v)}
@@ -236,12 +241,12 @@ const CSelect = ({
                 disabled={disabled}
                 onClear={onClear}
               />
-            )}
+                )}
             <div
               className={clsx(
                 'c-select--arrow',
                 `c-mr-${contextSize}`,
-                focused && `c-select--arrow-show-options`
+                focused && 'c-select--arrow-show-options',
               )}
               onClick={onArrowClick}
             >

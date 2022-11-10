@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useEffect } from 'react'
-import { useTransition, animated, config } from 'react-spring'
+import React, { useCallback, useContext } from 'react'
+import { animated, config, useTransition } from 'react-spring'
 import useTimer from './useTimer'
 import { CarouselContext } from './CarouselContext'
 
@@ -28,17 +28,15 @@ const TransitionWrapper = ({
 
   pauses.push(
     useCallback(() => {
-      if (activeIndex === currentIndex) {
+      if (activeIndex === currentIndex)
         pause()
-      }
-    }, [activeIndex, currentIndex, pause])
+    }, [activeIndex, currentIndex, pause]),
   )
   resumes.push(
     useCallback(() => {
-      if (activeIndex === currentIndex) {
+      if (activeIndex === currentIndex)
         resume()
-      }
-    }, [activeIndex, currentIndex, resume])
+    }, [activeIndex, currentIndex, resume]),
   )
 
   const transition = useTransition(activeIndex === currentIndex, {
@@ -58,12 +56,12 @@ const TransitionWrapper = ({
     },
     onRest({ value: { x } }: any) {
       reset()
-      if (x !== 0 || activeIndex !== currentIndex) {
+      if (x !== 0 || activeIndex !== currentIndex)
         return
-      }
-      if (!hovering) {
+
+      if (!hovering)
         begin()
-      }
+
       setSliding(false)
     },
   })
@@ -79,7 +77,7 @@ const TransitionWrapper = ({
         >
           {children}
         </animated.div>
-      )
+      ),
   )
 }
 

@@ -1,0 +1,8 @@
+{
+	"private": true,
+	"devDependencies": {
+		"@casual-ui/eslint-config-react": "^0.0.4",
+		"@types/react": "^17.0.43",
+		"eslint": "^8.27.0"
+	}
+}

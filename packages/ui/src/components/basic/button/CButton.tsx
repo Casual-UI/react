@@ -1,8 +1,9 @@
-import React, { CSSProperties } from 'react'
+import type { CSSProperties } from 'react'
+import React from 'react'
 import clsx from 'clsx'
-import CLoading from '../loading/CLoading'
 import { useSizeThemeClass } from '@casual-ui/react'
-import { CSize, CSlot, CTheme } from '@casual-ui/types'
+import type { CSize, CSlot, CTheme } from '@casual-ui/types'
+import CLoading from '../loading/CLoading'
 
 interface CButtonProps {
   /**
@@ -123,20 +124,21 @@ const CButton = ({
         `c-font-${size}`,
         `c-px-${size}`,
         `c-h-${size}`,
-        className
+        className,
       )}
       disabled={disabled}
       onClick={() => {
-        if (!disabled && !loading) onClick?.()
+        if (!disabled && !loading)
+          onClick?.()
       }}
     >
       <div className="c-button--focus-helper"></div>
       <div className={clsx('c-button--content-wrapper')}>
-        {children ? children : label}
+        {children || label}
         {loading && (
           <>
             <span>&nbsp;</span>
-            {customLoading ? customLoading : <CLoading />}
+            {customLoading || <CLoading />}
           </>
         )}
       </div>

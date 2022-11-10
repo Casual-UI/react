@@ -21,9 +21,9 @@ const CDateGridPanel = ({
             key={item}
             className={clsx(
               'c-date-picker--panel-cell',
-              isActive(item) && 'c-date-picker--panel-cell--is-selected'
+              isActive(item) && 'c-date-picker--panel-cell--is-selected',
             )}
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation()
               onItemClick?.(item)
             }}

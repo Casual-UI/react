@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo } from 'react'
-import { Required } from 'utility-types'
+import type { Required } from 'utility-types'
 
 type Validator = (value: any) => string | false | Promise<string | false>
 
@@ -60,12 +60,12 @@ export const useFormContext = (customValue: CFormContextProps = {}) => {
       validateField: customValue.validateField || contextValue.validateField,
       errors: customValue.errors || contextValue.errors,
     }),
-    [customValue, contextValue]
+    [customValue, contextValue],
   )
 }
 
 export const useFormItemContext = (
-  customValue: CFormItemContextProps = {}
+  customValue: CFormItemContextProps = {},
 ) => ({
   ...useContext(CFormItemContext),
   ...customValue,

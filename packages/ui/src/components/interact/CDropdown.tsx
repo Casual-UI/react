@@ -1,4 +1,4 @@
-import { CSlot } from '@casual-ui/types'
+import type { CSlot } from '@casual-ui/types'
 import { useClickOutside } from '@casual-ui/react'
 import clsx from 'clsx'
 import React, { useRef } from 'react'
@@ -53,11 +53,13 @@ const CDropdown = ({
   useClickOutside({
     domRef: dropdownDom,
     cbInside: () => {
-      if (disabled || manual) return
+      if (disabled || manual)
+        return
       onChange?.(true)
     },
     cbOutside: () => {
-      if (disabled || manual) return
+      if (disabled || manual)
+        return
       onChange?.(false)
     },
   })
@@ -70,7 +72,7 @@ const CDropdown = ({
       <div
         className={clsx(
           'c-dropdown--drop-content',
-          !widthWithinParent && 'c-dropdown--drop-content-auto-width'
+          !widthWithinParent && 'c-dropdown--drop-content-auto-width',
         )}
       >
         {dropContent}

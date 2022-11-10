@@ -1,10 +1,10 @@
 import React from 'react'
 import { createPortal } from 'react-dom'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import type { PositionGroup } from '@casual-ui/types'
 import CPopup from '../CPopup'
 import useNotification from './useNotification'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import CNotificationItem from './CNotificationItem'
-import { PositionGroup } from '@casual-ui/types'
 import {
   clearSiblingsTransition,
   getNextSiblings,
@@ -18,27 +18,27 @@ const CNotification = () => {
     const nextSiblings = getNextSiblings(node)
     const prevSiblings = getPrevSiblings(node)
     if (groupName.endsWith('start')) {
-      nextSiblings.forEach(sibling => {
+      nextSiblings.forEach((sibling) => {
         sibling.classList.add('c-notification--with-transition')
-        sibling.style.transform = `translate(0, calc(-100% - 12px))`
+        sibling.style.transform = 'translate(0, calc(-100% - 12px))'
       })
     }
 
     if (groupName.endsWith('center')) {
-      nextSiblings.forEach(sibling => {
+      nextSiblings.forEach((sibling) => {
         sibling.classList.add('c-notification--with-transition')
-        sibling.style.transform = `translate(0, calc((-100% - 12px) / 2))`
+        sibling.style.transform = 'translate(0, calc((-100% - 12px) / 2))'
       })
-      prevSiblings.forEach(sibling => {
+      prevSiblings.forEach((sibling) => {
         sibling.classList.add('c-notification--with-transition')
-        sibling.style.transform = `translate(0, calc((100% + 12px) / 2))`
+        sibling.style.transform = 'translate(0, calc((100% + 12px) / 2))'
       })
     }
 
     if (groupName.endsWith('end')) {
-      prevSiblings.forEach(sibling => {
+      prevSiblings.forEach((sibling) => {
         sibling.classList.add('c-notification--with-transition')
-        sibling.style.transform = `translate(0, calc(100% + 12px))`
+        sibling.style.transform = 'translate(0, calc(100% + 12px))'
       })
     }
   }
@@ -46,12 +46,12 @@ const CNotification = () => {
   const onItemEnter = (node: HTMLElement, group: PositionGroup) => {
     if (group.endsWith('center')) {
       const prevSiblings = getPrevSiblings(node)
-      if (prevSiblings.length > 0) {
+      if (prevSiblings.length > 0)
         node.style.position = 'absolute'
-      }
-      prevSiblings.forEach(sibling => {
+
+      prevSiblings.forEach((sibling) => {
         sibling.classList.add('c-notification--with-transition')
-        sibling.style.transform = `translate(0, calc((-100% - 12px) / 2))`
+        sibling.style.transform = 'translate(0, calc((-100% - 12px) / 2))'
       })
     }
   }
@@ -101,7 +101,7 @@ const CNotification = () => {
         )
       })}
     </div>,
-    document.body
+    document.body,
   )
 }
 
