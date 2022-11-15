@@ -1,4 +1,4 @@
-import '@casual-ui/styles/dist/style.css'
+import '@casual-ui/styles'
 import CButton from './src/components/basic/button/CButton'
 import CLoading from './src/components/basic/loading/CLoading'
 import CLoadingAudio from './src/components/basic/loading/CLoadingAudio'

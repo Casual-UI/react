@@ -50,7 +50,7 @@ const config = {
         theme: {
           customCss: [
             require.resolve('./src/styles/doc.scss'),
-            require.resolve('@casual-ui/styles/dist/style.css'),
+            require.resolve('@casual-ui/styles/src/index.scss'),
           ],
         },
       }),

@@ -25,7 +25,7 @@
   "devDependencies": {
     "@casual-ui/i18n": "latest",
     "@casual-ui/react": "workspace:*",
-    "@casual-ui/styles": "latest",
+    "@casual-ui/styles": "workspace:*",
     "@casual-ui/types": "latest",
     "@quasar/extras": "^1.13.4",
     "@types/react-dom": "^18.0.6",
@@ -53,7 +53,8 @@
       ".": {
         "import": "./dist/casual-ui-react.es.js",
         "require": "./dist/casual-ui-react.umd.js"
-      }
+      },
+      "./dist/style.css": "./dist/style.css"
     }
   }
 }

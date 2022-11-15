@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@casual-ui/react": "latest",
-    "@casual-ui/styles": "latest",
+    "@casual-ui/styles": "workspace:*",
     "@docusaurus/core": "^2.2.0",
     "@docusaurus/module-type-aliases": "^2.2.0",
     "@docusaurus/preset-classic": "^2.2.0",

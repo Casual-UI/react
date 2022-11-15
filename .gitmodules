@@ -1,0 +1,3 @@
+[submodule "packages/docs/packages/styles"]
+	path = packages/docs/packages/styles
+	url = https://github.com/Casual-UI/styles.git
