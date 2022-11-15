@@ -12,7 +12,6 @@ yarn.lock
 .docusaurus/
 pnpm-lock.yaml
 demo
-deploy
 build/
 .vscode/
 .vscode/extensions.json!
