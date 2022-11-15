@@ -1,4 +1,5 @@
-import { RefObject, useEffect } from 'react'
+import type { RefObject } from 'react'
+import { useEffect } from 'react'
 
 export default ({
   domRef,
@@ -11,17 +12,18 @@ export default ({
 }) => {
   useEffect(() => {
     const onWindowClick = (e: any) => {
-      if (!domRef.current) return
-      if (domRef.current.contains(e.target)) {
+      if (!domRef.current)
+        return
+      if (domRef.current.contains(e.target))
         cbInside?.()
-      } else {
+
+      else
         cbOutside?.()
-      }
     }
     window.addEventListener('click', onWindowClick)
 
     return () => {
       window.removeEventListener('click', onWindowClick)
     }
-  }, [])
+  }, [cbInside, cbOutside, domRef])
 }

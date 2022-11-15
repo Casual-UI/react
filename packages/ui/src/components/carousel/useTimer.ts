@@ -9,9 +9,8 @@ export default function useTimer(cb: (...params: any) => any, delay: number) {
 
   useEffect(() => {
     return () => {
-      if (flag) {
+      if (flag)
         clearTimeout(flag)
-      }
     }
   }, [flag])
 
@@ -22,19 +21,20 @@ export default function useTimer(cb: (...params: any) => any, delay: number) {
       clearTimeout(flag)
       setFlag(null)
     }
-  }, [flag])
+  }, [delay, flag])
 
   const begin = () => {
-    if (delay < 1) return
+    if (delay < 1)
+      return
     setRemain(delay)
     setStart(Date.now())
     setFlag(setTimeout(cb, remain))
   }
 
   const resume = useCallback(() => {
-    if (remain < 1) {
+    if (remain < 1)
       return
-    }
+
     if (flag) {
       clearTimeout(flag)
       setFlag(null)

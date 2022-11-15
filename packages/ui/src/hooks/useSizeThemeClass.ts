@@ -1,4 +1,4 @@
-import { CSize, CTheme } from '@casual-ui/types'
+import type { CSize, CTheme } from '@casual-ui/types'
 import { useMemo } from 'react'
 
 export default ({
@@ -12,6 +12,6 @@ export default ({
 }) => {
   return useMemo(
     () => [prefix, `${prefix}--theme-${theme}`, `${prefix}--size-${size}`],
-    [size, theme]
+    [prefix, size, theme],
   )
 }

@@ -6,7 +6,7 @@ const useLoadingSize = (size = '1em') => {
         fontSize: size,
       },
     }),
-    [size]
+    [size],
   )
   return sizeValue
 }
