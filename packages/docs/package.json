@@ -18,7 +18,7 @@
     "directory": "/packages/react/docs"
   },
   "devDependencies": {
-    "@casual-ui/react": "latest",
+    "@casual-ui/react": "workspace:*",
     "@casual-ui/styles": "workspace:*",
     "@docusaurus/core": "^2.2.0",
     "@docusaurus/module-type-aliases": "^2.2.0",

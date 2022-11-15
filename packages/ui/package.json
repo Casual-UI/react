@@ -23,10 +23,10 @@
     "react17 ui components"
   ],
   "devDependencies": {
-    "@casual-ui/i18n": "latest",
+    "@casual-ui/i18n": "workspace:*",
     "@casual-ui/react": "workspace:*",
     "@casual-ui/styles": "workspace:*",
-    "@casual-ui/types": "latest",
+    "@casual-ui/types": "workspace:*",
     "@quasar/extras": "^1.13.4",
     "@types/react-dom": "^18.0.6",
     "@types/react-transition-group": "^4.4.4",
