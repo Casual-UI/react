@@ -34,4 +34,4 @@ const App = () => <CButton label="A Button" />
 
 ## LICENSE
 
-MIT
+[MIT](https://opensource.org/licenses/MIT)
