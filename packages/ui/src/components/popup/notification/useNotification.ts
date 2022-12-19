@@ -90,7 +90,7 @@ const open = (
   notifyAll()
 
   const close = () => closeByPositionGroupAndID(positionKey, id)
-  let flag: NodeJS.Timeout
+  let flag: ReturnType<typeof setTimeout>
   if (timeout > 0)
     flag = setTimeout(close, timeout)
 

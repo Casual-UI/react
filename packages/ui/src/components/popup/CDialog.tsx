@@ -1,7 +1,7 @@
 import type { CSlot, PositionGroup } from '@casual-ui/types'
 import { matClose } from '@quasar/extras/material-icons'
 import clsx from 'clsx'
-import type { CSSProperties } from 'react'
+import type { CSSProperties, FC } from 'react'
 import React, { useEffect, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
@@ -134,7 +134,7 @@ interface CDialogProps {
   exchangeAnimationDirection?: boolean
 }
 
-const CDialog = ({
+const CDialog: FC<CDialogProps> = ({
   value,
   onChange,
   title = '',

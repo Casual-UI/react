@@ -2,13 +2,15 @@
   "name": "@casual-ui/react",
   "version": "0.0.2",
   "description": "Casual UI React",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "author": {
     "email": "1197160272@qq.com",
     "name": "Dongsheng Zhao"
   },
   "scripts": {
-    "build": "vite build"
+    "build:es": "tsc -p ./tsconfig.json -m es2015 --outDir dist/es",
+    "build:umd": "tsc -p ./tsconfig.json -m umd --outDir dist/umd",
+    "build": "vite build && pnpm build:es && pnpm build:umd"
   },
   "repository": {
     "url": "https://github.com/Blackman99/casual-ui.git",
@@ -47,12 +49,11 @@
     "dist"
   ],
   "publishConfig": {
-    "main": "./dist/casual-ui-react.umd.js",
-    "module": "./dist/casual-ui-react.es.js",
+    "types": "./dist/es/index.d.ts",
     "exports": {
       ".": {
-        "import": "./dist/casual-ui-react.es.js",
-        "require": "./dist/casual-ui-react.umd.js"
+        "import": "./dist/es/index.js",
+        "require": "./dist/umd/index.js"
       },
       "./dist/style.css": "./dist/style.css"
     }

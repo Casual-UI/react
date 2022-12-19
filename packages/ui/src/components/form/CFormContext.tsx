@@ -1,5 +1,4 @@
 import { createContext, useContext, useMemo } from 'react'
-import type { Required } from 'utility-types'
 
 type Validator = (value: any) => string | false | Promise<string | false>
 
@@ -42,10 +41,10 @@ export const CFormItemContext = createContext<CFormItemContextProps>({})
 export const useFormContext = (customValue: CFormContextProps = {}) => {
   const contextValue = useContext(CFormContext)
   return useMemo<
-    Required<
+    Required<Pick<
       CFormContextProps,
       'col' | 'labelAlign' | 'labelDirection' | 'labelWidth'
-    >
+    >> & CFormContextProps
   >(
     () => ({
       labelAlign: customValue.labelAlign || contextValue.labelAlign || 'left',

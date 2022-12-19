@@ -1,3 +1,4 @@
+import type { FC } from 'react'
 import React from 'react'
 import { createPortal } from 'react-dom'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
@@ -11,7 +12,7 @@ import {
   getPrevSiblings,
 } from './utils'
 
-const CNotification = () => {
+const CNotification: FC = () => {
   const { closeByPositionGroupAndID, notifications } = useNotification()
 
   const onItemExit = (node: HTMLElement, groupName: PositionGroup) => {
