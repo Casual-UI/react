@@ -1,5 +1,13 @@
 # @casual-ui/react
 
+## 0.0.6
+
+### Patch Changes
+
+- 54b254b: divide style build and components build
+- Updated dependencies [54b254b]
+  - @casual-ui/react@0.0.6
+
 ## 0.0.5
 
 ### Patch Changes
