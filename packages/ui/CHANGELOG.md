@@ -1,5 +1,13 @@
 # @casual-ui/react
 
+## 0.0.7
+
+### Patch Changes
+
+- 8a63afe: use real i18n package instead of pnpm workspace package
+- Updated dependencies [8a63afe]
+  - @casual-ui/react@0.0.7
+
 ## 0.0.6
 
 ### Patch Changes
