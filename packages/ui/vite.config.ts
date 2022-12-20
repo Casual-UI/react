@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     lib: {
-      entry: resolve(__dirname, './src/index.ts'),
+      entry: resolve(__dirname, './src/import-style.ts'),
       name: 'CasualUIReact',
       fileName: format => `casual-ui-react.${format}.js`,
     },
