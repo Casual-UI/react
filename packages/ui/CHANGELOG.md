@@ -1,5 +1,13 @@
 # @casual-ui/react
 
+## 0.0.10
+
+### Patch Changes
+
+- 2efc696: fix: input should have a border box
+- Updated dependencies [2efc696]
+  - @casual-ui/react@0.0.10
+
 ## 0.0.7
 
 ### Patch Changes
