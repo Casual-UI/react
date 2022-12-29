@@ -1,5 +1,14 @@
 # @casual-ui/react
 
+## 0.0.11
+
+### Patch Changes
+
+- bc4540d: remove CSlot use ReactNode instead
+- Updated dependencies [bc4540d]
+  - @casual-ui/types@0.0.5
+  - @casual-ui/react@0.0.11
+
 ## 0.0.10
 
 ### Patch Changes
