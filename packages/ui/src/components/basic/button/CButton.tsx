@@ -1,8 +1,8 @@
-import type { CSSProperties } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import React from 'react'
 import clsx from 'clsx'
 import { useSizeThemeClass } from '@casual-ui/react'
-import type { CSize, CSlot, CTheme } from '@casual-ui/types'
+import type { CSize, CTheme } from '@casual-ui/types'
 import CLoading from '../loading/CLoading'
 
 interface CButtonProps {
@@ -88,7 +88,7 @@ interface CButtonJSXProps {
    * Customize the button content. This prop will override the <code>label</code> prop.
    * @zh 子元素内容，该项会覆盖<code>label</code>属性
    */
-  children?: CSlot
+  children?: ReactNode
 }
 
 const CButton = ({

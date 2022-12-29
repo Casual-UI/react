@@ -1,5 +1,6 @@
+import type { ReactNode } from 'react'
 import React from 'react'
-import type { CSize, CSlot, CTheme } from '@casual-ui/types'
+import type { CSize, CTheme } from '@casual-ui/types'
 import { useSize, useTheme } from '@casual-ui/react'
 import { matClose } from '@quasar/extras/material-icons'
 import clsx from 'clsx'
@@ -34,7 +35,7 @@ interface CTagProps {
    * Customize the prefix content
    * @zh 自定义前置内容
    */
-  prefix?: CSlot
+  prefix?: ReactNode
   /**
    * Emit when the close icon clicked.
    * @zh 点击关闭图标触发

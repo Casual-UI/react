@@ -1,5 +1,5 @@
-import type { CSlot } from '@casual-ui/types'
 import clsx from 'clsx'
+import type { ReactNode } from 'react'
 import React from 'react'
 import { CSSTransition } from 'react-transition-group'
 interface CPopupProps {
@@ -24,7 +24,7 @@ interface CPopupProps {
   /**
    * 弹出层内容
    */
-  children: CSlot
+  children: ReactNode
   /**
    * 自定义类名
    */

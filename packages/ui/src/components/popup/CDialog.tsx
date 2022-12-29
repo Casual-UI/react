@@ -1,7 +1,7 @@
-import type { CSlot, PositionGroup } from '@casual-ui/types'
+import type { PositionGroup } from '@casual-ui/types'
 import { matClose } from '@quasar/extras/material-icons'
 import clsx from 'clsx'
-import type { CSSProperties, FC } from 'react'
+import type { CSSProperties, FC, ReactNode } from 'react'
 import React, { useEffect, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
@@ -29,7 +29,7 @@ interface CDialogProps {
    * Customize the title content.
    * @zh 自定义标题
    */
-  customTitle?: CSlot
+  customTitle?: ReactNode
   /**
    * The dialog width.
    * @zh 宽度
@@ -99,27 +99,27 @@ interface CDialogProps {
    * Customize the header content.
    * @zh 自定义头部内容
    */
-  customHeader?: CSlot
+  customHeader?: ReactNode
   /**
    * Customize the close icon.
    * @zh 自定义关闭图标
    */
-  customCloseIcon?: CSlot
+  customCloseIcon?: ReactNode
   /**
    * The dialog content.
    * @zh 对话框内容
    */
-  children?: CSlot
+  children?: ReactNode
   /**
    * Customize the footer content.
    * @zh 自定义底部
    */
-  customFooter?: CSlot
+  customFooter?: ReactNode
   /**
    * Customize the footer action buttons.
    * @zh 自定义底部操作按钮
    */
-  customFooterActions?: CSlot
+  customFooterActions?: ReactNode
 
   /**
    * Determine whether to close the dialog on backdrop clicked or not.
@@ -172,8 +172,8 @@ const CDialog: FC<CDialogProps> = ({
   }, [onChange, value])
 
   const getContent = (
-    customContent: CSlot | undefined,
-    defaultContent: CSlot,
+    customContent: ReactNode | undefined,
+    defaultContent: ReactNode,
   ) => (customContent || defaultContent)
 
   const roundedClass = useMemo(() => {

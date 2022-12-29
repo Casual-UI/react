@@ -1,8 +1,8 @@
-import type { CSlot } from '@casual-ui/types'
+import type { ReactNode } from 'react'
 import React from 'react'
 interface OTdProps {
   width?: string
-  children?: CSlot
+  children?: ReactNode
 }
 const CTh = ({ children, width = 'auto' }: OTdProps) => {
   return (

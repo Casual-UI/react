@@ -1,7 +1,6 @@
-import type { CSlot } from '@casual-ui/types'
 import { matKeyboardArrowDown } from '@quasar/extras/material-icons'
 import clsx from 'clsx'
-import type { CSSProperties } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 import React, {
   useCallback,
   useEffect,
@@ -16,17 +15,17 @@ interface CExpansionProps {
    * The icon content.
    * @zh 图标
    */
-  icon?: CSlot
+  icon?: ReactNode
   /**
    * The title
    * @zh 标题
    */
-  title?: CSlot
+  title?: ReactNode
   /**
    * Customize the arrow
    * @zh 自定义箭头
    */
-  arrow?: (expandStatus: boolean) => CSlot
+  arrow?: (expandStatus: boolean) => ReactNode
   /**
    * The expand status.
    * @zh 是否展开
@@ -41,7 +40,7 @@ interface CExpansionProps {
    * The expand content.
    * @zh 折叠内容
    */
-  children: CSlot
+  children: ReactNode
   /**
    * Determine whether to expand from top.
    * @zh 是否从上方展开

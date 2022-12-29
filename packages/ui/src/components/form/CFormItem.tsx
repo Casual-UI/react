@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import type { Ref } from 'react'
+import type { ReactNode, Ref } from 'react'
 import React, {
   forwardRef,
   useEffect,
@@ -7,7 +7,7 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import type { CLabelDirection, CRule, CSize, CSlot } from '@casual-ui/types'
+import type { CLabelDirection, CRule, CSize } from '@casual-ui/types'
 import useSize, { CSizeContext } from '../../hooks/useSize'
 import useGutterSize, { CGutterSizeContext } from '../../hooks/useGutterSize'
 import { CFormItemContext, useFormContext } from './CFormContext'
@@ -53,7 +53,7 @@ interface CFormItemProps {
     validateCurrent: (value: any) => void
     clearCurrent: () => void
     hasError: false | string
-  }) => CSlot)
+  }) => ReactNode)
   /**
    * The validators.
    * @zh 验证规则

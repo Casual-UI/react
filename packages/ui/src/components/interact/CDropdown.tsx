@@ -1,6 +1,6 @@
-import type { CSlot } from '@casual-ui/types'
 import { useClickOutside } from '@casual-ui/react'
 import clsx from 'clsx'
+import type { ReactNode } from 'react'
 import React, { useRef } from 'react'
 interface CDropdownProps {
   /**
@@ -17,12 +17,12 @@ interface CDropdownProps {
    * The trigger content.
    * @zh 默认触发内容
    */
-  children: CSlot
+  children: ReactNode
   /**
    * The dropdown content
    * @zh 下拉内容
    */
-  dropContent: CSlot
+  dropContent: ReactNode
 
   /**
    * Determine whether the dropdown is disabled or not.

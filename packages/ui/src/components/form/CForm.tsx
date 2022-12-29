@@ -1,7 +1,7 @@
-import type { Ref } from 'react'
+import type { ReactNode, Ref } from 'react'
 import React, { forwardRef, useImperativeHandle, useState } from 'react'
 import clsx from 'clsx'
-import type { CSize, CSlot } from '@casual-ui/types'
+import type { CSize } from '@casual-ui/types'
 import useSize, { CSizeContext } from '../../hooks/useSize'
 import useGutterSize, { CGutterSizeContext } from '../../hooks/useGutterSize'
 import CLoadingBars from '../basic/loading/CLoadingBars'
@@ -62,7 +62,7 @@ interface CFormProps {
    * The content of form. It is recommend to use CFormItem.
    * @zh 表单内容，推荐使用 CFormItem
    */
-  children?: CSlot
+  children?: ReactNode
   /**
    * Determine whether the form is in validating or not.
    * @zh 表单是否处于验证中

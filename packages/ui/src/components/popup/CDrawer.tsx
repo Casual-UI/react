@@ -1,5 +1,6 @@
+import type { ReactNode } from 'react'
 import React, { useMemo } from 'react'
-import type { CPosition, CSlot } from '@casual-ui/types'
+import type { CPosition } from '@casual-ui/types'
 import CDialog from './CDialog'
 
 type Position = 'left' | 'top' | 'right' | 'bottom'
@@ -51,19 +52,19 @@ interface CDrawerProps {
    * Customize the title content.
    * @zh 自定义标题
    */
-  customTitle?: CSlot
+  customTitle?: ReactNode
 
   /**
    * Customize the close icon.
    * @zh 自定义关闭图标
    */
-  customCloseIcon?: CSlot
+  customCloseIcon?: ReactNode
 
   /**
    * The content.
    * @zh 抽屉内容
    */
-  children?: CSlot
+  children?: ReactNode
 }
 
 const hMap = new Map<Position, CPosition>([

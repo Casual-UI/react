@@ -1,7 +1,8 @@
-import type { CSize, CSlot, CTheme } from '@casual-ui/types'
+import type { CSize, CTheme } from '@casual-ui/types'
 import { CIcon, CLoading, useSize, useSizeThemeClass } from '@casual-ui/react'
 import { matHighlightOff } from '@quasar/extras/material-icons'
 import clsx from 'clsx'
+import type { ReactNode } from 'react'
 import React, { useEffect, useState } from 'react'
 import { useFormItemContext } from './CFormContext'
 
@@ -45,12 +46,12 @@ interface CInputProps<T = string | number> {
    * Customize the prefix content of input.
    * @zh 输入框前置内容
    */
-  prefix?: CSlot
+  prefix?: ReactNode
   /**
    * Customize the suffix content of input.
    * @zh 输入框后置内容
    */
-  suffix?: CSlot
+  suffix?: ReactNode
   /**
    * Determine whether the input is in loading or not.
    * @zh 是否处于加载态
@@ -60,7 +61,7 @@ interface CInputProps<T = string | number> {
    * Customize the loading icon content.
    * @zh 自定义加载内容
    */
-  customLoading?: CSlot
+  customLoading?: ReactNode
   /**
    * Determine whether the input is clearable or not when it value is not empty.
    * @zh 内容是否可清除

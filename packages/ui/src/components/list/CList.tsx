@@ -1,6 +1,7 @@
-import type { CSize, CSlot } from '@casual-ui/types'
+import type { CSize } from '@casual-ui/types'
 import { useSize } from '@casual-ui/react'
 import clsx from 'clsx'
+import type { ReactNode } from 'react'
 import React from 'react'
 import { CSizeContext } from '../../hooks/useSize'
 import CItem from './CItem'
@@ -57,7 +58,7 @@ interface CListProps {
     onItemClick?: (item: any) => void
     active?: boolean
     divider?: boolean
-  }) => CSlot
+  }) => ReactNode
 }
 
 const CList = ({

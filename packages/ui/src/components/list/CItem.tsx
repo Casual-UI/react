@@ -1,6 +1,7 @@
-import type { CSize, CSlot } from '@casual-ui/types'
+import type { CSize } from '@casual-ui/types'
 import { useSize } from '@casual-ui/react'
 import clsx from 'clsx'
+import type { ReactNode } from 'react'
 import React from 'react'
 
 interface CItemProps {
@@ -33,7 +34,7 @@ interface CItemProps {
    * Customize content
    * @zh 自定义内容
    */
-  children?: CSlot
+  children?: ReactNode
 }
 
 const CItem = ({

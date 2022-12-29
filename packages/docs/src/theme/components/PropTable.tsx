@@ -23,7 +23,6 @@ export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
       <code>
         {new Map([
           ['CTheme', '\'primary\' | \'secondary\' | \'warning\' | \'negative\''],
-          ['CSlot', 'JSX.Element | string'],
           ['CSize', '\'sm\' | \'md\' | \'lg\''],
         ]).get(val.name) || val.name}
       </code>

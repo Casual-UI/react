@@ -1,6 +1,7 @@
+import type { ReactNode } from 'react'
 import React, { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
-import type { CSize, CSlot } from '@casual-ui/types'
+import type { CSize } from '@casual-ui/types'
 import { useSize } from '@casual-ui/react'
 
 type SlotWithNext = (setNextName: (nextName: string) => void) => JSX.Element
@@ -15,12 +16,12 @@ interface CTabItem {
    * The panel content
    * @zh 面板内容
    */
-  content?: CSlot | SlotWithNext
+  content?: ReactNode | SlotWithNext
   /**
    * Customize the header content
    * @zh 自定义头部
    */
-  header?: CSlot
+  header?: ReactNode
 }
 
 interface CTabsProps {

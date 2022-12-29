@@ -1,13 +1,13 @@
+import type { ReactNode } from 'react'
 import React, { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
-import type { CSlot } from '@casual-ui/types'
 import { useClickOutside } from '@casual-ui/react'
 interface CTooltipProps {
   /**
    * The popup content.
    * @zh 弹出的内容文字
    */
-  content?: CSlot
+  content?: ReactNode
   /**
    * Popup positions
    * @zh 弹出位置
@@ -44,7 +44,7 @@ interface CTooltipProps {
    * The trigger content.
    * @zh 默认内容，用于触发提示
    */
-  children: CSlot
+  children: ReactNode
 }
 
 const CTooltip = ({

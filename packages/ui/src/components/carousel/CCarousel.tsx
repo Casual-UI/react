@@ -2,8 +2,9 @@ import {
   matNavigateBefore,
   matNavigateNext,
 } from '@quasar/extras/material-icons'
-import type { CSlot, CTheme } from '@casual-ui/types'
+import type { CTheme } from '@casual-ui/types'
 import clsx from 'clsx'
+import type { ReactNode } from 'react'
 import React, { useCallback, useMemo, useState } from 'react'
 import CButton from '../basic/button/CButton'
 import CIcon from '../basic/icon/CIcon'
@@ -81,19 +82,19 @@ interface CCarouselProps {
    * Customize the indicators content.
    * @zh 自定义指示器内容
    */
-  customIndicators?: CSlot
+  customIndicators?: ReactNode
 
   /**
    * Customize the to previous control arrow.
    * @zh 自定义前一个箭头控制器
    */
-  customArrowPrev?: CSlot
+  customArrowPrev?: ReactNode
 
   /**
    * Customize the to next control arrow.
    * @zh 自定义后一个箭头控制器
    */
-  customArrowNext?: CSlot
+  customArrowNext?: ReactNode
 
   /**
    * Determine whether to pause the autoplay when the carousel is hovered.
