@@ -1,5 +1,13 @@
 # @casual-ui/react
 
+## 0.0.12
+
+### Patch Changes
+
+- f5da2cd: update i18n package
+- Updated dependencies [f5da2cd]
+  - @casual-ui/react@0.0.12
+
 ## 0.0.11
 
 ### Patch Changes
