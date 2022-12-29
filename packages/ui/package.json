@@ -32,7 +32,7 @@
     "vite": "^2.8.6"
   },
   "dependencies": {
-    "@casual-ui/i18n": "^0.1.5",
+    "@casual-ui/i18n": "^0.1.7",
     "@casual-ui/react": "workspace:*",
     "@casual-ui/styles": "workspace:*",
     "@casual-ui/types": "workspace:*",
