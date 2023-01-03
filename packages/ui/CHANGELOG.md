@@ -1,5 +1,14 @@
 # @casual-ui/react
 
+## 0.0.13
+
+### Patch Changes
+
+- a88b71c: - Add ajax bar component
+  - Add cache for doc parse
+- Updated dependencies [a88b71c]
+  - @casual-ui/react@0.0.13
+
 ## 0.0.12
 
 ### Patch Changes
