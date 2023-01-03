@@ -46,6 +46,12 @@ interface CExpansionProps {
    * @zh 是否从上方展开
    */
   reverse?: boolean
+
+  /**
+   * Customize the header styles.
+   * @zh 自定义展开头部样式
+   */
+  headerStyle?: CSSProperties
 }
 
 const CExpansion = ({
@@ -55,6 +61,7 @@ const CExpansion = ({
   arrow,
   children,
   reverse = false,
+  headerStyle,
 }: CExpansionProps) => {
   const [innerOpen, setInnerOpen] = useState(true)
   const [initialBodyHeight, setInitialBodyHeight] = useState('auto')
@@ -95,6 +102,7 @@ const CExpansion = ({
       <div
         className="c-expansion--header"
         onClick={onHeaderClick}
+        style={headerStyle}
       >
         {icon && <div className="c-expansion--icon">{icon}</div>}
         <div className="c-expansion--title">{title}</div>

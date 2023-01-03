@@ -1,54 +1,75 @@
 const path = require('path')
+const { resolve } = require('path')
+const { existsSync, mkdirSync, readFileSync, writeFileSync } = require('fs')
 const docgen = require('react-docgen-typescript')
 const fg = require('fast-glob')
-
-const cliProgress = require('cli-progress')
-
-const colors = require('ansi-colors')
 const flagRef = require('./flagRef')
-
-// create new progress bar
-const b1 = new cliProgress.SingleBar({
-  format:
-    `Doc parsing |${
-    colors.cyan('{bar}')
-    }| {percentage}% || {value}/{total} Parsed`,
-  barCompleteChar: '\u2588',
-  barIncompleteChar: '\u2591',
-  hideCursor: true,
-})
 
 const CWD_PATH = process.cwd()
 
-module.exports = async function CasualComponentsDoc() {
+const pluginName = 'casual-components-doc'
+
+/**
+ * @type {import('@docusaurus/types').PluginModule}
+ */
+const CasualComponentsDoc = async function (ctx) {
+  const { generatedFilesDir } = ctx
+
+  const CACHE_MAP_DIR = resolve(generatedFilesDir, `./${pluginName}/cache-map`)
   return {
-    name: 'casual-components-doc',
+    name: pluginName,
     async loadContent() {
+      if (!existsSync(CACHE_MAP_DIR))
+        mkdirSync(CACHE_MAP_DIR, { recursive: true })
+
       if (flagRef.value)
         return {}
       const files = await fg(['../ui/src/components/**/*.tsx'])
-      b1.start(files.length, 0)
 
-      const content = files.reduce((docs, filePath) => {
-        const name = filePath.split('/').at(-1).replace(/\.tsx/, '.json')
-        const res = {
-          ...docs,
-          [name]: docgen.parse(path.resolve(CWD_PATH, filePath), {
-            shouldIncludePropTagMap: true,
-          }),
-        }
-        b1.increment()
-        return res
-      }, {})
-      b1.stop()
-      return content
+      return files
     },
-    contentLoaded: async ({ content, actions: { createData } }) => {
+    contentLoaded: async ({ content: files, actions: { createData } }) => {
       if (flagRef.value)
         return
       flagRef.value = true
-      for (const k in content)
-        await createData(k, JSON.stringify(content[k]))
+      for (let i = 0; i < files.length; i++) {
+        const filePath = files[i]
+        const fileName = filePath.split('/').at(-1)
+        const name = fileName.replace(/\.tsx/, '.json')
+        const sourceFile = path.resolve(CWD_PATH, filePath)
+
+        const doCreate = async () => {
+          await createData(name, JSON.stringify(docgen.parse(sourceFile, {
+            shouldIncludePropTagMap: true,
+          })))
+        }
+        const cacheFilePath = resolve(CACHE_MAP_DIR, `${name}.temp`)
+        const hasCache = existsSync(cacheFilePath)
+        const sourceCode = readFileSync(sourceFile)
+        if (!hasCache) {
+          console.log('[Casual doc] file: \n', fileName, '\nHas no cache. Create it')
+
+          // add cache if there's no cache
+          writeFileSync(cacheFilePath, sourceCode, 'utf-8')
+          await doCreate()
+          continue
+        }
+        const cachedFileContent = readFileSync(cacheFilePath)
+        if (!sourceCode.equals(cachedFileContent)) {
+          console.log('[Casual doc] file: \n', fileName, '\nSource code changed. Update it')
+          writeFileSync(cacheFilePath, sourceCode, 'utf-8')
+          await doCreate()
+          continue
+        }
+        else if (!existsSync(resolve(generatedFilesDir, `./${pluginName}/default/${name}`))) {
+          console.log('[Casual doc] file: \n', fileName, '\n Has no json. Create it')
+          await doCreate()
+          continue
+        }
+        console.log('[Casual doc] file ', fileName, 'has cache. Use it')
+      }
     },
   }
 }
+
+module.exports = CasualComponentsDoc

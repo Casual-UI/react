@@ -1,0 +1,68 @@
+---
+title: Ajax Bar
+---
+
+### 基础使用
+
+```jsx live
+function Demo () {
+  const ajaxBar = createRef()
+
+  const start = () => {
+    ajaxBar.current && ajaxBar.current.start()
+  }
+
+  const end = () => {
+    ajaxBar.current && ajaxBar.current.end()
+  }
+
+  return (
+    <SpaceItems>
+      <CAjaxBar ref={ajaxBar} />
+      <CButton label="开始" onClick={start} />
+      <CButton label="结束" theme="negative" rounded onClick={end} />
+    </SpaceItems>
+  )
+}
+```
+
+### Themes
+
+```jsx live
+function Demo () {
+  const ajaxBar = createRef()
+  const [theme, setTheme] = useState(undefined)
+  
+  const isFirstRun = useRef(true)
+  const startWithTheme = (t) => {
+    setTheme(t)
+  }
+
+  useEffect(() => {
+    if(isFirstRun.current) {
+      isFirstRun.current = false
+      return
+    }
+    ajaxBar.current && ajaxBar.current.start()
+  }, [theme])
+
+  const end = () => {
+    ajaxBar.current && ajaxBar.current.end()
+  }
+
+  return (
+    <SpaceItems>
+      <CAjaxBar ref={ajaxBar} theme={theme} />
+      <CButton label="打开主色" onClick={() => startWithTheme('primary')} />
+      <CButton label="打开辅色" theme="secondary" onClick={() => startWithTheme('secondary')} />
+      <CButton label="打开警告色" theme="warning" onClick={() => startWithTheme('warning')} />
+      <CButton label="打开消极色" theme="negative" onClick={() => startWithTheme('negative')} />
+      <CButton label="结束" theme="negative" rounded onClick={end} />
+    </SpaceItems>
+  )
+}
+```
+
+### Props
+
+<PropTable name="CAjaxBar" />

@@ -1,0 +1,68 @@
+---
+title: Ajax Bar
+---
+
+### Basic Usage
+
+```jsx live
+function Demo () {
+  const ajaxBar = createRef()
+
+  const start = () => {
+    ajaxBar.current && ajaxBar.current.start()
+  }
+
+  const end = () => {
+    ajaxBar.current && ajaxBar.current.end()
+  }
+
+  return (
+    <SpaceItems>
+      <CAjaxBar ref={ajaxBar} />
+      <CButton label="Start" onClick={start} />
+      <CButton label="End" theme="negative" rounded onClick={end} />
+    </SpaceItems>
+  )
+}
+```
+
+### Themes
+
+```jsx live
+function Demo () {
+  const ajaxBar = createRef()
+  const [theme, setTheme] = useState(undefined)
+  
+  const isFirstRun = useRef(true)
+  const startWithTheme = (t) => {
+    setTheme(t)
+  }
+
+  useEffect(() => {
+    if(isFirstRun.current) {
+      isFirstRun.current = false
+      return
+    }
+    ajaxBar.current && ajaxBar.current.start()
+  }, [theme])
+
+  const end = () => {
+    ajaxBar.current && ajaxBar.current.end()
+  }
+
+  return (
+    <SpaceItems>
+      <CAjaxBar ref={ajaxBar} theme={theme} />
+      <CButton label="Start primary" onClick={() => startWithTheme('primary')} />
+      <CButton label="Start secondary" theme="secondary" onClick={() => startWithTheme('secondary')} />
+      <CButton label="Start warning" theme="warning" onClick={() => startWithTheme('warning')} />
+      <CButton label="Start negative" theme="negative" onClick={() => startWithTheme('negative')} />
+      <CButton label="End" theme="negative" rounded onClick={end} />
+    </SpaceItems>
+  )
+}
+```
+
+### Props
+
+<PropTable name="CAjaxBar" />

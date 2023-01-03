@@ -37,9 +37,14 @@ function ThemedLiveEditor() {
   const isBrowser = useIsBrowser()
   return (
     <CExpansion
+      headerStyle={{
+        fontSize: '12px',
+        borderBottomLeftRadius: '4px',
+        borderBottomRightRadius: '4px',
+      }}
       title={
         <div className="c-flex c-items-center">
-          <ReactIcon style={{ fontSize: '24px', color: '#61DAFB' }} className="c-mr-md" />
+          <ReactIcon style={{ fontSize: '18px', color: '#61DAFB' }} className="c-mr-md" />
           {translate({
             id: 'codeExpansion.title',
             message: 'Fold/Expand Code',

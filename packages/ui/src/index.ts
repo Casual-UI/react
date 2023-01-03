@@ -53,9 +53,11 @@ import CDrawer from './components/popup/CDrawer'
 import CCarousel from './components/carousel/CCarousel'
 import CCarouselSlider from './components/carousel/CCarouselSlider'
 import useI18n from './hooks/useI18n'
+import CAjaxBar from './components/interact/CAjaxBar'
 
 export {
   useI18n,
+  CAjaxBar,
   CCarousel,
   CCarouselSlider,
   CDrawer,
