@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const path = require('path')
 const { resolve } = require('path')
 const { existsSync, mkdirSync, readFileSync, writeFileSync } = require('fs')
