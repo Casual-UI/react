@@ -79,7 +79,6 @@ const TransitionWrapper = ({
     ({ x }, item) =>
       item && (
         <animated.div
-          className="c-carousel--slider-item"
           ref={container}
           style={{
             transform: x.to(x => `translate${vertical ? 'Y' : 'X'}(${x}%)`),
