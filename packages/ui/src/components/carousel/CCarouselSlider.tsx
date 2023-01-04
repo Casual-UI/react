@@ -1,9 +1,11 @@
+import type { ReactNode } from 'react'
+
 interface CCarouselSliderProps {
   /**
    * The content
    * @zh 内容
    */
-  children?: any
+  children?: ReactNode
 }
 
 const CCarouselSlider = ({ children }: CCarouselSliderProps) => children

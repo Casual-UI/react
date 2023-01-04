@@ -31,7 +31,7 @@ const config = {
           routeBasePath: '/',
           sidebarPath: require.resolve('./config/sidebars.js'),
           editUrl:
-            'https://github.com/Blackman99/casual-ui/edit/main/packages/react/docs',
+            'https://github.com/Casual-UI/react/edit/main/packages/docs',
           remarkPlugins: [
             [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
             () => async (ast) => {

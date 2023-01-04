@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import clsx from 'clsx'
 import type { CSize } from '@casual-ui/types'
 import dayjs from 'dayjs'
@@ -133,24 +133,27 @@ const CDatePicker = ({
 
   const { validateCurrent } = useFormItemContext()
 
-  const [isFirst, setIsFirst] = useState(true)
+  const isFirst = useRef(true)
 
   useEffect(() => {
-    if (!isFirst)
+    if (isFirst.current) {
       validateCurrent?.(value)
+      isFirst.current = false
+    }
 
-    setIsFirst(false)
     if (!value) {
       onFormattedValueChange?.('')
       return
     }
     onFormattedValueChange?.(innerFormatter(value))
-  }, [innerFormatter, isFirst, onFormattedValueChange, validateCurrent, value])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value])
 
   useEffect(() => {
     const [start, end] = rangeValue
     onFormattedRangeChange?.([innerFormatter(start), innerFormatter(end)])
-  }, [innerFormatter, onFormattedRangeChange, rangeValue])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rangeValue])
 
   const displayValue = useMemo(() => {
     if (range) {
@@ -170,13 +173,9 @@ const CDatePicker = ({
   ])
   const [innerUnit, setInnerUnit] = useState(unit)
 
-  const openOrCloseDropDown = (v: boolean) => {
-    setShowDrop(v)
-  }
-
   const onDateSet = () => {
     if (hideOnSelect)
-      openOrCloseDropDown(false)
+      setShowDrop(false)
   }
   const onMonthSet = (
     newMonth: number,
@@ -231,12 +230,13 @@ const CDatePicker = ({
       >
         <CDropdown
           value={showDrop}
-          onChange={openOrCloseDropDown}
+          onChange={setShowDrop}
           widthWithinParent={false}
           disabled={disabled}
           dropContent={
             <CTabs
-              customHeader={setNextName => (
+              isFlow={true}
+              customHeader={toName => (
                 <CDatePanelHeader
                   year={year}
                   month={month}
@@ -244,7 +244,7 @@ const CDatePicker = ({
                   unit={innerUnit}
                   onYearChange={setYear}
                   onMonthChange={setMonth}
-                  onUnitChange={setNextName}
+                  onUnitChange={toName}
                   onYearRangeChange={setYearRange}
                   unitSwitchable={!range}
                 />
@@ -256,15 +256,15 @@ const CDatePicker = ({
               items={[
                 {
                   name: 'year',
-                  content: setNextName => (
-                    <div className={clsx('c-date-picker--panel-wrapper')}>
+                  content: toName => (
+                    <div className={clsx('c-date-picker--panel-wrapper')} key="year">
                       <CDateGridPanel
                         items={Array(yearRange[1] - yearRange[0] + 1)
                           .fill(0)
                           .map((_, i) => i + yearRange[0])}
                         displayFormatter={item => `${item}`}
                         isActive={isYearActive}
-                        onItemClick={y => onYearSet(y, setNextName)}
+                        onItemClick={y => onYearSet(y, toName)}
                       />
                     </div>
                   ),
@@ -272,7 +272,7 @@ const CDatePicker = ({
                 {
                   name: 'month',
                   content: setNextName => (
-                    <div className={clsx('c-date-picker--panel-wrapper')}>
+                    <div className={clsx('c-date-picker--panel-wrapper')} key="month">
                       <CDateGridPanel
                         items={Array(12)
                           .fill(0)
@@ -287,7 +287,7 @@ const CDatePicker = ({
                 {
                   name: 'day',
                   content: (
-                    <div className={clsx('c-date-picker--panel-wrapper')}>
+                    <div className={clsx('c-date-picker--panel-wrapper')} key="day">
                       <CDatePanel
                         {...{
                           value,

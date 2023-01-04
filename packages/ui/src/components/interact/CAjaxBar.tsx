@@ -14,8 +14,21 @@ interface CAjaxBarProps {
 
 const CAjaxBarWithoutForward = ({
   theme,
-}: CAjaxBarProps, ref: Ref<{
+}: CAjaxBarProps,
+/**
+ * The forward ref
+ * @zh 转发的 ref 实例
+ */
+ref: Ref<{
+  /**
+   * Start the ajax bar
+   * @zh 开始加载
+   */
   start: () => void
+  /**
+   * End the ajax bar
+   * @zh 结束加载
+   */
   end: () => void
 }>) => {
   /**
@@ -32,10 +45,6 @@ const CAjaxBarWithoutForward = ({
     }
   }
 
-  /**
-   * Start the ajax bar
-   * @zh 开始加载
-   */
   const start = () => {
     setBarWidth(0)
     maybeClear()
@@ -48,10 +57,6 @@ const CAjaxBarWithoutForward = ({
     }, 200))
   }
 
-  /**
-   * End the ajax bar
-   * @zh 结束加载
-   */
   const end = () => {
     if (barWidth > 0) {
       setBarWidth(100)

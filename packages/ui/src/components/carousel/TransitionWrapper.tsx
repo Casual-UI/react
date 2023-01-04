@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useRef } from 'react'
 import { animated, config, useTransition } from 'react-spring'
 import useTimer from './useTimer'
 import { CarouselContext } from './CarouselContext'
@@ -22,9 +22,12 @@ const TransitionWrapper = ({
   interval: number
   vertical: boolean
 }) => {
+  const container = useRef<HTMLDivElement>(null)
   const { reset, begin, resume, pause } = useTimer(toNext, interval)
 
-  const { hovering, pauses, resumes, setSliding } = useContext(CarouselContext)
+  const isFirst = useRef(true)
+
+  const { hovering, pauses, resumes, setSliding, setCurrentItemHeight, setCurrentItemWidth } = useContext(CarouselContext)
 
   pauses.push(
     useCallback(() => {
@@ -61,8 +64,14 @@ const TransitionWrapper = ({
 
       if (!hovering)
         begin()
+      if (isFirst.current)
+        isFirst.current = false
 
       setSliding(false)
+      if (container.current) {
+        setCurrentItemHeight?.(container.current.offsetHeight)
+        setCurrentItemWidth?.(container.current.offsetWidth)
+      }
     },
   })
 
@@ -71,8 +80,18 @@ const TransitionWrapper = ({
       item && (
         <animated.div
           className="c-carousel--slider-item"
+          ref={container}
           style={{
             transform: x.to(x => `translate${vertical ? 'Y' : 'X'}(${x}%)`),
+            ...((x.isAnimating && !isFirst.current)
+              ? {
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                }
+              : {}),
           }}
         >
           {children}
