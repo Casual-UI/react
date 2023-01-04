@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import type { ReactNode } from 'react'
 import React from 'react'
 import CTd from './CTd'
 import CTh from './CTh'
@@ -18,9 +19,9 @@ interface CustomHeaderRenderProps {
 
 type CustomHeaderRender = (
   props: CustomHeaderRenderProps
-) => JSX.Element | string
+) => ReactNode
 
-type CustomRender = (props: CustomRenderProps) => JSX.Element | string
+type CustomRender = (props: CustomRenderProps) => ReactNode | {}
 
 interface CTableColumn<T = any, S extends keyof T = any> {
   /**

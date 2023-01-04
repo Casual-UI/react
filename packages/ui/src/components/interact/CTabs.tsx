@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { createRef, useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 import type { CSize } from '@casual-ui/types'
-import { useSize } from '@casual-ui/react'
+import { CCarousel, useSize } from '@casual-ui/react'
+import type { CCarouselRef } from '../carousel/CCarousel'
 
-type SlotWithNext = (setNextName: (nextName: string) => void) => JSX.Element
-
+type ReactNodeWithSetName = (toName: (name: string) => void) => ReactNode
 interface CTabItem {
   /**
    * The name
@@ -16,7 +16,7 @@ interface CTabItem {
    * The panel content
    * @zh 面板内容
    */
-  content?: ReactNode | SlotWithNext
+  content?: ReactNode | ReactNodeWithSetName
   /**
    * Customize the header content
    * @zh 自定义头部
@@ -59,75 +59,61 @@ interface CTabsProps {
    * Customize the header content.
    * @zh 自定义头部部分
    */
-  customHeader?: SlotWithNext
+  customHeader?: ReactNode | ReactNodeWithSetName
+
+  /**
+   * Used for [CCarousel](/components/basic/carousel) isFlow prop
+   * @zh 用于 [CCarousel](/components/basic/carousel) isFlow prop
+   */
+  isFlow?: boolean
 }
 const CTabs = ({
   items,
-  activeTab,
   onTabChange,
   size,
   panelPadding = true,
   bodyStyle,
+  isFlow,
+  activeTab,
   customHeader,
 }: CTabsProps) => {
   const realSize = useSize(size)
+  const carouselRef = createRef<CCarouselRef>()
 
   const [activeBarLeft, setActiveBarLeft] = useState('0')
   const [activeBarWidth, setActiveBarWidth] = useState('0')
+  const initialIndex = items.findIndex(item => item.name === activeTab)
+  const [activeTabIndex, setActiveTabIndex] = useState(initialIndex === -1 ? 0 : initialIndex)
 
   const header = useRef<HTMLDivElement>(null)
 
-  const [nextName, setNextName] = useState(activeTab)
-
-  const [enterClass, setEnterClass] = useState('')
-  const [leaveClass, setLeaveClass] = useState('')
+  const toName = (name: string) => {
+    carouselRef.current?.toIndex(items.findIndex(item => item.name === name))
+    onTabChange?.(name)
+  }
 
   useEffect(() => {
-    if (!customHeader) {
-      if (!header.current)
-        return
-
-      const activeItem = header.current.querySelector<HTMLDivElement>(
-        '.c-tabs--header-item-active',
-      )
-      if (!activeItem)
-        return
-      setActiveBarLeft(`${activeItem.offsetLeft}px`)
-      setActiveBarWidth(`${activeItem.offsetWidth}px`)
-    }
-    const currentIdx = items.findIndex(item => item.name === activeTab)
-    const newIdx = items.findIndex(item => item.name === nextName)
-    if (newIdx < currentIdx) {
-      // backwards
-      setEnterClass('c-date-panel-reverse-enter-active')
-      setLeaveClass(
-        `c-date-panel-reverse-leave-active c-date-panel-reverse-leave-initial c-pa-${realSize}`,
-      )
-    }
-    else {
-      // forwards
-      setEnterClass('c-date-panel-enter-active')
-      setLeaveClass(
-        `c-date-panel-leave-active c-date-panel-leave-initial c-pa-${realSize}`,
-      )
-    }
-    setTimeout(() => {
-      onTabChange?.(nextName)
-    }, 300)
-  }, [activeTab, customHeader, items, nextName, onTabChange, realSize])
+    if (!header.current)
+      return
+    const activeItem = header.current.querySelector<HTMLDivElement>(
+      '.c-tabs--header-item-active',
+    )
+    if (!activeItem)
+      return
+    setActiveBarLeft(`${activeItem.offsetLeft}px`)
+    setActiveBarWidth(`${activeItem.offsetWidth}px`)
+  }, [activeTabIndex])
 
   return (
     <div className={clsx('c-tabs')}>
       {customHeader
-        ? (
-            customHeader(setNextName)
-          )
+        ? (typeof customHeader === 'function' ? customHeader(toName) : customHeader)
         : (
         <div
           ref={header}
           className="c-tabs--header c-row c-items-center"
         >
-          {items.map(item => (
+          {items.map((item, i) => (
             <div
               key={item.name}
               className={clsx(
@@ -135,9 +121,9 @@ const CTabs = ({
                 `c-h-${realSize}`,
                 `c-font-${realSize}`,
                 `c-px-${realSize}`,
-                nextName === item.name && 'c-tabs--header-item-active',
+                activeTabIndex === i && 'c-tabs--header-item-active',
               )}
-              onClick={() => setNextName(item.name)}
+              onClick={() => toName(item.name)}
             >
               {item.header ? item.header : item.name}
             </div>
@@ -155,28 +141,16 @@ const CTabs = ({
         style={bodyStyle}
         className={clsx('c-tabs--body', panelPadding && `c-pa-${realSize}`)}
       >
-        {items.map(
-          item =>
-            (activeTab === item.name || nextName === item.name) && (
-              <div
-                key={item.name}
-                className={clsx(
-                  'c-tabs--body-item',
-                  activeTab === nextName
-                    ? ''
-                    : item.name === nextName
-                      ? enterClass
-                      : leaveClass,
-                )}
-              >
-                {item.content
-                  ? typeof item.content === 'function'
-                    ? item.content(setNextName)
-                    : item.content
-                  : item.name}
-              </div>
-            ),
-        )}
+        <CCarousel
+          ref={carouselRef}
+          activeIndex={activeTabIndex}
+          arrowTiming="never"
+          onActiveIndexChange={setActiveTabIndex}
+          showIndicators={false}
+          isFlow={isFlow}
+        >
+          {items.map(({ content }) => typeof content === 'function' ? content(toName) : content)}
+        </CCarousel>
       </div>
     </div>
   )

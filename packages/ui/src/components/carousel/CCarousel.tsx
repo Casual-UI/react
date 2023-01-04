@@ -4,8 +4,8 @@ import {
 } from '@quasar/extras/material-icons'
 import type { CTheme } from '@casual-ui/types'
 import clsx from 'clsx'
-import type { ReactNode } from 'react'
-import React, { useCallback, useMemo, useState } from 'react'
+import type { CSSProperties, ReactNode, Ref } from 'react'
+import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from 'react'
 import CButton from '../basic/button/CButton'
 import CIcon from '../basic/icon/CIcon'
 import Fade from '../transition/Fade'
@@ -17,6 +17,18 @@ interface CCarouselProps {
    * @zh 容器的高度
    */
   height?: string
+
+  /**
+   * Determine whether to use fixed height or auto toggle height when the content change.
+   * @zh 是否使用固定高度，设置为 `false` 则会每次内容变化重新计算高度
+   */
+  fixedHeight?: boolean
+
+  /**
+   * Tell CCarousel whether the position of the outer container is not static.
+   * @zh 告知外部容器是否为脱离文档流，即非 `static` 定位
+   */
+  isFlow?: boolean
 
   /**
    * The theme color. It will affect the control arrow and the indicators' style.
@@ -41,6 +53,12 @@ interface CCarouselProps {
    * @zh 当前激活的轮播变化时触发
    */
   onActiveIndexChange?: (newIndex: number) => void
+
+  /**
+   * Determine whether to show the indicators or not.
+   * @zh 是否展示指示器
+   */
+  showIndicators?: boolean
 
   /**
    * The horizontal position of the indicators.
@@ -106,12 +124,15 @@ interface CCarouselProps {
    * The content of carousel. It is recommended to use `CCarouselSlider`
    * @zh 内容，建议使用<code>CCarouselSlider</code>
    */
-  children: any[]
+  children: Array<ReactNode>
 }
 
 type Direction = 'forward' | 'backward'
+interface CCarouselRef {
+  toIndex: (idx: number) => void
+}
 
-const CCarousel = ({
+const CCarouselWithoutForward = ({
   height = '300px',
   theme = 'primary',
   interval = 0,
@@ -128,7 +149,10 @@ const CCarousel = ({
   customArrowNext,
   children,
   pauseOnHover = true,
-}: CCarouselProps) => {
+  showIndicators = true,
+  fixedHeight = false,
+  isFlow = false,
+}: CCarouselProps, ref: Ref<CCarouselRef>) => {
   const [direction, setDirection] = useState<Direction>('forward')
 
   const [showArrow, setShowArrow] = useState(arrowTiming === 'always')
@@ -198,10 +222,21 @@ const CCarousel = ({
 
   const [transitioning, setTransitioning] = useState(false)
 
-  const indicatorAnimationState = useMemo<'running' | 'paused'>(
-    () => ((pauseOnHover && hovering) || transitioning ? 'paused' : 'running'),
-    [pauseOnHover, hovering, transitioning],
-  )
+  const indicatorAnimationState = ((pauseOnHover && hovering) || transitioning ? 'paused' : 'running')
+
+  const [currentItemHeight, setCurrentItemHeight] = useState(0)
+  const [currentItemWidth, setCurrentItemWidth] = useState(0)
+
+  useImperativeHandle(ref, () => ({
+    toIndex,
+  }))
+
+  const style: CSSProperties = {
+    height: fixedHeight ? height : currentItemHeight ? `${currentItemHeight}px` : 'auto',
+  }
+  if (isFlow && currentItemWidth)
+    style.width = `${currentItemWidth}px`
+
   return (
     <CarouselContext.Provider
       value={{
@@ -209,13 +244,14 @@ const CCarousel = ({
         setSliding: setTransitioning,
         pauses,
         resumes,
+        setCurrentItemHeight,
+        setCurrentItemWidth,
+        isFlow,
       }}
     >
       <div
         className={clsx('c-carousel', vertical && 'c-carousel--vertical')}
-        style={{
-          height,
-        }}
+        style={style}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
@@ -235,7 +271,7 @@ const CCarousel = ({
               `c-${indicatorsAlignDirection}`,
             )}
           >
-            {customIndicators || children.map((_, i) => {
+            {showIndicators && (customIndicators || children.map((_, i) => {
               const isActive = i === activeIndex
               return (
                     <div key={`indicators-${i}`}>
@@ -262,7 +298,7 @@ const CCarousel = ({
                       </div>
                     </div>
               )
-            })}
+            }))}
           </div>
         </div>
         <Fade show={showPrevArrow}>
@@ -317,6 +353,8 @@ const CCarousel = ({
   )
 }
 
-export { CCarouselProps }
+const CCarousel = forwardRef(CCarouselWithoutForward)
+
+export type { CCarouselProps, CCarouselRef }
 
 export default CCarousel

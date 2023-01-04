@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from 'react'
 import { CTable } from '@casual-ui/react'
 import type {
@@ -7,7 +8,7 @@ import type {
 import type { PropItem } from 'react-docgen-typescript'
 import { translate } from '@docusaurus/Translate'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
-
+import Highlight, { defaultProps } from 'prism-react-renderer'
 interface PropTableProps {
   name: string
   typeWidth?: string
@@ -19,13 +20,25 @@ const localeMap = {
 
 export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
   const typeRender: CustomRender = ({ val }: any) => {
+    const code = new Map([
+      ['CTheme', '\'primary\' | \'secondary\' | \'warning\' | \'negative\''],
+      ['CSize', '\'xs\' | \'sm\' | \'md\' | \'lg\' | \'xl\''],
+    ]).get(val.name) || val.name
+
     return (
-      <code>
-        {new Map([
-          ['CTheme', '\'primary\' | \'secondary\' | \'warning\' | \'negative\''],
-          ['CSize', '\'sm\' | \'md\' | \'lg\''],
-        ]).get(val.name) || val.name}
-      </code>
+      <Highlight {...defaultProps} code={code} language="typescript">
+         {({ className, style, tokens, getLineProps, getTokenProps }) => (
+          <pre className={className} style={style}>
+            {tokens.map((line, i) => (
+              <div {...getLineProps({ line, key: i })}>
+                {line.map((token, key) => (
+                  <span {...getTokenProps({ token, key })} key={key} />
+                ))}
+              </div>
+            ))}
+          </pre>
+         )}
+      </Highlight>
     )
   }
 
