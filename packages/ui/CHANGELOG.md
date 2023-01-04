@@ -1,7 +1,5 @@
 # @casual-ui/react
 
-<<<<<<< HEAD
-=======
 ## 0.0.14
 
 ### Patch Changes
@@ -12,7 +10,6 @@
 - Updated dependencies [122b697]
   - @casual-ui/react@0.0.14
 
->>>>>>> c89a0a91ab350885c5c06e3c2b8d6fbfc904daae
 ## 0.0.13
 
 ### Patch Changes
