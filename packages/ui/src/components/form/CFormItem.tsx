@@ -2,10 +2,8 @@ import clsx from 'clsx'
 import type { ReactNode, Ref } from 'react'
 import React, {
   forwardRef,
-  useEffect,
   useImperativeHandle,
   useMemo,
-  useState,
 } from 'react'
 import type { CLabelDirection, CRule, CSize } from '@casual-ui/types'
 import useSize, { CSizeContext } from '../../hooks/useSize'
@@ -134,18 +132,6 @@ const CFormItemWithoutForwardRef = (
     ]).get(direction)
   }
 
-  const [innerErrorMessage, setInnerErrorMessage] = useState(hasError)
-
-  useEffect(() => {
-    if (!hasError) {
-      setTimeout(() => {
-        setInnerErrorMessage('')
-      }, 200)
-      return
-    }
-    setInnerErrorMessage(hasError)
-  }, [hasError])
-
   return (
     <CFormItemContext.Provider
       value={{
@@ -195,7 +181,7 @@ const CFormItemWithoutForwardRef = (
                     : 'c-form-item--error-tip--hidden',
                 )}
               >
-                {innerErrorMessage}
+                {hasError}
               </div>
             </div>
           </div>

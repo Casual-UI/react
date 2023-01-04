@@ -16,17 +16,19 @@
   --ifm-color-primary-lighter: #359962;
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
+  --ifm-pre-padding: 10px;
 }
+
 .alert--success {
   --ifm-alert-border-color: var(--casual-primary);
   --ifm-alert-background-color: var(--casual-primary-pale);
   --ifm-alert-background-color-highlight: var(--casual-primary-pale-darker);
-
 }
 
 .admonition-heading {
   font-weight: bold;
 }
+
 html[data-theme="light"] {
   background-color: #f7f8fa;
 
@@ -96,7 +98,7 @@ table {
 
 html,
 body {
-  font-family:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 .playgroundContainer_src-theme-Playground-styles-module .c-expansion--header {

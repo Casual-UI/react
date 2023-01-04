@@ -7,21 +7,21 @@ export default function useTimer(cb: (...params: any) => any, delay: number) {
 
   const [remain, setRemain] = useState(delay)
 
-  useEffect(() => {
-    return () => {
-      if (flag)
-        clearTimeout(flag)
+  const doClear = useCallback((setFlagNull = true) => {
+    if (flag) {
+      clearTimeout(flag)
+      if (setFlagNull)
+        setFlag(null)
     }
   }, [flag])
 
-  const reset = useCallback(() => {
+  useEffect(() => () => doClear(false), [doClear])
+
+  const reset = () => {
     setStart(Date.now())
     setRemain(delay)
-    if (flag) {
-      clearTimeout(flag)
-      setFlag(null)
-    }
-  }, [delay, flag])
+    doClear()
+  }
 
   const begin = () => {
     if (delay < 1)
@@ -31,24 +31,17 @@ export default function useTimer(cb: (...params: any) => any, delay: number) {
     setFlag(setTimeout(cb, remain))
   }
 
-  const resume = useCallback(() => {
+  const resume = () => {
     if (remain < 1)
       return
-
-    if (flag) {
-      clearTimeout(flag)
-      setFlag(null)
-    }
+    doClear()
     setFlag(setTimeout(cb, remain))
-  }, [remain, cb, flag])
+  }
 
-  const pause = useCallback(() => {
-    if (flag) {
-      clearTimeout(flag)
-      setFlag(null)
-    }
+  const pause = () => {
+    doClear()
     setRemain(remain - (Date.now() - start))
-  }, [flag, remain, start])
+  }
 
   return {
     reset,

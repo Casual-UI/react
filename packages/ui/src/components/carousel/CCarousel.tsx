@@ -5,13 +5,13 @@ import {
 import type { CTheme } from '@casual-ui/types'
 import clsx from 'clsx'
 import type { CSSProperties, ReactNode, Ref } from 'react'
-import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useState } from 'react'
+import React, { forwardRef, useImperativeHandle, useState } from 'react'
 import CButton from '../basic/button/CButton'
 import CIcon from '../basic/icon/CIcon'
 import Fade from '../transition/Fade'
 import TransitionWrapper from './TransitionWrapper'
 import { CarouselContext } from './CarouselContext'
-interface CCarouselProps {
+export interface CCarouselProps {
   /**
    * The height of container.
    * @zh 容器的高度
@@ -128,7 +128,7 @@ interface CCarouselProps {
 }
 
 type Direction = 'forward' | 'backward'
-interface CCarouselRef {
+export interface CCarouselRef {
   toIndex: (idx: number) => void
 }
 
@@ -157,15 +157,9 @@ const CCarouselWithoutForward = ({
 
   const [showArrow, setShowArrow] = useState(arrowTiming === 'always')
 
-  const showPrevArrow = useMemo(
-    () => showArrow && (infinity || activeIndex > 0),
-    [showArrow, infinity, activeIndex],
-  )
+  const showPrevArrow = showArrow && (infinity || activeIndex > 0)
 
-  const showNextArrow = useMemo(
-    () => showArrow && (infinity || activeIndex < children.length - 1),
-    [showArrow, infinity, activeIndex, children.length],
-  )
+  const showNextArrow = showArrow && (infinity || activeIndex < children.length - 1)
 
   const [hovering, setHovering] = useState(false)
 
@@ -190,35 +184,32 @@ const CCarouselWithoutForward = ({
       resumes.forEach(r => r())
   }
 
-  const toIndex = useCallback(
-    (idx: number) => {
-      if (idx < activeIndex) {
-        setDirection('backward')
-        if (idx >= 0) {
-          onActiveIndexChange?.(idx)
-          return
-        }
-        if (infinity)
-          onActiveIndexChange?.(children.length - 1)
-
+  const toIndex = (idx: number) => {
+    if (idx < activeIndex) {
+      setDirection('backward')
+      if (idx >= 0) {
+        onActiveIndexChange?.(idx)
         return
       }
-      if (idx > activeIndex) {
-        setDirection('forward')
-        if (idx < children.length) {
-          onActiveIndexChange?.(idx)
-          return
-        }
-        if (infinity)
-          onActiveIndexChange?.(0)
+      if (infinity)
+        onActiveIndexChange?.(children.length - 1)
+
+      return
+    }
+    if (idx > activeIndex) {
+      setDirection('forward')
+      if (idx < children.length) {
+        onActiveIndexChange?.(idx)
+        return
       }
-    },
-    [activeIndex, children.length, infinity, onActiveIndexChange],
-  )
+      if (infinity)
+        onActiveIndexChange?.(0)
+    }
+  }
 
-  const toPrev = useCallback(() => toIndex(activeIndex - 1), [activeIndex, toIndex])
+  const toPrev = () => toIndex(activeIndex - 1)
 
-  const toNext = useCallback(() => toIndex(activeIndex + 1), [activeIndex, toIndex])
+  const toNext = () => toIndex(activeIndex + 1)
 
   const [transitioning, setTransitioning] = useState(false)
 
@@ -334,8 +325,7 @@ const CCarouselWithoutForward = ({
           </div>
         </Fade>
         <div className="c-carousel--sliders">
-          {children.map((c, i) => (
-            <TransitionWrapper
+          {children.map((c, i) => <TransitionWrapper
               key={i}
               direction={direction}
               activeIndex={activeIndex}
@@ -345,8 +335,7 @@ const CCarouselWithoutForward = ({
               vertical={vertical}
             >
               {c}
-            </TransitionWrapper>
-          ))}
+            </TransitionWrapper>)}
         </div>
       </div>
     </CarouselContext.Provider>
@@ -354,7 +343,5 @@ const CCarouselWithoutForward = ({
 }
 
 const CCarousel = forwardRef(CCarouselWithoutForward)
-
-export type { CCarouselProps, CCarouselRef }
 
 export default CCarousel

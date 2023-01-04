@@ -5,7 +5,7 @@ export default function Demo() {
   const [activeIndex, setActiveIndex] = useState(0)
 
   const itemStyle = {
-    height: '100%',
+    height: '300px',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -16,6 +16,7 @@ export default function Demo() {
 
   return (
     <CCarousel
+      infinity
       activeIndex={activeIndex}
       onActiveIndexChange={setActiveIndex}
     >

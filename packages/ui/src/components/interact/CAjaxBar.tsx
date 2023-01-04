@@ -1,7 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react'
 import clsx from 'clsx'
 import type { CTheme } from '@casual-ui/types'
-import type { Ref } from 'react'
 import useTheme from '../../hooks/useTheme'
 
 interface CAjaxBarProps {
@@ -12,28 +11,12 @@ interface CAjaxBarProps {
   theme: CTheme
 }
 
-const CAjaxBarWithoutForward = ({
-  theme,
-}: CAjaxBarProps,
-/**
- * The forward ref
- * @zh 转发的 ref 实例
- */
-ref: Ref<{
-  /**
-   * Start the ajax bar
-   * @zh 开始加载
-   */
+interface CAjaxBarRef {
   start: () => void
-  /**
-   * End the ajax bar
-   * @zh 结束加载
-   */
   end: () => void
-}>) => {
-  /**
-   * The ajax bar width
-   */
+}
+
+const CAjaxBar = forwardRef<CAjaxBarRef, CAjaxBarProps>(({ theme }, ref) => {
   const [barWidth, setBarWidth] = useState(0)
 
   const [startedFlag, setStartedFlag] = useState<ReturnType<typeof setInterval> | null>(null)
@@ -70,6 +53,10 @@ ref: Ref<{
 
   useImperativeHandle(ref, () => {
     return {
+      /**
+       * Start the ajax bar
+       * @zh 开始进度条
+       */
       start,
       end,
     }
@@ -84,8 +71,8 @@ ref: Ref<{
       <div className="c-ajax-bar--progress"></div>
     </div>
   )
-}
+})
 
-const CAjaxBar = forwardRef(CAjaxBarWithoutForward)
+CAjaxBar.displayName = 'CAjaxBar'
 export default CAjaxBar
 export type { CAjaxBarProps }

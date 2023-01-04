@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { CTable } from '@casual-ui/react'
 import type {
   CTableColumn,
@@ -9,6 +9,8 @@ import type { PropItem } from 'react-docgen-typescript'
 import { translate } from '@docusaurus/Translate'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Highlight, { defaultProps } from 'prism-react-renderer'
+import { usePluginData } from '@docusaurus/useGlobalData'
+
 interface PropTableProps {
   name: string
   typeWidth?: string
@@ -21,11 +23,16 @@ const localeMap = {
 export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
   const typeRender: CustomRender = ({ val }: any) => {
     const code = new Map([
-      ['CTheme', '\'primary\' | \'secondary\' | \'warning\' | \'negative\''],
+      ['CTheme', `  | 'primary' 
+  | 'secondary' 
+  | 'warning' 
+  | 'negative'`],
       ['CSize', '\'xs\' | \'sm\' | \'md\' | \'lg\' | \'xl\''],
     ]).get(val.name) || val.name
 
     return (
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
+      // @ts-ignore
       <Highlight {...defaultProps} code={code} language="typescript">
          {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre className={className} style={style}>
@@ -50,7 +57,9 @@ export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
         message: 'Name',
       }),
       field: 'name',
-      width: '120px',
+      width: '200px',
+      customHeader: ({ title }) => <span>{title} (<b className="c-text-negative">*</b> means required)</span>,
+      customRender: ({ val, row }) => row.required ? <span>{val}<b className="c-text-negative">*</b></span> : val,
     },
     {
       title: translate({
@@ -87,29 +96,11 @@ export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
     },
     {
       title: translate({
-        id: 'propTable.required',
-        message: 'Required',
-      }),
-      field: 'required',
-      customRender: ({ val }: any) =>
-        val
-          ? translate({
-            id: 'propTable.required.yes',
-            message: 'Yes',
-          })
-          : translate({
-            id: 'propTable.required.no',
-            message: 'No',
-          }),
-      width: '100px',
-    },
-    {
-      title: translate({
         id: 'propTable.defaultValue',
         message: 'Default Value',
       }),
       field: 'defaultValue',
-      width: '100px',
+      width: '120px',
       customRender: ({ val }: any) => {
         return val === null
           ? (
@@ -127,18 +118,11 @@ export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
       },
     },
   ]
-
-  const [data, setData] = useState([])
-
-  useEffect(() => {
-    if (name) {
-      import(
-        `@site/.docusaurus/casual-components-doc/default/${name}.json`
-      ).then((r) => {
-        setData(Object.values(r.default[0].props))
-      })
-    }
-  }, [name])
+  const pluginData = usePluginData('casual-components-doc') as any
+  let data = []
+  const jsonName = `${name}.json`
+  if (pluginData && jsonName in pluginData)
+    data = Object.values(pluginData[jsonName][0].props) as any
 
   return (
     <CTable<PropItem>
