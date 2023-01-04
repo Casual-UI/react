@@ -4,9 +4,11 @@
 
 ### Patch Changes
 
-- 122b697: - Bug: fix date picker useEffect loop
+- 122b697: 
+  - Bug: fix date picker useEffect loop
   - Refator: reimplement the CTabs and CDatePicker with CCarousel
   - Docs: Add type highlight for prop types
+  - Fix: remove CCarousel useless class name
 - Updated dependencies [122b697]
   - @casual-ui/react@0.0.14
 
