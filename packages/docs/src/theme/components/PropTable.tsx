@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { CTable } from '@casual-ui/react'
 import type {
   CTableColumn,
@@ -9,7 +9,6 @@ import type { PropItem } from 'react-docgen-typescript'
 import { translate } from '@docusaurus/Translate'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Highlight, { defaultProps } from 'prism-react-renderer'
-import { usePluginData } from '@docusaurus/useGlobalData'
 import darkTheme from 'prism-react-renderer/themes/palenight'
 import lightTheme from 'prism-react-renderer/themes/vsLight'
 import { useColorMode } from '@docusaurus/theme-common'
@@ -125,11 +124,17 @@ export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
       },
     },
   ]
-  const pluginData = usePluginData('casual-components-doc') as any
-  let data = []
-  const jsonName = `${name}.json`
-  if (pluginData && jsonName in pluginData)
-    data = Object.values(pluginData[jsonName][0].props) as any
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    if (name) {
+      import(
+        `@site/.docusaurus/casual-components-doc/default/${name}.json`
+      ).then((r) => {
+        setData(Object.values(r.default[0].props))
+      })
+    }
+  }, [name])
 
   return (
     <CTable<PropItem>
