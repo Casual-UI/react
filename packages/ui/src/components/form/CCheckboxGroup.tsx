@@ -1,6 +1,7 @@
 import type { CSize } from '@casual-ui/types'
 import clsx from 'clsx'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
+import { useNotFirst } from '@casual-ui/react'
 import useGutterSize from '../../hooks/useGutterSize'
 import type { CCheckboxModel } from './CCheckbox'
 import CCheckbox from './CCheckbox'
@@ -63,14 +64,9 @@ const CCheckboxGroup = ({
 
   const { validateCurrent } = useFormItemContext()
 
-  const [isFirst, setIsFirst] = useState(true)
-
-  useEffect(() => {
-    if (!isFirst)
-      validateCurrent?.(value)
-
-    setIsFirst(false)
-  }, [isFirst, validateCurrent, value])
+  useNotFirst(() => {
+    validateCurrent?.(value)
+  }, [value])
 
   return (
     <div

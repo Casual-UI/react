@@ -54,8 +54,10 @@ import CCarousel from './components/carousel/CCarousel'
 import CCarouselSlider from './components/carousel/CCarouselSlider'
 import useI18n from './hooks/useI18n'
 import CAjaxBar from './components/interact/CAjaxBar'
+import useNotFirst from './hooks/useNotFirst'
 
 export {
+  useNotFirst,
   useI18n,
   CAjaxBar,
   CCarousel,

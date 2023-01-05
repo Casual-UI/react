@@ -7,10 +7,11 @@ export default function useTimer(cb: (...params: any) => any, delay: number) {
 
   const [remain, setRemain] = useState(delay)
 
-  const clearCountdown = () => {
+  const clearCountdown = (setNull = true) => {
     if (countdownFlag.current) {
       clearTimeout(countdownFlag.current)
-      countdownFlag.current = null
+      if (setNull)
+        countdownFlag.current = null
     }
   }
 
@@ -40,7 +41,7 @@ export default function useTimer(cb: (...params: any) => any, delay: number) {
     setRemain(remain - (Date.now() - start))
   }
 
-  useEffect(() => () => clearCountdown(), [])
+  useEffect(() => () => clearCountdown(false), [])
 
   return {
     clearCountdown,

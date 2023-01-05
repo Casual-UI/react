@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import clsx from 'clsx'
 import type { CSize } from '@casual-ui/types'
 import dayjs from 'dayjs'
-import { CSizeContext, CTabs, useSize } from '@casual-ui/react'
+import { CSizeContext, CTabs, useNotFirst, useSize } from '@casual-ui/react'
 import CDropdown from '../../interact/CDropdown'
 import CInput from '../CInput'
 import { useFormItemContext } from '../CFormContext'
@@ -133,20 +133,14 @@ const CDatePicker = ({
 
   const { validateCurrent } = useFormItemContext()
 
-  const isFirst = useRef(true)
-
-  useEffect(() => {
-    if (isFirst.current) {
-      validateCurrent?.(value)
-      isFirst.current = false
-    }
+  useNotFirst(() => {
+    validateCurrent?.(value)
 
     if (!value) {
       onFormattedValueChange?.('')
       return
     }
     onFormattedValueChange?.(innerFormatter(value))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
   useEffect(() => {

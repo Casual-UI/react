@@ -147,7 +147,6 @@ const CFormItemWithoutForwardRef = (
               'c-form-item',
               `c-col-${formContextValue.col}`,
               `c-${formContextValue.labelDirection}`,
-              `c-col-${formContextValue.col}`,
               formContextValue.labelDirection === 'column'
                 || formContextValue.labelDirection === 'column-reverse'
                 ? 'c-items-start'

@@ -1,5 +1,5 @@
 import type { CSize } from '@casual-ui/types'
-import { CIcon, CSizeContext, useSize } from '@casual-ui/react'
+import { CIcon, CSizeContext, useNotFirst, useSize } from '@casual-ui/react'
 import { matKeyboardArrowDown } from '@quasar/extras/material-icons'
 import clsx from 'clsx'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
@@ -109,13 +109,11 @@ const CSelect = ({
 
   const { hasError, validateCurrent } = useFormItemContext()
 
-  const [isFirst, setIsFirst] = useState(true)
+  useNotFirst(() => {
+    validateCurrent?.(value)
+  }, [value])
 
   useEffect(() => {
-    if (!isFirst)
-      validateCurrent?.(value)
-
-    setIsFirst(false)
     if (multiple) {
       const newHeight = tagsDom.current?.clientHeight || -1
       if (newHeight > initialSelectDomHeight) {
@@ -126,7 +124,8 @@ const CSelect = ({
       return
     }
     setInputValue(options.find(item => item.value === value)?.label || '')
-  }, [initialSelectDomHeight, isFirst, multiple, options, validateCurrent, value])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value])
 
   const onItemClick = (item: OOption) => {
     if (multiple) {
