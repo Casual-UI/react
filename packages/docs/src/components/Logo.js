@@ -40,7 +40,7 @@ const Logo = () => {
       </p>
       <div className={homeStyle.actions}>
         <a
-          href="/guide/install/"
+          href={useBaseUrl('/guide/install/')}
           aria-label={translate({
             id: 'homePage.quickStart.ariaLabel',
             message: 'Quick Start',
@@ -53,7 +53,7 @@ const Logo = () => {
           })}
         </a>
         <a
-          href="/components/basic/button"
+          href={useBaseUrl('/components/basic/button')}
           aria-label={translate({
             id: 'homePage.componentList.ariaLabel',
             message: 'Components List',
