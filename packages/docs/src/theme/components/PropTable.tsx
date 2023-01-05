@@ -10,6 +10,9 @@ import { translate } from '@docusaurus/Translate'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Highlight, { defaultProps } from 'prism-react-renderer'
 import { usePluginData } from '@docusaurus/useGlobalData'
+import darkTheme from 'prism-react-renderer/themes/palenight'
+import lightTheme from 'prism-react-renderer/themes/vsLight'
+import { useColorMode } from '@docusaurus/theme-common'
 
 interface PropTableProps {
   name: string
@@ -21,6 +24,7 @@ const localeMap = {
 }
 
 export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
+  const { colorMode } = useColorMode()
   const typeRender: CustomRender = ({ val }: any) => {
     const code = new Map([
       ['CTheme', `  | 'primary' 
@@ -33,7 +37,7 @@ export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
     return (
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
       // @ts-ignore
-      <Highlight {...defaultProps} code={code} language="typescript">
+      <Highlight {...defaultProps} code={code} language="typescript" theme={colorMode === 'dark' ? darkTheme : lightTheme}>
          {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre className={className} style={style}>
             {tokens.map((line, i) => (
