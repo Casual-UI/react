@@ -444,13 +444,7 @@
     "message": "类型"
   },
   "propTable.required": {
-    "message": "是否必填"
-  },
-  "propTable.required.yes": {
-    "message": "是"
-  },
-  "propTable.required.no": {
-    "message": "否"
+    "message": "代表必须"
   },
   "propTable.defaultValue": {
     "message": "默认值"

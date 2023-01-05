@@ -62,7 +62,10 @@ export const PropTable = ({ name, typeWidth = '200px' }: PropTableProps) => {
       }),
       field: 'name',
       width: '200px',
-      customHeader: ({ title }) => <span>{title} (<b className="c-text-negative">*</b> means required)</span>,
+      customHeader: ({ title }) => <span>{title} (<b className="c-text-negative">*</b>{translate({
+        id: 'propTable.required',
+        message: 'for required',
+      })})</span>,
       customRender: ({ val, row }) => row.required ? <span>{val}<b className="c-text-negative">*</b></span> : val,
     },
     {
