@@ -26,7 +26,7 @@ const Logo = () => {
     <div className={homeStyle.home}>
       <div className={clsx(homeStyle.logoContainer)}>
         <img
-          src={useBaseUrl('/logo.svg')}
+          src={useBaseUrl('/logo.png')}
           alt=""
           className={homeStyle.logo}
         />

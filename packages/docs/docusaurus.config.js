@@ -10,7 +10,7 @@ const config = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'logo.svg',
+  favicon: 'logo.png',
   organizationName: 'Blackman99',
   projectName: 'casual-ui-react',
   githubHost: 'github.com',
@@ -65,8 +65,8 @@ const config = {
         title: 'Casual UI - React',
         logo: {
           alt: 'Casual UI Logo',
-          src: 'logo.svg',
-          srcDark: 'logo-dark.svg',
+          src: 'logo.png',
+          srcDark: 'logo.png',
         },
         items: [
           {
