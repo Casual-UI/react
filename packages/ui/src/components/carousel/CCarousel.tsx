@@ -5,12 +5,12 @@ import {
 import type { CTheme } from '@casual-ui/types'
 import clsx from 'clsx'
 import type { CSSProperties, ReactNode, Ref } from 'react'
-import React, { forwardRef, useImperativeHandle, useState } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { animated, useSpringRef, useTransition } from 'react-spring'
 import CButton from '../basic/button/CButton'
 import CIcon from '../basic/icon/CIcon'
 import Fade from '../transition/Fade'
-import TransitionWrapper from './TransitionWrapper'
-import { CarouselContext } from './CarouselContext'
+import useTimer from './useTimer'
 export interface CCarouselProps {
   /**
    * The height of container.
@@ -163,27 +163,6 @@ const CCarouselWithoutForward = ({
 
   const [hovering, setHovering] = useState(false)
 
-  const pauses: Function[] = []
-  const resumes: Function[] = []
-
-  const onMouseEnter = () => {
-    if (arrowTiming === 'hover')
-      setShowArrow(true)
-
-    setHovering(true)
-    if (pauseOnHover)
-      pauses.forEach(p => p())
-  }
-
-  const onMouseLeave = () => {
-    if (arrowTiming === 'hover')
-      setShowArrow(false)
-
-    setHovering(false)
-    if (pauseOnHover)
-      resumes.forEach(r => r())
-  }
-
   const toIndex = (idx: number) => {
     if (idx < activeIndex) {
       setDirection('backward')
@@ -209,7 +188,29 @@ const CCarouselWithoutForward = ({
 
   const toPrev = () => toIndex(activeIndex - 1)
 
-  const toNext = () => toIndex(activeIndex + 1)
+  const toNext = () => {
+    toIndex(activeIndex + 1)
+  }
+
+  const { reset, begin, resume, pause } = useTimer(toNext, interval)
+
+  const handleMouseEnter = () => {
+    if (arrowTiming === 'hover')
+      setShowArrow(true)
+
+    setHovering(true)
+    if (pauseOnHover)
+      pause()
+  }
+
+  const handleMouseLeave = () => {
+    if (arrowTiming === 'hover')
+      setShowArrow(false)
+
+    setHovering(false)
+    if (pauseOnHover)
+      resume()
+  }
 
   const [transitioning, setTransitioning] = useState(false)
 
@@ -228,117 +229,137 @@ const CCarouselWithoutForward = ({
   if (isFlow && currentItemWidth)
     style.width = `${currentItemWidth}px`
 
+  const springRef = useSpringRef()
+
+  const slidesRef = useRef<HTMLDivElement>(null)
+
+  const transition = useTransition(activeIndex, {
+    ref: springRef,
+    from: { transform: `translate${vertical ? 'Y' : 'X'}(${direction === 'forward' ? 100 : -100}%)` },
+    enter: { transform: `translate${vertical ? 'Y' : 'X'}(0%)` },
+    leave: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      transform: `translate${vertical ? 'Y' : 'X'}(${direction === 'forward' ? -100 : 100}%)`,
+    },
+    keys: null,
+    onStart: () => {
+      setTransitioning(true)
+    },
+    onRest(state, control, idx) {
+      setTransitioning(false)
+      if (idx !== activeIndex)
+        return
+      reset()
+      if (interval && !hovering)
+        begin()
+
+      if (slidesRef.current) {
+        setCurrentItemHeight?.(slidesRef.current.offsetHeight)
+        setCurrentItemWidth?.(slidesRef.current.offsetWidth)
+      }
+    },
+  })
+
+  useEffect(() => {
+    springRef.start()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex])
+
   return (
-    <CarouselContext.Provider
-      value={{
-        hovering,
-        setSliding: setTransitioning,
-        pauses,
-        resumes,
-        setCurrentItemHeight,
-        setCurrentItemWidth,
-        isFlow,
-      }}
+    <div
+      className={clsx('c-carousel', vertical && 'c-carousel--vertical')}
+      style={style}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div
-        className={clsx('c-carousel', vertical && 'c-carousel--vertical')}
-        style={style}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+        className={clsx(
+          'c-carousel--indicators',
+          'c-flex',
+          `c-items-${indicatorsPositionVertical}`,
+          `c-justify-${indicatorsPositionHorizontal}`,
+        )}
       >
         <div
           className={clsx(
-            'c-carousel--indicators',
+            'c-carousel--indicators-container',
+            'c-gutter-xs',
             'c-flex',
-            `c-items-${indicatorsPositionVertical}`,
-            `c-justify-${indicatorsPositionHorizontal}`,
+            `c-${indicatorsAlignDirection}`,
           )}
         >
-          <div
-            className={clsx(
-              'c-carousel--indicators-container',
-              'c-gutter-xs',
-              'c-flex',
-              `c-${indicatorsAlignDirection}`,
-            )}
-          >
-            {showIndicators && (customIndicators || children.map((_, i) => {
-              const isActive = i === activeIndex
-              return (
-                    <div key={`indicators-${i}`}>
+          {showIndicators && (customIndicators || children.map((_, i) => {
+            const isActive = i === activeIndex
+            return (
+                  <div key={`indicators-${i}`}>
+                    <div
+                      className={clsx(
+                        'c-carousel--indicator-item',
+                        `c-carousel--indicator-item--${theme}`,
+                        isActive && 'c-carousel--indicator-item--active',
+                      )}
+                      onClick={() => toIndex(i)}
+                    >
+                      <div className="c-carousel--indicator-item--bg"></div>
                       <div
-                        className={clsx(
-                          'c-carousel--indicator-item',
-                          `c-carousel--indicator-item--${theme}`,
-                          isActive && 'c-carousel--indicator-item--active',
-                        )}
-                        onClick={() => toIndex(i)}
-                      >
-                        <div className="c-carousel--indicator-item--bg"></div>
-                        <div
-                          className="c-carousel--indicator-item--progress-bar"
-                          style={
-                            isActive
-                              ? {
-                                  animationPlayState: indicatorAnimationState,
-                                  animationDuration: `${interval}ms`,
-                                }
-                              : {}
-                          }
-                        ></div>
-                      </div>
+                        className="c-carousel--indicator-item--progress-bar"
+                        style={
+                          isActive
+                            ? {
+                                animationPlayState: indicatorAnimationState,
+                                animationDuration: `${interval}ms`,
+                              }
+                            : {}
+                        }
+                      ></div>
                     </div>
-              )
-            }))}
-          </div>
-        </div>
-        <Fade show={showPrevArrow}>
-          <div
-            className="c-carousel--control c-carousel--control--prev"
-            onClick={toPrev}
-          >
-            {customArrowPrev || (
-              <CButton
-                flat
-                icon
-                theme={theme}
-              >
-                <CIcon content={matNavigateBefore} />
-              </CButton>
-            )}
-          </div>
-        </Fade>
-        <Fade show={showNextArrow}>
-          <div
-            className="c-carousel--control c-carousel--control--next"
-            onClick={toNext}
-          >
-            {customArrowNext || (
-              <CButton
-                flat
-                icon
-                theme={theme}
-              >
-                <CIcon content={matNavigateNext} />
-              </CButton>
-            )}
-          </div>
-        </Fade>
-        <div className="c-carousel--sliders">
-          {children.map((c, i) => <TransitionWrapper
-              key={i}
-              direction={direction}
-              activeIndex={activeIndex}
-              currentIndex={i}
-              toNext={toNext}
-              interval={interval}
-              vertical={vertical}
-            >
-              {c}
-            </TransitionWrapper>)}
+                  </div>
+            )
+          }))}
         </div>
       </div>
-    </CarouselContext.Provider>
+      <Fade show={showPrevArrow}>
+        <div
+          className="c-carousel--control c-carousel--control--prev"
+          onClick={toPrev}
+        >
+          {customArrowPrev || (
+            <CButton
+              flat
+              icon
+              theme={theme}
+            >
+              <CIcon content={matNavigateBefore} />
+            </CButton>
+          )}
+        </div>
+      </Fade>
+      <Fade show={showNextArrow}>
+        <div
+          className="c-carousel--control c-carousel--control--next"
+          onClick={toNext}
+        >
+          {customArrowNext || (
+            <CButton
+              flat
+              icon
+              theme={theme}
+            >
+              <CIcon content={matNavigateNext} />
+            </CButton>
+          )}
+        </div>
+      </Fade>
+      <div className="c-carousel--sliders" ref={slidesRef}>
+        {transition((style, idx) => <animated.div style={style}>
+          {children[idx]}
+        </animated.div>)}
+      </div>
+    </div>
   )
 }
 

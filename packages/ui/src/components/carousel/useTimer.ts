@@ -1,26 +1,23 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function useTimer(cb: (...params: any) => any, delay: number) {
-  const [flag, setFlag] = useState<ReturnType<typeof setTimeout> | null>(null)
+  const countdownFlag = useRef<number | null>(null)
 
   const [start, setStart] = useState(Date.now())
 
   const [remain, setRemain] = useState(delay)
 
-  const doClear = useCallback((setFlagNull = true) => {
-    if (flag) {
-      clearTimeout(flag)
-      if (setFlagNull)
-        setFlag(null)
+  const clearCountdown = () => {
+    if (countdownFlag.current) {
+      clearTimeout(countdownFlag.current)
+      countdownFlag.current = null
     }
-  }, [flag])
-
-  useEffect(() => () => doClear(false), [doClear])
+  }
 
   const reset = () => {
+    clearCountdown()
     setStart(Date.now())
     setRemain(delay)
-    doClear()
   }
 
   const begin = () => {
@@ -28,27 +25,30 @@ export default function useTimer(cb: (...params: any) => any, delay: number) {
       return
     setRemain(delay)
     setStart(Date.now())
-    setFlag(setTimeout(cb, remain))
+    countdownFlag.current = setTimeout(cb, delay)
   }
 
   const resume = () => {
     if (remain < 1)
       return
-    doClear()
-    setFlag(setTimeout(cb, remain))
+    clearCountdown()
+    countdownFlag.current = setTimeout(cb, remain)
   }
 
   const pause = () => {
-    doClear()
+    clearCountdown()
     setRemain(remain - (Date.now() - start))
   }
 
+  useEffect(() => () => clearCountdown(), [])
+
   return {
+    clearCountdown,
     reset,
     begin,
     resume,
     pause,
-    flag,
+    countdownFlag,
     remain,
     start,
   }
