@@ -131,7 +131,7 @@ const config = {
             position: 'right',
           },
           {
-            'href': 'https://github.com/Blackman99/casual-ui.git',
+            'href': 'https://github.com/Casual-UI/react',
             'position': 'right',
             'className': 'header-github-link',
             'aria-label': 'GitHub repository',
