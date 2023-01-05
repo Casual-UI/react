@@ -151,6 +151,7 @@ const CFormItemWithoutForwardRef = (
                 || formContextValue.labelDirection === 'column-reverse'
                 ? 'c-items-start'
                 : 'c-items-center',
+              rules && rules.length && field && 'c-form-item--maybe-error',
             )}
           >
             <div

@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import type { CSize } from '@casual-ui/types'
 import useSize, { CSizeContext } from '../../hooks/useSize'
 import useGutterSize, { CGutterSizeContext } from '../../hooks/useGutterSize'
+import CLoadingBars from '../basic/loading/CLoadingBars'
 import type {
   Errors,
   Validator,
@@ -62,6 +63,16 @@ interface CFormProps {
    * @zh 表单内容，推荐使用 CFormItem
    */
   children?: ReactNode
+  /**
+   * Determine whether the form is in validating or not.
+   * @zh 表单是否处于验证中
+   */
+  validating?: boolean
+  /**
+   * Emit when the validating status change.
+   * @zh 表单验证中状态变更
+   */
+  onValidatingChange?: (validating: boolean) => void
 }
 const FormWithoutForward = (
   {
@@ -74,6 +85,8 @@ const FormWithoutForward = (
     value,
     gutterSize,
     items = [],
+    validating,
+    onValidatingChange,
   }: CFormProps,
   ref: Ref<{
     validateAll: () => void | Promise<void>
@@ -101,7 +114,13 @@ const FormWithoutForward = (
     })
   }
 
-  const validateField = async (field: string) => {
+  const wrapValidating = (validateAction: Function) => async () => {
+    onValidatingChange?.(true)
+    await validateAction()
+    onValidatingChange?.(false)
+  }
+
+  const validateField = wrapValidating(async (field: string) => {
     const fieldRules = validators[field]
     let hasError: string | false = false
     if (fieldRules) {
@@ -117,9 +136,9 @@ const FormWithoutForward = (
       ...errors,
       [field]: hasError,
     })
-  }
+  })
 
-  const validateAll = async () => {
+  const validateAll = wrapValidating(async () => {
     const errors: Errors = {}
     for (const field in validators) {
       const rules = validators[field]
@@ -132,7 +151,7 @@ const FormWithoutForward = (
       }
     }
     setErrors(errors)
-  }
+  })
 
   const formContextValue = useFormContext({
     col,
@@ -172,6 +191,11 @@ const FormWithoutForward = (
               />
             ))}
             {children}
+             {validating && (
+              <div className="c-form--validating-loading c-flex c-items-center c-justify-center">
+                <CLoadingBars />
+              </div>
+             )}
           </div>
         </CSizeContext.Provider>
       </CGutterSizeContext.Provider>
