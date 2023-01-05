@@ -131,9 +131,10 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://github.com/Blackman99/casual-ui.git',
-            label: 'Github',
-            position: 'right',
+            'href': 'https://github.com/Blackman99/casual-ui.git',
+            'position': 'right',
+            'className': 'header-github-link',
+            'aria-label': 'GitHub repository',
           },
         ],
       },
