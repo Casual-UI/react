@@ -114,7 +114,13 @@ const FormWithoutForward = (
     })
   }
 
-  const validateField = async (field: string) => {
+  const wrapValidating = (validateAction: Function) => async () => {
+    onValidatingChange?.(true)
+    await validateAction()
+    onValidatingChange?.(false)
+  }
+
+  const validateField = wrapValidating(async (field: string) => {
     const fieldRules = validators[field]
     let hasError: string | false = false
     if (fieldRules) {
@@ -130,10 +136,9 @@ const FormWithoutForward = (
       ...errors,
       [field]: hasError,
     })
-  }
+  })
 
-  const validateAll = async () => {
-    onValidatingChange?.(true)
+  const validateAll = wrapValidating(async () => {
     const errors: Errors = {}
     for (const field in validators) {
       const rules = validators[field]
@@ -146,8 +151,7 @@ const FormWithoutForward = (
       }
     }
     setErrors(errors)
-    onValidatingChange?.(false)
-  }
+  })
 
   const formContextValue = useFormContext({
     col,
@@ -187,11 +191,11 @@ const FormWithoutForward = (
               />
             ))}
             {children}
-            {validating && (
+             {validating && (
               <div className="c-form--validating-loading c-flex c-items-center c-justify-center">
                 <CLoadingBars />
               </div>
-            )}
+             )}
           </div>
         </CSizeContext.Provider>
       </CGutterSizeContext.Provider>

@@ -147,11 +147,11 @@ const CFormItemWithoutForwardRef = (
               'c-form-item',
               `c-col-${formContextValue.col}`,
               `c-${formContextValue.labelDirection}`,
-              `c-col-${formContextValue.col}`,
               formContextValue.labelDirection === 'column'
                 || formContextValue.labelDirection === 'column-reverse'
                 ? 'c-items-start'
                 : 'c-items-center',
+              rules && rules.length && field && 'c-form-item--maybe-error',
             )}
           >
             <div

@@ -249,7 +249,7 @@ const CCarouselWithoutForward = ({
     onStart: () => {
       setTransitioning(true)
     },
-    onRest(state, control, idx) {
+    onRest(_state, _control, idx) {
       setTransitioning(false)
       if (idx !== activeIndex)
         return
