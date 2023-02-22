@@ -7,7 +7,7 @@ Include these parts:
 
 ## Online Demos & Docs 
 
-[Casual UI - React](https://casual-ui-react.donsen.site/)
+[Casual UI - React](https://react.casual-ui.site/)
 
 ## Usage Guide
 
