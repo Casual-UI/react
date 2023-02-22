@@ -118,11 +118,11 @@ const config = {
             items: [
               {
                 label: 'Casual UI - Vue',
-                to: 'https://casual-ui-vue.donsen.site/',
+                to: 'https://vue.casual-ui.site/',
               },
               {
                 label: 'Casual UI - Svelte',
-                to: 'https://casual-ui-svelte.donsen.site/',
+                to: 'https://svelte.casual-ui.site/',
               },
             ],
           },
