@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 const config = {
   title: 'Casual UI - React',
   tagline: 'A ui components lib that supports for React17+',
-  url: 'https://casual-ui-react.donsen.site',
+  url: 'https://react.casual-ui.site',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
