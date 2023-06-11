@@ -1,42 +1,6 @@
-## Introduction
-The React version repo of Casual UI
+According to the [benchmark here](https://github.com/krausest/js-framework-benchmark)
 
-Include these parts:
-- The ui components source code
-- The docs site
+![image](https://github.com/Casual-UI/react/assets/41723543/c2d9ce4a-8934-4b8a-842e-fb9dce989432)
 
-## Online Demos & Docs 
-
-[Casual UI - React](https://react.casual-ui.site/)
-
-## Usage Guide
-
-- Install
-```sh
-# via npm
-npm install @casual-ui/react
-
-# via yarn
-yarn add @casual-ui/react
-
-# via pnpm
-pnpm install @casual-ui/react
-```
-- Import styles in your entry file
-```js
-import '@casual-ui/react/dist/style.css'
-```
-- Use in j(t)sx files
-```jsx
-import { CButton } from '@casual-ui/react'
-
-const App = () => <CButton label="A Button" />
-```
-
-## Contributing
-
-[Contributing](./CONTRIBUTING.md)
-
-## LICENSE
-
-[MIT](https://opensource.org/licenses/MIT)
+# React now becomes the worst performance framework among all. And not to mention that the syntax/API is very anti-human.
+# It is not worthy to maintain anything based on React. 
