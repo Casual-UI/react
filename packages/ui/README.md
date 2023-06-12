@@ -1,36 +1,6 @@
-# Casual UI React
+According to the [benchmark here](https://github.com/krausest/js-framework-benchmark)
 
-A casual UI libs for React17+
+![image](https://github.com/Casual-UI/react/assets/41723543/c2d9ce4a-8934-4b8a-842e-fb9dce989432)
 
-## Demos & Docs
-
-[Casual UI - React](https://casual-ui-react.donsen.site/)
-
-## Install
-
-```bash
-# via npm
-npm install casual-ui-react react react-dom
-
-# via yarn
-yarn install casual-ui-react react react-dom
-
-# via pnpm
-pnpm install casual-ui-react react react-dom
-```
-
-## Usage
-
-### Import styles in your entry file
-
-```js
-import 'casual-ui-react/dist/style.css'
-```
-
-### Use in your jsx files
-
-```jsx
-import { CButton } from '@casual-ui/react'
-
-const APP = () => <CButton label="按钮" />
-```
+# React now becomes the worst performance framework among all. And not to mention that the syntax/API is very anti-human.
+# It is not worthy to maintain anything based on React anymore.
