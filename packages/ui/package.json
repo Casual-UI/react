@@ -1,6 +1,6 @@
 {
   "name": "@casual-ui/react",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Casual UI React",
   "main": "src/index.ts",
   "author": {
