@@ -1,5 +1,13 @@
 # @casual-ui/react
 
+## 0.0.16
+
+### Patch Changes
+
+- 8d82c24: mark as deprecated
+- Updated dependencies [8d82c24]
+  - @casual-ui/react@0.0.16
+
 ## 0.0.15
 
 ### Patch Changes
