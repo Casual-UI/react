@@ -1,5 +1,16 @@
 # @casual-ui/react
 
+## 0.1.0
+
+### Minor Changes
+
+- 3160929: chore: update deps
+
+### Patch Changes
+
+- Updated dependencies [3160929]
+  - @casual-ui/react@0.1.0
+
 ## 0.0.16
 
 ### Patch Changes
