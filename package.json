@@ -1,10 +1,10 @@
 {
 	"private": true,
 	"devDependencies": {
-		"@casual-ui/eslint-config-react": "^0.0.4",
-		"@changesets/cli": "^2.25.2",
-		"@types/react": "^17.0.43",
-		"eslint": "^8.27.0"
+		"@casual-ui/eslint-config-react": "^0.4.0",
+		"@changesets/cli": "^2.26.2",
+		"@types/react": "^18.2.20",
+		"eslint": "^8.47.0"
 	},
 	"scripts": {
 		"release": "cd ./packages/ui && pnpm build && cd ../.. && changeset publish"

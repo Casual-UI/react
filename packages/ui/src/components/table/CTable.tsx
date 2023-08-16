@@ -21,7 +21,7 @@ type CustomHeaderRender = (
   props: CustomHeaderRenderProps
 ) => ReactNode
 
-type CustomRender = (props: CustomRenderProps) => ReactNode | {}
+type CustomRender = (props: CustomRenderProps) => ReactNode
 
 interface CTableColumn<T = any, S extends keyof T = any> {
   /**

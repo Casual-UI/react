@@ -1,6 +1,5 @@
 // @ts-check
-const lightCodeTheme = require('prism-react-renderer/themes/github')
-const darkCodeTheme = require('prism-react-renderer/themes/dracula')
+const { themes } = require('prism-react-renderer')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -34,16 +33,6 @@ const config = {
             'https://github.com/Casual-UI/react/edit/main/packages/docs',
           remarkPlugins: [
             [require('@docusaurus/remark-plugin-npm2yarn'), { sync: true }],
-            () => async (ast) => {
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-expect-error
-              ast.children.unshift({
-                type: 'import',
-                value:
-                  'import { PropTable } from \'@site/src/theme/components/PropTable.tsx\'',
-                default: false,
-              })
-            },
           ],
         },
         blog: false,
@@ -56,8 +45,8 @@ const config = {
       }),
     ],
   ],
-  plugins: ['docusaurus-plugin-sass', './plugins/casual-components-doc'],
-  themes: ['@docusaurus/theme-live-codeblock'],
+  plugins: ['@docusaurus/theme-live-codeblock', 'docusaurus-plugin-sass', './plugins/casual-components-doc'],
+  themes: [],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -166,8 +155,8 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Casual UI.`,
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        theme: themes.github,
+        darkTheme: themes.dracula,
       },
       liveCodeBlock: {
         playgroundPosition: 'top',

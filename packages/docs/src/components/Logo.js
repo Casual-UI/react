@@ -4,7 +4,8 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import useBaseUrl from '@docusaurus/useBaseUrl'
 import { translate } from '@docusaurus/Translate'
 import homeStyle from './home.module.scss'
-const Logo = () => {
+
+export default function Logo() {
   const { siteConfig } = useDocusaurusContext()
   const badges = [
     'react',
@@ -138,5 +139,3 @@ const Logo = () => {
     </div>
   )
 }
-
-export { Logo }

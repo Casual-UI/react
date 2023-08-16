@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-const path = require('path')
-const { resolve } = require('path')
-const { existsSync, mkdirSync, readFileSync, writeFileSync } = require('fs')
+const { resolve } = require('node:path')
+const process = require('node:process')
+const { existsSync, mkdirSync, readFileSync, writeFileSync } = require('node:fs')
 const pc = require('picocolors')
 const docgen = require('react-docgen-typescript')
 const fg = require('fast-glob')
@@ -40,14 +40,14 @@ const CasualComponentsDoc = async function (ctx) {
         const filePath = files[i]
         const fileName = filePath.split('/').at(-1)
         const name = fileName.replace(/\.tsx/, '.json')
-        const sourceFile = path.resolve(CWD_PATH, filePath)
+        const sourceFile = resolve(CWD_PATH, filePath)
         const doCreate = async () => {
           const apiObj = docgen.parse(sourceFile, {
             shouldIncludePropTagMap: true,
           })
           apiObj.forEach((apiItem) => {
-            Object.values(apiItem.props).forEach((prop) => {
-              prop.type.name = prettier
+            Object.values(apiItem.props).forEach(async (prop) => {
+              prop.type.name = (await prettier
                 .format(
                   `type Type1 = ${prop.type.name}`,
                   {
@@ -57,7 +57,7 @@ const CasualComponentsDoc = async function (ctx) {
                     trailingComma: 'es5',
                     printWidth: 40,
                   },
-                )
+                ))
                 .replace(/type Type1 = ?\n?/, '')
                 .replace(/[\r\n]+$/, '')
             })
